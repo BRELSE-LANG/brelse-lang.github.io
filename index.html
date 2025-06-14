@@ -1,29 +1,87 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-black text-white">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BrelseLang - From Dots to Data, Future is Tactile</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet">
-  </head>
-  <body class="min-h-screen flex items-center justify-center flex-col p-6">
-    <!-- Logo -->
-    <img src="logo.png" alt="BrelseLang Logo" class="w-48 mb-6">
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BrelseLang - From Dots to Data</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #121212;
+      color: #f0f0f0;
+      line-height: 1.6;
+    }
+    header {
+      background-color: #1e1e1e;
+      padding: 2rem;
+      text-align: center;
+    }
+    header img {
+      max-height: 80px;
+      margin-bottom: 1rem;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+    .tagline {
+      font-size: 1.2rem;
+      color: #ccc;
+    }
+    .container {
+      padding: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h2 {
+      color: #fbbf24;
+      margin-top: 2rem;
+    }
+    a {
+      color: #60a5fa;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="brelselang-logo.png" alt="BrelseLang Logo" />
+    <h1>BrelseLang</h1>
+    <p class="tagline">From Dots to Data, Future is Tactile</p>
+  </header>
 
-    <!-- Title -->
-    <h1 class="text-4xl md:text-5xl font-bold text-center mb-4">
-      BrelseLang
-    </h1>
-
-    <!-- Tagline -->
-    <p class="text-lg md:text-xl text-gray-400 text-center mb-8">
-      From Dots to Data, Future is Tactile
+  <div class="container">
+    <h2>What is BrelseLang?</h2>
+    <p>
+      BrelseLang is a revolutionary hybrid language that combines Braille and Morse Code, designed for cybersecurity, assistive technology, and tactile computing. It empowers communication through touch and vibration.
     </p>
 
-    <!-- CTA -->
-    <a href="https://github.com/brelse-lang" target="_blank"
-       class="bg-white text-black px-6 py-3 rounded-full font-medium hover:bg-gray-200 transition">
-      Explore on GitHub
-    </a>
-  </body>
+    <h2>Use Cases</h2>
+    <ul>
+      <li>Accessible communication for visually impaired users</li>
+      <li>Secure transmission through tactile-only channels</li>
+      <li>Offline encoding/decoding for remote or critical environments</li>
+    </ul>
+
+    <h2>Explore</h2>
+    <p>
+      <a href="https://github.com/brelse-lang" target="_blank">View GitHub Repository</a>
+    </p>
+  </div>
+
+  <footer>
+    &copy; 2025 BrelseLang Project · Founder: Shankar Kumar
+  </footer>
+</body>
 </html>
