@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<!DOCTYPE html><html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -8,30 +7,35 @@
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
-    html, body { scroll-behavior: smooth; }
+    html, body { scroll-behavior: smooth; background-color: white; color: #111; }
   </style>
 </head>
-<body class="bg-white text-black font-sans">
-
-  <!-- HEADER -->
-  <header class="max-w-6xl mx-auto px-6 py-8 flex justify-between items-center border-b border-black">
-    <h1 class="text-2xl font-bold">BrelseLang</h1>
-    <nav class="space-x-6 text-gray-800">
-      <a href="#about" class="hover:underline">About</a>
-      <a href="#features" class="hover:underline">Features</a>
-      <a href="#novelty" class="hover:underline">Why BrelseLang</a>
-      <a href="#contact" class="hover:underline">Contact</a>
-    </nav>
-  </header>
-
-  <!-- HERO -->
-  <section class="text-center py-28 px-6 border-b border-black" id="hero" data-aos="fade-up">
-    <h2 class="text-5xl font-extrabold mb-6 tracking-tight">BrelseLang</h2>
-    <p class="text-xl text-gray-800 max-w-2xl mx-auto">From Dots to Data — The Future is Tactile</p>
-  </section>
-
-  <!-- ABOUT -->
-  <section class="max-w-4xl mx-auto px-6 py-24" id="about" data-aos="fade-up">
+<body class="font-sans">  <!-- HERO MOCKUP BASED ON USER IMAGE DESIGN -->  <section class="bg-black text-white text-center py-24 px-6" id="hero">
+    <h1 class="text-5xl font-extrabold tracking-tight mb-4">BrelseLang</h1>
+    <p class="text-lg text-gray-300 mb-8">From Dots to Data, Future is Tactile</p>
+    <a href="#about" class="inline-block bg-white text-black px-6 py-2 rounded-full font-semibold hover:bg-gray-100 transition">Learn more</a>
+  </section>  <!-- LEARN SECTION -->  <section class="bg-white py-20 px-6" id="learn">
+    <div class="max-w-5xl mx-auto text-center">
+      <h2 class="text-2xl font-bold mb-12">Learn</h2>
+      <div class="grid md:grid-cols-3 gap-12">
+        <div>
+          <i data-lucide="lock" class="w-10 h-10 mx-auto mb-4"></i>
+          <h3 class="font-semibold text-lg">Cybersecurity</h3>
+          <p class="text-gray-700 text-sm mt-1">Hybrid language for secure communication</p>
+        </div>
+        <div>
+          <i data-lucide="accessibility" class="w-10 h-10 mx-auto mb-4"></i>
+          <h3 class="font-semibold text-lg">Assistive tech</h3>
+          <p class="text-gray-700 text-sm mt-1">Enabling accessibility and inclusion</p>
+        </div>
+        <div>
+          <i data-lucide="touchpad" class="w-10 h-10 mx-auto mb-4"></i>
+          <h3 class="font-semibold text-lg">Tactile computing</h3>
+          <p class="text-gray-700 text-sm mt-1">Next-generation touch interfaces</p>
+        </div>
+      </div>
+    </div>
+  </section>  <!-- EXISTING CONTENT CONTINUES -->  <section class="max-w-4xl mx-auto px-6 py-24" id="about" data-aos="fade-up">
     <h3 class="text-2xl font-semibold mb-4 flex items-center gap-2">
       <i data-lucide="info" class="w-5 h-5"></i> What is BrelseLang?
     </h3>
@@ -39,10 +43,7 @@
       BrelseLang is a tactile-first programming and communication language combining the spatial power of Braille with the temporal rhythm of Morse Code. 
       Designed for next-gen assistive tech, secure communication, and AI-human interaction, BrelseLang enables machines and people to “feel” data instead of only reading or hearing it.
     </p>
-  </section>
-
-  <!-- FEATURES -->
-  <section class="bg-gray-100 py-24 px-6 border-y border-black" id="features" data-aos="fade-up">
+  </section>  <section class="bg-gray-100 py-24 px-6 border-y border-black" id="features" data-aos="fade-up">
     <div class="max-w-6xl mx-auto">
       <h3 class="text-2xl font-semibold mb-12 text-center flex justify-center items-center gap-2">
         <i data-lucide="layers" class="w-5 h-5"></i> Key Features
@@ -68,10 +69,7 @@
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- NOVELTY ANGLE -->
-  <section class="max-w-4xl mx-auto px-6 py-24" id="novelty" data-aos="fade-up">
+  </section>  <section class="max-w-4xl mx-auto px-6 py-24" id="novelty" data-aos="fade-up">
     <h3 class="text-2xl font-semibold mb-6 flex items-center gap-2">
       <i data-lucide="sparkles" class="w-5 h-5"></i> Why BrelseLang is Novel
     </h3>
@@ -81,10 +79,7 @@
       <li>First of its kind to embed emotional and spatial cues in binary logic</li>
       <li>Potential applications in defense, robotics, neurotech, and assistive hardware</li>
     </ul>
-  </section>
-
-  <!-- CTA -->
-  <section class="text-center py-20 px-6 border-t border-black" id="contact" data-aos="fade-up">
+  </section>  <section class="text-center py-20 px-6 border-t border-black" id="contact" data-aos="fade-up">
     <h3 class="text-2xl font-semibold mb-4 flex justify-center items-center gap-2">
       <i data-lucide="message-circle" class="w-5 h-5"></i> Ready to Feel the Future?
     </h3>
@@ -92,19 +87,49 @@
     <a href="https://github.com/brelse-lang" target="_blank" class="border border-black px-6 py-3 font-semibold hover:bg-black hover:text-white transition inline-flex items-center gap-2">
       <i data-lucide="github" class="w-5 h-5"></i> Visit GitHub
     </a>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="text-center text-gray-500 text-sm py-8">
-    &copy; 2025 BrelseLang — Made to Be Felt.
-  </footer>
-
-  <!-- Scripts -->
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script>
+  </section>  <footer class="border-t border-gray-300 bg-white text-sm text-gray-700 pt-16 pb-10 px-6">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-4 gap-10">
+      <div>
+        <h4 class="font-bold mb-3">Product</h4>
+        <ul class="space-y-1">
+          <li><a href="#" class="hover:underline">Overview</a></li>
+          <li><a href="#" class="hover:underline">Features</a></li>
+          <li><a href="#" class="hover:underline">Integrations</a></li>
+          <li><a href="#" class="hover:underline">Roadmap</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-bold mb-3">Company</h4>
+        <ul class="space-y-1">
+          <li><a href="#" class="hover:underline">About</a></li>
+          <li><a href="#" class="hover:underline">Team</a></li>
+          <li><a href="#" class="hover:underline">Blog</a></li>
+          <li><a href="#" class="hover:underline">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-bold mb-3">Social</h4>
+        <ul class="space-y-1">
+          <li class="flex items-center gap-2"><i data-lucide="github" class="w-4 h-4"></i> GitHub</li>
+          <li class="flex items-center gap-2"><i data-lucide="linkedin" class="w-4 h-4"></i> LinkedIn</li>
+          <li class="flex items-center gap-2"><i data-lucide="twitter" class="w-4 h-4"></i> Twitter</li>
+          <li class="flex items-center gap-2"><i data-lucide="youtube" class="w-4 h-4"></i> YouTube</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-bold mb-3">Legal</h4>
+        <ul class="space-y-1">
+          <li><a href="#" class="hover:underline">Privacy Policy</a></li>
+          <li><a href="#" class="hover:underline">Terms of Service</a></li>
+        </ul>
+        <div class="mt-4 text-blue-600 flex items-center gap-1">
+          <span class="text-blue-500 text-xs">●</span> All systems normal
+        </div>
+      </div>
+    </div>
+    <div class="mt-10 text-center text-xs text-gray-500">&copy; 2025 BrelseLang — Made to Be Felt.</div>
+  </footer>  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>  <script>
     AOS.init();
     lucide.createIcons();
-  </script>
-
-</body>
+  </script></body>
 </html>
