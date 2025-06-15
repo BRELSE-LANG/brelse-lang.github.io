@@ -1,81 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BrelseLang</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body class="bg-black text-white font-sans">
-    <!-- Hero Section -->
-    <section class="min-h-screen flex flex-col items-center justify-center text-center px-6">
-      <img src="logo.png" alt="BrelseLang Logo" class="w-32 mb-6" />
-      <h1 class="text-5xl font-bold">BrelseLang</h1>
-      <p class="text-xl mt-4 text-gray-400">From Dots to Data, Future is Tactile</p>
-    </section>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BrelseLang – From Dots to Data</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-black text-white font-sans">
+  <!-- NAV -->
+  <header class="flex justify-between items-center p-6 max-w-6xl mx-auto">
+    <h1 class="text-2xl font-bold tracking-wide">BrelseLang</h1>
+    <nav class="space-x-6">
+      <a href="#about" class="hover:underline">About</a>
+      <a href="#features" class="hover:underline">Features</a>
+      <a href="#novelty" class="hover:underline">Why BrelseLang</a>
+      <a href="#contact" class="hover:underline">Contact</a>
+    </nav>
+  </header>
 
-    <!-- What is BrelseLang -->
-    <section class="py-20 px-6 max-w-4xl mx-auto text-center">
-      <h2 class="text-3xl font-semibold mb-4">What is BrelseLang?</h2>
-      <p class="text-gray-400">
-        BrelseLang is a hybrid language bridging Braille and Morse — reimagined for cybersecurity, communication,
-        and tactile-first digital interaction.
-      </p>
-    </section>
+  <!-- HERO -->
+  <section class="text-center py-32 px-6" id="hero">
+    <h2 class="text-5xl font-extrabold mb-4">From Dots to Data, <br/>The Future is Tactile</h2>
+    <p class="text-lg text-gray-400 mb-8 max-w-2xl mx-auto">BrelseLang is the world's first hybrid communication protocol merging Braille and Morse—bridging accessibility and intelligence through touch.</p>
+    <a href="#contact" class="bg-white text-black px-6 py-3 font-semibold rounded-full hover:bg-gray-200 transition">Get Involved</a>
+  </section>
 
-    <!-- MVP Showcase -->
-    <section class="py-20 px-6 bg-gray-900">
-      <div class="max-w-5xl mx-auto text-center">
-        <h2 class="text-3xl font-semibold mb-4">MVP Preview</h2>
-        <p class="text-gray-400 mb-8">Console-based encoder/decoder translating Braille ↔ Morse ↔ Text.</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <img src="mvp1.png" class="rounded-lg shadow" alt="MVP Screenshot 1" />
-          <img src="mvp2.png" class="rounded-lg shadow" alt="MVP Screenshot 2" />
+  <!-- ABOUT -->
+  <section class="max-w-6xl mx-auto px-6 py-24" id="about">
+    <h3 class="text-3xl font-bold mb-6">What is BrelseLang?</h3>
+    <p class="text-gray-300 text-lg leading-relaxed">BrelseLang is a tactile-first programming and communication language combining the spatial power of Braille with the temporal rhythm of Morse Code. Designed for next-gen assistive tech, secure communication, and AI-human interaction, BrelseLang enables machines and people to “feel” data instead of only reading or hearing it.</p>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="bg-gray-900 py-24 px-6" id="features">
+    <div class="max-w-6xl mx-auto">
+      <h3 class="text-3xl font-bold mb-12 text-center">Key Features</h3>
+      <div class="grid md:grid-cols-3 gap-12 text-center">
+        <div>
+          <h4 class="text-xl font-semibold mb-2">6-Dot Grid System</h4>
+          <p class="text-gray-400">Universal tactile structure based on Braille fundamentals, enabling spatial decoding.</p>
+        </div>
+        <div>
+          <h4 class="text-xl font-semibold mb-2">Time Pulse Encoding</h4>
+          <p class="text-gray-400">Built-in Morse timing logic for sequential pattern-based messaging and machine interfacing.</p>
+        </div>
+        <div>
+          <h4 class="text-xl font-semibold mb-2">Modular Integration</h4>
+          <p class="text-gray-400">Plug BrelseLang into wearable devices, haptic engines, drones, and even neural feedback tools.</p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Why It Matters -->
-    <section class="py-20 px-6">
-      <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-3xl font-semibold mb-4">Why the World Needs BrelseLang</h2>
-        <p class="text-gray-400">
-          Accessibility, security, and inclusive tech are not luxuries—they're essential. BrelseLang opens a new
-          paradigm where communication isn’t bound to sight or sound.
-        </p>
-      </div>
-    </section>
+  <!-- NOVELTY ANGLE -->
+  <section class="max-w-6xl mx-auto px-6 py-24" id="novelty">
+    <h3 class="text-3xl font-bold mb-6">Why BrelseLang is Novel</h3>
+    <ul class="list-disc text-gray-300 pl-6 space-y-4">
+      <li>Bridges accessibility and encryption in one tactile language</li>
+      <li>Human-AI communication with no need for screens or sound</li>
+      <li>First of its kind to embed emotional and spatial cues in binary logic</li>
+      <li>Potential applications in defense, robotics, neurotech, and assistive hardware</li>
+    </ul>
+  </section>
 
-    <!-- How It Works -->
-    <section class="py-20 px-6 bg-gray-900">
-      <div class="max-w-5xl mx-auto text-center">
-        <h2 class="text-3xl font-semibold mb-4">How It Works</h2>
-        <p class="text-gray-400 mb-8">
-          Input tactile patterns → Interpret via custom grid → Translates to Morse/Braille/Text
-        </p>
-        <img src="flow-diagram.png" class="mx-auto w-full max-w-lg" alt="Flow Diagram" />
-      </div>
-    </section>
+  <!-- CTA -->
+  <section class="bg-gray-900 py-20 text-center px-6" id="contact">
+    <h3 class="text-3xl font-bold mb-4">Ready to Feel the Future?</h3>
+    <p class="text-gray-400 mb-8">Partner with us, contribute to our GitHub, or explore the MVP in action.</p>
+    <a href="https://github.com/brelse-lang" target="_blank" class="bg-white text-black px-6 py-3 font-semibold rounded-full hover:bg-gray-200 transition">Visit GitHub</a>
+  </section>
 
-    <!-- Open Source / GitHub -->
-    <section class="py-20 px-6">
-      <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-2xl font-semibold mb-2">Open Source, For Everyone</h2>
-        <p class="text-gray-400 mb-6">
-          Join us on GitHub to build the future of tactile communication together.
-        </p>
-        <a
-          href="https://github.com/brelse-lang"
-          class="inline-block px-6 py-3 bg-white text-black font-medium rounded-lg hover:bg-gray-200"
-          target="_blank"
-          >Explore GitHub</a
-        >
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="py-10 px-6 text-center text-gray-600 text-sm bg-black border-t border-gray-800">
-      &copy; 2025 BrelseLang. Designed with purpose and precision.
-    </footer>
-  </body>
+  <!-- FOOTER -->
+  <footer class="text-center text-gray-600 text-sm py-8">
+    &copy; 2025 BrelseLang. Built with vision and purpose.
+  </footer>
+</body>
 </html>
