@@ -1,1 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BrelseLang Encoder v1.0</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+  <h1>BrelseLang Encoder v1.0</h1>
+
+  <label for="inputText">Enter Message to Encode:</label><br />
+  <textarea id="inputText" placeholder="Type your text here..."></textarea><br />
+
+  <button id="encodeBtn">Convert to Brelse Code</button>
+
+  <div style="margin-top:20px;">
+    <label><input type="checkbox" id="showBraille" /> Braille Only</label>
+    <label><input type="checkbox" id="showMorse" /> Morse Only</label>
+  </div>
+
+  <pre id="output"></pre>
+
+  <button id="downloadBtn" style="display:none;">Download Output as .txt</button>
+
+  <script src="script.js"></script>
+</body>
+                                                                  </html>
