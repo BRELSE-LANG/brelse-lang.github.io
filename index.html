@@ -11,12 +11,22 @@
     html, body { scroll-behavior: smooth; font-family: 'Inter', sans-serif; }
   </style>
 </head>
-<body class="bg-[#f9fafb] text-[#0f0f0f]">  <!-- HERO SECTION -->  <section class="bg-black text-white text-center py-24 px-6 border-b border-gray-800" id="hero" data-aos="fade-up">
+<body class="bg-[#f9fafb] text-[#0f0f0f]">  <header class="bg-white px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+  <div class="flex items-center gap-3">
+    <!-- SVG Logo -->
+    <svg width="32" height="32" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <text x="10" y="60" font-family="Inter, sans-serif" font-size="60" font-weight="bold">B</text>
+      <circle cx="80" cy="70" r="4" />
+      <rect x="70" y="75" width="20" height="4" rx="2" />
+    </svg>
+    <span class="text-xl font-bold tracking-tight">BrelseLang</span>
+  </div>
+</header><!-- HERO SECTION -->  <section class="bg-black text-white text-center py-24 px-6 border-b border-gray-800" id="hero" data-aos="fade-up">
     <h1 class="text-5xl font-extrabold mb-4 tracking-tight">BrelseLang</h1>
     <p class="text-lg text-gray-400">From Dots to Data, Future is Tactile</p>
-    <a href="https://github.com/brelse-lang" target="_blank" class="inline-block mt-6 px-5 py-2 text-sm font-semibold bg-white text-black rounded-full hover:bg-gray-200 transition duration-300">
-      Read Research Paper
-    </a>
+    <a href="/docs/brelselang_research_paper.pdf" target="_blank" class="inline-block mt-6 px-5 py-2 text-sm font-semibold bg-white text-black rounded-full hover:bg-gray-200 transition duration-300">
+  📄 Read Full Research Paper
+</a>
   </section>  <!-- FEATURE ICONS -->  <section class="bg-white py-20 px-6" data-aos="fade-up">
     <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-around items-center gap-12 md:gap-0">
       <div class="text-center hover:scale-105 transition-transform duration-300 ease-in-out">
@@ -121,4 +131,4 @@
     AOS.init();
     lucide.createIcons();
   </script></body>
-                                </html>
+      </html>
