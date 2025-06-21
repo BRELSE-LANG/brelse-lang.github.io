@@ -13,12 +13,16 @@
 </head>
 <body class="bg-[#f9fafb] text-[#0f0f0f]">  <header class="bg-white px-6 py-4 border-b border-gray-200 flex items-center justify-between">
   <div class="flex items-center gap-3">
-    <!-- SVG Logo -->
-    <svg width="32" height="32" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-      <text x="10" y="60" font-family="Inter, sans-serif" font-size="60" font-weight="bold">B</text>
-      <circle cx="80" cy="70" r="4" />
-      <rect x="70" y="75" width="20" height="4" rx="2" />
-    </svg>
+    <!-- Polished SVG Logo with proper alignment -->
+    <div class="flex flex-col items-center justify-center w-10 h-10">
+      <svg width="32" height="32" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <text x="10" y="60" font-family="Inter, sans-serif" font-size="60" font-weight="bold">B</text>
+      </svg>
+      <div class="flex items-center gap-1 mt-[-4px]">
+        <div class="w-2 h-2 bg-black rounded-full"></div>
+        <div class="w-5 h-1 bg-black rounded"></div>
+      </div>
+    </div>
     <span class="text-xl font-bold tracking-tight">BrelseLang</span>
   </div>
 </header><!-- HERO SECTION -->  <section class="bg-black text-white text-center py-24 px-6 border-b border-gray-800" id="hero" data-aos="fade-up">
@@ -131,4 +135,4 @@
     AOS.init();
     lucide.createIcons();
   </script></body>
-      </html>
+  </html>
