@@ -12,20 +12,12 @@
 <body class="bg-white text-black">  <!-- HEADER -->  <header class="flex items-center justify-between px-6 py-4 border-b">
     <div class="flex items-center gap-3">
       <!-- SVG Logo -->
-      <svg width="40" height="45" viewBox="0 0 160 180" xmlns="http://www.w3.org/2000/svg">
-  <!-- Equilateral triangle with rounded corners -->
-  <path
-    d="M80,20
-       Q75,20 70,30
-       L30,120
-       Q28,125 33,125
-       L127,125
-       Q132,125 130,120
-       L90,30
-       Q85,20 80,20 Z"
-    fill="black"
-  />  <!-- Ring (circle outline) -->  <circle cx="80" cy="88" r="20" fill="none" stroke="black" stroke-width="12" />  <!-- Inner dot -->  <circle cx="80" cy="88" r="6" fill="black" />  <!-- Horizontal rounded dash (same as circle diameter) -->  <rect x="40" y="145" width="80" height="12" fill="black" />
-</svg>
+      <svg width="40" height="40" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="60,10 20,90 100,90" fill="#000" />
+        <circle cx="60" cy="60" r="20" fill="white" />
+        <circle cx="60" cy="60" r="8" fill="#000" />
+        <rect x="35" y="100" width="50" height="10" rx="5" fill="#000" />
+      </svg>
       <span class="text-xl font-bold tracking-tight">BrelseLang</span>
     </div>
     <nav class="space-x-4 text-sm">
@@ -35,31 +27,20 @@
     </nav>
   </header>  <!-- MAIN CONTENT -->  <main class="px-6 py-10 space-y-16"><!-- ENCODER -->
 <section id="encoder">
-
   <h2 class="text-2xl font-semibold mb-4">Text to Brelse Encoder</h2>
-  <div class="w-full aspect-video border rounded overflow-hidden">
-    $1
-<div class="mt-4">
-  <button class="px-4 py-2 bg-black text-white rounded" onclick="downloadEncoderOutput()">Download</button>
-</div>
-<script>
-  function downloadEncoderOutput() {
-    const iframe = document.querySelector('iframe');
-    const innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-    const output = innerDoc.querySelector('textarea, pre, .output');
-    if (output) {
-      const text = output.innerText || output.value;
-      const blob = new Blob([text], { type: 'text/plain' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'bresle_output.txt';
-      link.click();
-    } else {
-      alert('No output to download.');
-    }
-  }
-</script>
-</section><!-- DECODER -->
+  <textarea class="w-full p-3 border rounded mb-4" rows="4" placeholder="Enter your message here..."></textarea>
+  <div class="flex items-center gap-3">
+    <button class="px-4 py-2 bg-black text-white rounded">Convert to Brelse</button>
+    <label class="flex items-center gap-1">
+      <input type="checkbox" /> Braille Only
+    </label>
+    <label class="flex items-center gap-1">
+      <input type="checkbox" /> Morse Only
+    </label>
+  </div>
+</section>
+
+<!-- DECODER -->
 <section id="decoder">
   <h2 class="text-2xl font-semibold mb-4">Brelse to Text Decoder</h2>
   <textarea class="w-full p-3 border rounded mb-4" rows="4" placeholder="Paste Brelse code here..."></textarea>
@@ -77,4 +58,4 @@
   </main>  <!-- FOOTER -->  <footer class="text-center text-sm text-gray-500 py-8 border-t">
     &copy; 2025 BrelseLang. All rights reserved.
   </footer></body>
-</html>
+    </html>
