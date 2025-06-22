@@ -109,15 +109,36 @@
   }
 
   function decodeFromBrelse() {
-    const input = document.getElementById("decoderInput").value.trim();
-    const lines = input.split('\n');
-    let decoded = "";
+  const input = document.getElementById("decoderInput").value.trim();
+  const lines = input.split('
+');
+  let decoded = "";
 
-    lines.forEach(line => {
-      const parts = line.split(':');
-      if (parts.length >= 2) {
-        decoded += parts[0].trim();
+  const brailleReverse = Object.fromEntries(
+    Object.entries(brailleMap).map(([k, v]) => [v, k])
+  );
+  const morseReverse = Object.fromEntries(
+    Object.entries(morseMap).map(([k, v]) => [v, k])
+  );
+
+  lines.forEach(line => {
+    const parts = line.split(":");
+    if (parts.length >= 2) {
+      const code = parts[1].trim();
+      const [braille, morse] = code.includes("|") ? code.split("|").map(s => s.trim()) : [code.trim(), ""];
+
+      if (brailleReverse[braille]) {
+        decoded += brailleReverse[braille];
+      } else if (morseReverse[morse]) {
+        decoded += morseReverse[morse];
+      } else {
+        decoded += "?";
       }
+    }
+  });
+
+  document.getElementById("decodedOutput").innerText = decoded.toUpperCase();
+}
     });
 
     document.getElementById("decodedOutput").innerText = decoded;
@@ -130,4 +151,4 @@
     });
   }
 </script></body>
-                                                                                               </html>
+        </html>
