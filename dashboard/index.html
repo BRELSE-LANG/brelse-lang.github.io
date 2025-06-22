@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<!DOCTYPE html><html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,10 +9,7 @@
     body { font-family: 'Inter', sans-serif; }
   </style>
 </head>
-<body class="bg-white text-black">
-
-  <!-- HEADER -->
-  <header class="flex items-center justify-between px-6 py-4 border-b">
+<body class="bg-white text-black">  <!-- HEADER -->  <header class="flex items-center justify-between px-6 py-4 border-b">
     <div class="flex items-center gap-3">
       <!-- SVG Logo -->
       <svg width="40" height="45" viewBox="0 0 160 180" xmlns="http://www.w3.org/2000/svg">
@@ -28,16 +24,7 @@
        L90,30
        Q85,20 80,20 Z"
     fill="black"
-  />
-
-  <!-- Ring (circle outline) -->
-  <circle cx="80" cy="88" r="20" fill="none" stroke="black" stroke-width="12" />
-
-  <!-- Inner dot -->
-  <circle cx="80" cy="88" r="6" fill="black" />
-
-  <!-- Horizontal rounded dash (same as circle diameter) -->
-  <rect x="40" y="145" width="80" height="12" fill="black" />
+  />  <!-- Ring (circle outline) -->  <circle cx="80" cy="88" r="20" fill="none" stroke="black" stroke-width="12" />  <!-- Inner dot -->  <circle cx="80" cy="88" r="6" fill="black" />  <!-- Horizontal rounded dash (same as circle diameter) -->  <rect x="40" y="145" width="80" height="12" fill="black" />
 </svg>
       <span class="text-xl font-bold tracking-tight">BrelseLang</span>
     </div>
@@ -46,59 +33,49 @@
       <a href="#decoder" class="hover:underline">Decoder</a>
       <a href="#visualizer" class="hover:underline">Visualizer</a>
     </nav>
-  </header>
+  </header>  <!-- MAIN CONTENT -->  <main class="px-6 py-10 space-y-16"><!-- ENCODER -->
+<section id="encoder">
 
-  <!-- MAIN CONTENT -->
-  <main class="px-6 py-10 space-y-16">
-
-    <!-- ENCODER -->
-    <section id="encoder">
   <h2 class="text-2xl font-semibold mb-4">Text to Brelse Encoder</h2>
   <div class="w-full aspect-video border rounded overflow-hidden">
-    $1
-<div class="mt-4">
-  <button class="px-4 py-2 bg-black text-white rounded" onclick="downloadEncoderOutput()">Download</button>
-</div>
-<script>
-  function downloadEncoderOutput() {
-    const iframe = document.querySelector('iframe');
-    const innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-    const output = innerDoc.querySelector('textarea, pre, .output');
-    if (output) {
-      const text = output.innerText || output.value;
-      const blob = new Blob([text], { type: 'text/plain' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'bresle_output.txt';
-      link.click();
-    } else {
-      alert('No output to download.');
+    <iframe src="https://brelse-lang.github.io/encoder/" class="w-full h-full border-0"></iframe>
+  </div>
+  <div class="mt-4">
+    <button class="px-4 py-2 bg-black text-white rounded" onclick="downloadEncoderOutput()">Download</button>
+  </div>
+  <script>
+    function downloadEncoderOutput() {
+      const iframe = document.querySelector('iframe');
+      const innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+      const output = innerDoc.querySelector('textarea, pre, .output');
+      if (output) {
+        const text = output.innerText || output.value;
+        const blob = new Blob([text], { type: 'text/plain' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'bresle_output.txt';
+        link.click();
+      } else {
+        alert('No output to download.');
+      }
     }
-  }
-</script>
+  </script>
+</section><!-- DECODER -->
+<section id="decoder">
+  <h2 class="text-2xl font-semibold mb-4">Brelse to Text Decoder</h2>
+  <textarea class="w-full p-3 border rounded mb-4" rows="4" placeholder="Paste Brelse code here..."></textarea>
+  <button class="px-4 py-2 bg-black text-white rounded">Decode to Text</button>
 </section>
 
-    <!-- DECODER -->
-    <section id="decoder">
-      <h2 class="text-2xl font-semibold mb-4">Brelse to Text Decoder</h2>
-      <textarea class="w-full p-3 border rounded mb-4" rows="4" placeholder="Paste Brelse code here..."></textarea>
-      <button class="px-4 py-2 bg-black text-white rounded">Decode to Text</button>
-    </section>
+<!-- VISUALIZER -->
+<section id="visualizer">
+  <h2 class="text-2xl font-semibold mb-4">Live Code Visualizer</h2>
+  <div class="w-full h-40 border rounded bg-gray-50 flex items-center justify-center text-gray-400">
+    Visualization coming soon...
+  </div>
+</section>
 
-    <!-- VISUALIZER -->
-    <section id="visualizer">
-      <h2 class="text-2xl font-semibold mb-4">Live Code Visualizer</h2>
-      <div class="w-full h-40 border rounded bg-gray-50 flex items-center justify-center text-gray-400">
-        Visualization coming soon...
-      </div>
-    </section>
-
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="text-center text-sm text-gray-500 py-8 border-t">
+  </main>  <!-- FOOTER -->  <footer class="text-center text-sm text-gray-500 py-8 border-t">
     &copy; 2025 BrelseLang. All rights reserved.
-  </footer>
-
-</body>
-</html>
+  </footer></body>
+  </html>
