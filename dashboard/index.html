@@ -24,7 +24,7 @@
        L90,30
        Q85,20 80,20 Z"
     fill="black"
-  />  <!-- White circle inscribed inside triangle -->  <circle cx="80" cy="88" r="40" fill="white" />  <!-- Inner center dot -->  <circle cx="80" cy="88" r="8" fill="black" />  <!-- Horizontal rounded dash below triangle -->  <rect x="40" y="145" width="80" height="12" rx="6" fill="black" />
+  />  <!-- Ring (circle outline) -->  <circle cx="80" cy="88" r="20" fill="none" stroke="black" stroke-width="12" />  <!-- Inner dot -->  <circle cx="80" cy="88" r="6" fill="black" />  <!-- Horizontal rounded dash (same as circle diameter) -->  <rect x="40" y="145" width="80" height="12" fill="black" />
 </svg>
       <span class="text-xl font-bold tracking-tight">BrelseLang</span>
     </div>
@@ -39,23 +39,26 @@
   <h2 class="text-2xl font-semibold mb-4">Text to Brelse Encoder</h2>
   <div class="w-full aspect-video border rounded overflow-hidden">
     $1
-<div class="mt-4 flex gap-3">
+<div class="mt-4">
   <button class="px-4 py-2 bg-black text-white rounded" onclick="downloadEncoderOutput()">Download</button>
-  <button class="px-4 py-2 bg-gray-800 text-white rounded" onclick="copyEncoderOutput()">Copy</button>
 </div>
 <script>
-  function copyEncoderOutput() {
+  function downloadEncoderOutput() {
     const iframe = document.querySelector('iframe');
     const innerDoc = iframe.contentDocument || iframe.contentWindow.document;
     const output = innerDoc.querySelector('textarea, pre, .output');
     if (output) {
       const text = output.innerText || output.value;
-      navigator.clipboard.writeText(text).then(() => alert('Copied!'));
+      const blob = new Blob([text], { type: 'text/plain' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'bresle_output.txt';
+      link.click();
     } else {
-      alert('No output to copy.');
+      alert('No output to download.');
     }
-  }function downloadEncoderOutput() { const iframe = document.querySelector('iframe'); const innerDoc = iframe.contentDocument || iframe.contentWindow.document; const output = innerDoc.querySelector('textarea, pre, .output'); if (output) { const text = output.innerText || output.value; const blob = new Blob([text], { type: 'text/plain' }); const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'bresle_output.txt'; link.click(); } else { alert('No output to download.'); } } </script>
-
+  }
+</script>
 </section><!-- DECODER -->
 <section id="decoder">
   <h2 class="text-2xl font-semibold mb-4">Brelse to Text Decoder</h2>
