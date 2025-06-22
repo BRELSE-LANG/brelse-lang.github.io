@@ -1,124 +1,133 @@
-<!DOCTYPE html><html lang="en" class="scroll-smooth">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BrelseLang Dashboard</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" />
-  <style>
-    body { font-family: 'Inter', sans-serif; }
-  </style>
-</head>
-<body class="bg-white text-black">  <!-- HEADER -->  <header class="flex items-center justify-between px-6 py-4 border-b">
-    <div class="flex items-center gap-3">
-      <!-- SVG Logo -->
-      <svg width="40" height="45" viewBox="0 0 160 180" xmlns="http://www.w3.org/2000/svg">
-  <!-- Triangle with curved corners -->
-  <path
-    d="M80,20
-       Q75,20 70,30
-       L30,120
-       Q28,125 33,125
-       L127,125
-       Q132,125 130,120
-       L90,30
-       Q85,20 80,20 Z"
-    fill="black"
-  />  <!-- Circle outline (ring) centered inside the triangle -->  <circle cx="80" cy="88" r="20" fill="none" stroke="black" stroke-width="12" />  <!-- Inner black dot -->  <circle cx="80" cy="88" r="6" fill="black" />  <!-- Dash under triangle -->  <rect x="40" y="145" width="80" height="12" fill="black" />
-</svg>
-      <span class="text-xl font-bold tracking-tight">BrelseLang</span>
-    </div>
-    <nav class="space-x-4 text-sm">
-      <a href="#encoder" class="hover:underline">Encoder</a>
-      <a href="#decoder" class="hover:underline">Decoder</a>
-      <a href="#visualizer" class="hover:underline">Visualizer</a>
-    </nav>
-  </header>  <!-- MAIN CONTENT -->  <main class="px-6 py-10 space-y-16"><!-- ENCODER -->
-<section id="encoder">
-
-  <h2 class="text-2xl font-semibold mb-4">Text to Brelse Encoder</h2>
-  <form id="bresle-form" class="space-y-4">
-    <div>
-      <label for="message" class="block font-medium mb-1">Enter Message to Encode:</label>
-      <textarea id="message" rows="4" class="w-full p-3 border rounded" placeholder="Type your text here..."></textarea>
-    </div>
-    <div>
-      <label class="inline-flex items-center mr-4">
-        <input type="checkbox" id="brailleOnly" class="mr-2"> Braille Only
-      </label>
-      <label class="inline-flex items-center">
-        <input type="checkbox" id="morseOnly" class="mr-2"> Morse Only
-      </label>
-    </div>
-    <button type="button" class="px-4 py-2 bg-black text-white rounded" onclick="convertToBrelse()">Convert to Brelse Code</button>
-  </form>  <div id="output" class="mt-6 whitespace-pre-line text-sm font-mono bg-gray-100 p-4 rounded border"></div>  <div class="mt-4">
-    <button class="px-4 py-2 bg-black text-white rounded" onclick="downloadOutput()">Download</button>
-  </div>  <script>
-    const brailleMap = {
-      a: "100000", b: "101000", c: "110000", d: "110100", e: "100100",
-      f: "111000", g: "111100", h: "101100", i: "011000", j: "011100",
-      k: "100010", l: "101010", m: "110010", n: "110110", o: "100110",
-      p: "111010", q: "111110", r: "101110", s: "011010", t: "011110",
-      u: "100011", v: "101011", w: "011101", x: "110011", y: "110111", z: "100111",
-      ' ': "000000"
-    };
-
-    const morseMap = {
-      a: ".-", b: "-...", c: "-.-.", d: "-..", e: ".",
-      f: "..-.", g: "--.", h: "....", i: "..", j: ".---",
-      k: "-.-", l: ".-..", m: "--", n: "-.", o: "---",
-      p: ".--.", q: "--.-", r: ".-.", s: "...", t: "-",
-      u: "..-", v: "...-", w: ".--", x: "-..-", y: "-.--", z: "--..",
-      ' ': "/"
-    };
-
-    function convertToBrelse() {
-      const text = document.getElementById('message').value.toLowerCase();
-      const brailleOnly = document.getElementById('brailleOnly').checked;
-      const morseOnly = document.getElementById('morseOnly').checked;
-      let output = "";
-
-      for (let ch of text) {
-        const braille = brailleMap[ch] || "------";
-        const morse = morseMap[ch] || "?";
-        if (brailleOnly) {
-          output += `${ch.toUpperCase()}: ${braille}
-`;
-        } else if (morseOnly) {
-          output += `${ch.toUpperCase()}: ${morse}
-`;
-        } else {
-          output += `${ch.toUpperCase()}: ${braille} | ${morse}
-`;
-        }
-      }
-      document.getElementById("output").innerText = output;
-    }
-
-    function downloadOutput() {
-      const text = document.getElementById("output").innerText;
-      const blob = new Blob([text], { type: "text/plain" });
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
-      link.download = "bresle_output.txt";
-      link.click();
-    }
-  </script></section><!-- DECODER -->
-<section id="decoder">
-  <h2 class="text-2xl font-semibold mb-4">Brelse to Text Decoder</h2>
-  <textarea class="w-full p-3 border rounded mb-4" rows="4" placeholder="Paste Brelse code here..."></textarea>
-  <button class="px-4 py-2 bg-black text-white rounded">Decode to Text</button>
-</section>
-
-<!-- VISUALIZER -->
-<section id="visualizer">
-  <h2 class="text-2xl font-semibold mb-4">Live Code Visualizer</h2>
-  <div class="w-full h-40 border rounded bg-gray-50 flex items-center justify-center text-gray-400">
-    Visualization coming soon...
+<!DOCTYPE html><html lang="en" class="scroll-smooth">  <head>  
+  <meta charset="UTF-8" />  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
+  <title>BrelseLang Dashboard</title>  
+  <script src="https://cdn.tailwindcss.com"></script>  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" />  
+  <style>  
+    body { font-family: 'Inter', sans-serif; }  
+  </style>  
+</head>  
+<body class="bg-white text-black">  <!-- HEADER -->  <header class="flex items-center justify-between px-6 py-4 border-b">  
+  <div class="flex items-center gap-3">  
+    <!-- SVG Logo -->  
+    <svg width="40" height="45" viewBox="0 0 160 180" xmlns="http://www.w3.org/2000/svg">  
+      <path d="M80,20 Q75,20 70,30 L30,120 Q28,125 33,125 L127,125 Q132,125 130,120 L90,30 Q85,20 80,20 Z" fill="black" />  
+      <circle cx="80" cy="88" r="20" fill="none" stroke="black" stroke-width="12" />  
+      <circle cx="80" cy="88" r="6" fill="black" />  
+      <rect x="40" y="145" width="80" height="12" fill="black" />  
+    </svg>  
+    <span class="text-xl font-bold tracking-tight">BrelseLang</span>  
+  </div>  
+  <nav class="space-x-4 text-sm">  
+    <a href="#encoder" class="hover:underline">Encoder</a>  
+    <a href="#decoder" class="hover:underline">Decoder</a>  
+    <a href="#visualizer" class="hover:underline">Visualizer</a>  
+  </nav>  
+</header>  <!-- MAIN CONTENT -->  <main class="px-6 py-10 space-y-16"><!-- ENCODER -->  <section id="encoder">  
+  <h2 class="text-2xl font-semibold mb-4">Text to Brelse Encoder</h2>  
+  <form id="bresle-form" class="space-y-4">  
+    <div>  
+      <label for="message" class="block font-medium mb-1">Enter Message to Encode:</label>  
+      <textarea id="message" rows="4" class="w-full p-3 border rounded" placeholder="Type your text here..."></textarea>  
+    </div>  
+    <div>  
+      <label class="inline-flex items-center mr-4">  
+        <input type="checkbox" id="brailleOnly" class="mr-2"> Braille Only  
+      </label>  
+      <label class="inline-flex items-center">  
+        <input type="checkbox" id="morseOnly" class="mr-2"> Morse Only  
+      </label>  
+    </div>  
+    <button type="button" class="px-4 py-2 bg-black text-white rounded" onclick="convertToBrelse()">Convert to Brelse Code</button>  
+  </form>  
+  <div id="output" class="mt-6 whitespace-pre-line text-sm font-mono bg-gray-100 p-4 rounded border"></div>  
+  <div class="mt-4">  
+    <button class="px-4 py-2 bg-black text-white rounded" onclick="downloadOutput()">Download</button>  
+  </div>  
+</section><!-- DECODER -->  <section id="decoder">  
+  <h2 class="text-2xl font-semibold mb-4">Brelse to Text Decoder</h2>  
+  <textarea id="decoderInput" class="w-full p-3 border rounded mb-4" rows="4" placeholder="Paste Brelse code here..."></textarea>  
+  <button class="px-4 py-2 bg-black text-white rounded" onclick="decodeFromBrelse()">Decode to Text</button>  
+  <div id="decodedOutput" class="mt-4 text-base font-mono text-gray-800"></div>
+  <div class="mt-2">
+    <button class="px-3 py-1.5 bg-black text-white text-sm rounded" onclick="copyDecodedText()">Copy</button>
   </div>
-</section>
+</section><!-- VISUALIZER -->  <section id="visualizer">  
+  <h2 class="text-2xl font-semibold mb-4">Live Code Visualizer</h2>  
+  <div class="w-full h-40 border rounded bg-gray-50 flex items-center justify-center text-gray-400">  
+    Visualization coming soon...  
+  </div>  
+</section></main>  <!-- FOOTER -->  <footer class="text-center text-sm text-gray-500 py-8 border-t">  
+  &copy; 2025 BrelseLang. All rights reserved.  
+</footer><script>
+  const brailleMap = {
+    a: "100000", b: "101000", c: "110000", d: "110100", e: "100100",
+    f: "111000", g: "111100", h: "101100", i: "011000", j: "011100",
+    k: "100010", l: "101010", m: "110010", n: "110110", o: "100110",
+    p: "111010", q: "111110", r: "101110", s: "011010", t: "011110",
+    u: "100011", v: "101011", w: "011101", x: "110011", y: "110111", z: "100111",
+    ' ': "000000"
+  };
 
-  </main>  <!-- FOOTER -->  <footer class="text-center text-sm text-gray-500 py-8 border-t">
-    &copy; 2025 BrelseLang. All rights reserved.
-  </footer></body>
-  </html>
+  const morseMap = {
+    a: ".-", b: "-...", c: "-.-.", d: "-..", e: ".",
+    f: "..-.", g: "--.", h: "....", i: "..", j: ".---",
+    k: "-.-", l: ".-..", m: "--", n: "-.", o: "---",
+    p: ".--.", q: "--.-", r: ".-.", s: "...", t: "-",
+    u: "..-", v: "...-", w: ".--", x: "-..-", y: "-.--", z: "--..",
+    ' ': "/"
+  };
+
+  function convertToBrelse() {
+    const text = document.getElementById('message').value.toLowerCase();
+    const brailleOnly = document.getElementById('brailleOnly').checked;
+    const morseOnly = document.getElementById('morseOnly').checked;
+    let output = "";
+
+    for (let ch of text) {
+      const braille = brailleMap[ch] || "------";
+      const morse = morseMap[ch] || "?";
+      if (brailleOnly) {
+        output += `${ch.toUpperCase()}: ${braille}\n`;
+      } else if (morseOnly) {
+        output += `${ch.toUpperCase()}: ${morse}\n`;
+      } else {
+        output += `${ch.toUpperCase()}: ${braille} | ${morse}\n`;
+      }
+    }
+    document.getElementById("output").innerText = output;
+  }
+
+  function downloadOutput() {
+    const text = document.getElementById("output").innerText;
+    const blob = new Blob([text], { type: "text/plain" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "bresle_output.txt";
+    link.click();
+  }
+
+  function decodeFromBrelse() {
+    const input = document.getElementById("decoderInput").value.trim();
+    const lines = input.split('\n');
+    let decoded = "";
+
+    lines.forEach(line => {
+      const parts = line.split(':');
+      if (parts.length >= 2) {
+        decoded += parts[0].trim();
+      }
+    });
+
+    document.getElementById("decodedOutput").innerText = decoded;
+  }
+
+  function copyDecodedText() {
+    const decoded = document.getElementById("decodedOutput").innerText;
+    navigator.clipboard.writeText(decoded).then(() => {
+      alert("Copied to clipboard!");
+    });
+  }
+</script></body>
+                                                                                               </html>
