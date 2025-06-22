@@ -37,30 +37,73 @@
 <section id="encoder">
 
   <h2 class="text-2xl font-semibold mb-4">Text to Brelse Encoder</h2>
-  <div class="w-full aspect-video border rounded overflow-hidden">
-    <iframe src="https://brelse-lang.github.io/encoder/" class="w-full h-full border-0"></iframe>
-  </div>
-  <div class="mt-4">
-    <button class="px-4 py-2 bg-black text-white rounded" onclick="downloadEncoderOutput()">Download</button>
-  </div>
-  <script>
-    function downloadEncoderOutput() {
-      const iframe = document.querySelector('iframe');
-      const innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-      const output = innerDoc.querySelector('textarea, pre, .output');
-      if (output) {
-        const text = output.innerText || output.value;
-        const blob = new Blob([text], { type: 'text/plain' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'bresle_output.txt';
-        link.click();
-      } else {
-        alert('No output to download.');
+  <form id="bresle-form" class="space-y-4">
+    <div>
+      <label for="message" class="block font-medium mb-1">Enter Message to Encode:</label>
+      <textarea id="message" rows="4" class="w-full p-3 border rounded" placeholder="Type your text here..."></textarea>
+    </div>
+    <div>
+      <label class="inline-flex items-center mr-4">
+        <input type="checkbox" id="brailleOnly" class="mr-2"> Braille Only
+      </label>
+      <label class="inline-flex items-center">
+        <input type="checkbox" id="morseOnly" class="mr-2"> Morse Only
+      </label>
+    </div>
+    <button type="button" class="px-4 py-2 bg-black text-white rounded" onclick="convertToBrelse()">Convert to Brelse Code</button>
+  </form>  <div id="output" class="mt-6 whitespace-pre-line text-sm font-mono bg-gray-100 p-4 rounded border"></div>  <div class="mt-4">
+    <button class="px-4 py-2 bg-black text-white rounded" onclick="downloadOutput()">Download</button>
+  </div>  <script>
+    const brailleMap = {
+      a: "100000", b: "101000", c: "110000", d: "110100", e: "100100",
+      f: "111000", g: "111100", h: "101100", i: "011000", j: "011100",
+      k: "100010", l: "101010", m: "110010", n: "110110", o: "100110",
+      p: "111010", q: "111110", r: "101110", s: "011010", t: "011110",
+      u: "100011", v: "101011", w: "011101", x: "110011", y: "110111", z: "100111",
+      ' ': "000000"
+    };
+
+    const morseMap = {
+      a: ".-", b: "-...", c: "-.-.", d: "-..", e: ".",
+      f: "..-.", g: "--.", h: "....", i: "..", j: ".---",
+      k: "-.-", l: ".-..", m: "--", n: "-.", o: "---",
+      p: ".--.", q: "--.-", r: ".-.", s: "...", t: "-",
+      u: "..-", v: "...-", w: ".--", x: "-..-", y: "-.--", z: "--..",
+      ' ': "/"
+    };
+
+    function convertToBrelse() {
+      const text = document.getElementById('message').value.toLowerCase();
+      const brailleOnly = document.getElementById('brailleOnly').checked;
+      const morseOnly = document.getElementById('morseOnly').checked;
+      let output = "";
+
+      for (let ch of text) {
+        const braille = brailleMap[ch] || "------";
+        const morse = morseMap[ch] || "?";
+        if (brailleOnly) {
+          output += `${ch.toUpperCase()}: ${braille}
+`;
+        } else if (morseOnly) {
+          output += `${ch.toUpperCase()}: ${morse}
+`;
+        } else {
+          output += `${ch.toUpperCase()}: ${braille} | ${morse}
+`;
+        }
       }
+      document.getElementById("output").innerText = output;
     }
-  </script>
-</section><!-- DECODER -->
+
+    function downloadOutput() {
+      const text = document.getElementById("output").innerText;
+      const blob = new Blob([text], { type: "text/plain" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "bresle_output.txt";
+      link.click();
+    }
+  </script></section><!-- DECODER -->
 <section id="decoder">
   <h2 class="text-2xl font-semibold mb-4">Brelse to Text Decoder</h2>
   <textarea class="w-full p-3 border rounded mb-4" rows="4" placeholder="Paste Brelse code here..."></textarea>
@@ -78,4 +121,4 @@
   </main>  <!-- FOOTER -->  <footer class="text-center text-sm text-gray-500 py-8 border-t">
     &copy; 2025 BrelseLang. All rights reserved.
   </footer></body>
-  </html>
+                                      </html>
