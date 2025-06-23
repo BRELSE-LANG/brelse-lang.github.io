@@ -1,90 +1,74 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BrelseLang – From Dots to Data</title>
+  <meta charset="UTF-8">
+  <title>BRELSELANG</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    html, body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: #f5f5f5; }
+    html, body {
+      font-family: 'Courier New', monospace;
+      background-color: #fff;
+      color: #000;
+    }
   </style>
 </head>
-<body>
+<body class="p-8">
 
-<!-- HEADER -->
-<header class="flex justify-between items-center px-8 py-5 border-b border-neutral-800">
-  <h1 class="text-xl font-semibold tracking-wide">BrelseLang</h1>
-  <nav class="space-x-6 text-sm text-neutral-400">
-    <a href="#about" class="hover:text-white">About</a>
-    <a href="#features" class="hover:text-white">Features</a>
-    <a href="#paper" class="hover:text-white">Paper</a>
-    <a href="#founder" class="hover:text-white">Founder</a>
-  </nav>
-</header>
+  <!-- Header -->
+  <header class="flex justify-between items-center border-b-2 border-black pb-4 mb-8 uppercase text-lg tracking-widest">
+    <h1 class="text-3xl font-bold">BRELSELANG</h1>
+    <nav class="space-x-6">
+      <a href="#about" class="hover:underline">About</a>
+      <a href="#features" class="hover:underline">Features</a>
+      <a href="#paper" class="hover:underline">Paper</a>
+    </nav>
+  </header>
 
-<!-- HERO -->
-<section class="text-center py-24 px-6">
-  <h2 class="text-5xl font-extrabold tracking-tight mb-4">From Dots to Data</h2>
-  <p class="text-lg text-neutral-400">A hybrid language of Braille + Morse for machines and humans</p>
-</section>
+  <!-- Hero -->
+  <section class="text-center mb-12">
+    <h2 class="text-5xl font-extrabold border-b-4 border-black inline-block px-6 py-4">FROM DOTS TO DATA</h2>
+    <p class="text-lg mt-6 uppercase">a hybrid language of braille + morse for machines and humans</p>
+  </section>
 
-<!-- ABOUT -->
-<section id="about" class="max-w-4xl mx-auto px-6 py-20 border-t border-neutral-800">
-  <h3 class="text-2xl font-semibold mb-6">What is BrelseLang?</h3>
-  <p class="text-neutral-300 leading-relaxed text-lg">
-    BrelseLang is a tactile-first coding and communication system that merges Braille’s structure with Morse’s rhythm.
-    Designed for war zones, smart wearables, neuro-devices, and silent communication. No screens. No voice. Just sensation.
-  </p>
-</section>
-
-<!-- FEATURES -->
-<section id="features" class="py-24 px-6 border-t border-neutral-800">
-  <div class="max-w-5xl mx-auto grid md:grid-cols-3 gap-10">
-    <div>
-      <h4 class="text-lg font-medium mb-2">Cybersecurity</h4>
-      <p class="text-neutral-400">Encrypted tactile code for secure operations.</p>
+  <!-- Raw Grid Features -->
+  <section id="features" class="grid md:grid-cols-3 gap-6 text-center border-t-2 border-b-2 border-black py-8 mb-12">
+    <div class="p-4 border border-black">
+      <h3 class="font-bold text-xl uppercase">Cybersecurity</h3>
+      <p class="mt-2 text-sm">Encrypted touch-based code for defense systems</p>
     </div>
-    <div>
-      <h4 class="text-lg font-medium mb-2">Tactile Computing</h4>
-      <p class="text-neutral-400">Interact through sensation, not screens.</p>
+    <div class="p-4 border border-black">
+      <h3 class="font-bold text-xl uppercase">Assistive Tech</h3>
+      <p class="mt-2 text-sm">A voice-free and screenless communication method</p>
     </div>
-    <div>
-      <h4 class="text-lg font-medium mb-2">Accessibility</h4>
-      <p class="text-neutral-400">Universal input/output for all users, including visually impaired.</p>
+    <div class="p-4 border border-black">
+      <h3 class="font-bold text-xl uppercase">Tactile AI</h3>
+      <p class="mt-2 text-sm">Machine-readable braille signals + morse pulses</p>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- PAPER -->
-<section id="paper" class="max-w-4xl mx-auto px-6 py-24 border-t border-neutral-800 text-center">
-  <h3 class="text-xl font-semibold mb-4">Read Our Research</h3>
-  <a href="/docs/brelselang_research_paper.pdf" class="inline-block mt-3 px-5 py-2 bg-white text-black font-medium rounded hover:bg-gray-200 transition">Download PDF</a>
-</section>
+  <!-- About -->
+  <section id="about" class="mb-12 border-l-4 border-black pl-6">
+    <h3 class="text-2xl font-bold uppercase mb-2">What is BrelseLang?</h3>
+    <p class="text-base leading-relaxed">
+      BrelseLang is a raw, physical coding language combining braille’s dots and morse’s dashes. 
+      It's designed to be touched, pulsed, or printed – used in war zones, smart fabrics, or silent messaging systems. 
+      No GUI. No voice. Just universal sensation.
+    </p>
+  </section>
 
-<!-- FOUNDER -->
-<section id="founder" class="max-w-4xl mx-auto px-6 py-24 border-t border-neutral-800">
-  <h3 class="text-2xl font-semibold mb-4">Founder</h3>
-  <p class="text-neutral-300 text-lg leading-relaxed">
-    BrelseLang is led by Shankar Kumar, a designer-turned-technologist focused on building tactile systems for security, accessibility, and future computation. Driven by the idea that communication shouldn't need screens or sound.
-  </p>
-</section>
+  <!-- Download Paper -->
+  <section id="paper" class="text-center mb-12">
+    <a href="/docs/brelselang_research_paper.pdf" target="_blank"
+       class="bg-black text-white px-8 py-3 uppercase font-bold tracking-wider border-2 border-black hover:bg-white hover:text-black transition-all">
+      Read Full Research Paper
+    </a>
+  </section>
 
-<!-- FOOTER -->
-<footer class="border-t border-neutral-800 text-sm text-neutral-500 px-6 py-12 text-center space-y-6">
-  <div class="space-x-4">
-    <a href="#about" class="hover:text-white">About</a>
-    <a href="#features" class="hover:text-white">Features</a>
-    <a href="#paper" class="hover:text-white">Paper</a>
-    <a href="#founder" class="hover:text-white">Founder</a>
-    <a href="mailto:contact@breslelang.org" class="hover:text-white">Contact</a>
-  </div>
-  <div class="space-x-4 text-xs">
-    <a href="https://github.com/brelse-lang" class="hover:text-white">GitHub</a>
-    <a href="#" class="hover:text-white">LinkedIn</a>
-    <a href="#" class="hover:text-white">Twitter</a>
-  </div>
-  <p class="mt-6">&copy; 2025 BrelseLang. Built to be Felt.</p>
-</footer>
+  <!-- Footer -->
+  <footer class="text-xs border-t-2 border-black pt-6 text-center uppercase">
+    &copy; 2025 BrelseLang. Built to be felt.
+  </footer>
 
 </body>
 </html>
