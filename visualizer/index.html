@@ -2,50 +2,66 @@
 <html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BrelseLang Visualizer</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    .dot { width: 16px; height: 16px; border-radius: 50%; background: #333; display: inline-block; margin: 2px; }
-    .empty { background: #ccc; }
-    .morse-dot, .morse-dash {
-      display: inline-block;
-      margin: 4px;
-      border-radius: 4px;
+    body {
+      font-family: 'Inter', sans-serif;
     }
-    .morse-dot { width: 10px; height: 10px; background-color: #0f0f0f; }
-    .morse-dash { width: 30px; height: 10px; background-color: #6366f1; }
+    .dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 9999px;
+      display: inline-block;
+      margin: 2px;
+      animation: pop 0.4s ease;
+    }
+    .dot.filled {
+      background-color: black;
+    }
+    .dot.empty {
+      background-color: #d1d5db;
+    }
+    .dash {
+      display: inline-block;
+      margin: 2px;
+      font-size: 18px;
+      animation: fade 0.5s ease;
+    }
+    @keyframes pop {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes fade {
+      0% { opacity: 0; transform: translateY(5px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
-<body class="bg-white text-black font-sans">
+<body class="bg-white text-black px-4 py-8 max-w-3xl mx-auto">
+  <h1 class="text-3xl font-bold mb-6">BrelseLang Visualizer</h1>
 
-  <!-- HEADER -->
-  <header class="px-6 py-4 border-b border-gray-300 flex items-center justify-between">
-    <h1 class="text-xl font-bold">BrelseLang Visualizer</h1>
-  </header>
+  <div class="mb-4">
+    <label class="block font-semibold mb-1">Enter text to visualize:</label>
+    <textarea id="inputText" rows="3" class="w-full p-3 border rounded" placeholder="Type something..."></textarea>
+  </div>
 
-  <!-- MAIN -->
-  <main class="max-w-3xl mx-auto px-6 py-10 space-y-12">
-    <!-- Input -->
-    <section>
-      <label for="inputText" class="block font-medium mb-2">Enter text to visualize:</label>
-      <textarea id="inputText" rows="3" class="w-full p-3 border rounded mb-4" placeholder="Type something like hello..."></textarea>
-      <button onclick="visualize()" class="px-4 py-2 bg-black text-white rounded">Visualize</button>
-    </section>
+  <div class="mb-4 flex flex-wrap items-center gap-4">
+    <button onclick="visualize()" class="px-4 py-2 bg-black text-white rounded">Visualize</button>
+    <button onclick="playMorse()" class="px-4 py-2 border rounded">🔊 Play Morse</button>
+    <div>
+      <label class="mr-2 font-medium">View:</label>
+      <select id="viewToggle" class="border rounded p-1">
+        <option value="both">Braille + Morse</option>
+        <option value="braille">Braille Only</option>
+        <option value="morse">Morse Only</option>
+      </select>
+    </div>
+  </div>
 
-    <!-- Output -->
-    <section>
-      <h2 class="text-xl font-semibold mb-4">Visualization Output</h2>
-      <div id="output" class="space-y-6"></div>
-    </section>
-  </main>
+  <div id="output" class="space-y-6"></div>
 
-  <!-- FOOTER -->
-  <footer class="text-center text-gray-500 text-sm py-6 border-t">
-    &copy; 2025 BrelseLang — Visualizing Tactile Language
-  </footer>
-
-  <!-- SCRIPT -->
   <script>
     const brailleMap = {
       a: "100000", b: "101000", c: "110000", d: "110100", e: "100100",
@@ -66,47 +82,83 @@
     };
 
     function visualize() {
-      const input = document.getElementById("inputText").value.toLowerCase();
+      const text = document.getElementById("inputText").value.toLowerCase();
+      const viewMode = document.getElementById("viewToggle").value;
       const output = document.getElementById("output");
       output.innerHTML = "";
 
-      for (let ch of input) {
-        const braille = brailleMap[ch] || "000000";
+      for (let ch of text) {
+        const braille = brailleMap[ch] || "------";
         const morse = morseMap[ch] || "?";
 
-        const charBlock = document.createElement("div");
-        charBlock.className = "border p-4 rounded bg-gray-50";
+        const container = document.createElement("div");
+        container.className = "p-4 rounded border bg-gray-50";
 
-        // Label
         const label = document.createElement("div");
-        label.className = "mb-2 font-semibold";
-        label.innerText = `${ch.toUpperCase()} → Braille + Morse`;
-        charBlock.appendChild(label);
+        label.innerHTML = `<strong>${ch.toUpperCase()}</strong> → ${viewMode === 'both' ? 'Braille + Morse' : viewMode === 'braille' ? 'Braille Only' : 'Morse Only'}`;
+        label.className = "mb-2";
+        container.appendChild(label);
 
-        // Braille Grid (2x3)
-        const brailleGrid = document.createElement("div");
-        brailleGrid.className = "grid grid-cols-2 gap-1 w-max mb-2";
-        for (let i = 0; i < 6; i++) {
-          const dot = document.createElement("span");
-          dot.className = "dot " + (braille[i] === "1" ? "" : "empty");
-          brailleGrid.appendChild(dot);
+        if (viewMode !== "morse") {
+          // Braille
+          const brailleDots = document.createElement("div");
+          for (let i = 0; i < 6; i++) {
+            const dot = document.createElement("span");
+            dot.className = "dot " + (braille[i] === "1" ? "filled" : "empty");
+            brailleDots.appendChild(dot);
+            if (i % 2 === 1) brailleDots.appendChild(document.createElement("br"));
+          }
+          container.appendChild(brailleDots);
         }
-        charBlock.appendChild(brailleGrid);
 
-        // Morse visualization
-        const morseContainer = document.createElement("div");
-        for (let m of morse) {
-          const el = document.createElement("span");
-          if (m === ".") el.className = "morse-dot";
-          else if (m === "-") el.className = "morse-dash";
-          else el.style.marginRight = "8px"; // for gaps
-          morseContainer.appendChild(el);
+        if (viewMode !== "braille") {
+          // Morse
+          const morseDisplay = document.createElement("div");
+          for (let symbol of morse) {
+            const dash = document.createElement("span");
+            dash.className = "dash";
+            dash.textContent = symbol === "." ? "•" : symbol === "-" ? "–" : "/";
+            morseDisplay.appendChild(dash);
+          }
+          morseDisplay.className += " mt-2";
+          container.appendChild(morseDisplay);
         }
-        charBlock.appendChild(morseContainer);
 
-        output.appendChild(charBlock);
+        output.appendChild(container);
+      }
+    }
+
+    function playMorse() {
+      const text = document.getElementById("inputText").value.toLowerCase();
+      const context = new AudioContext();
+      let time = context.currentTime;
+
+      const unit = 0.15; // duration of dot
+      const frequency = 600;
+
+      function playBeep(duration) {
+        const osc = context.createOscillator();
+        const gain = context.createGain();
+        osc.connect(gain);
+        gain.connect(context.destination);
+        osc.frequency.value = frequency;
+        gain.gain.setValueAtTime(1, time);
+        gain.gain.exponentialRampToValueAtTime(0.0001, time + duration);
+        osc.start(time);
+        osc.stop(time + duration);
+        time += duration + 0.05;
+      }
+
+      for (let ch of text) {
+        const code = morseMap[ch] || "";
+        for (let symbol of code) {
+          if (symbol === ".") playBeep(unit);
+          else if (symbol === "-") playBeep(unit * 3);
+          else if (symbol === "/") time += unit * 4;
+        }
+        time += unit * 2;
       }
     }
   </script>
 </body>
-  </html>
+</html>
