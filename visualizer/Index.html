@@ -1,1 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BrelseLang Visualizer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .dot { width: 16px; height: 16px; border-radius: 50%; background: #333; display: inline-block; margin: 2px; }
+    .empty { background: #ccc; }
+    .morse-dot, .morse-dash {
+      display: inline-block;
+      margin: 4px;
+      border-radius: 4px;
+    }
+    .morse-dot { width: 10px; height: 10px; background-color: #0f0f0f; }
+    .morse-dash { width: 30px; height: 10px; background-color: #6366f1; }
+  </style>
+</head>
+<body class="bg-white text-black font-sans">
 
+  <!-- HEADER -->
+  <header class="px-6 py-4 border-b border-gray-300 flex items-center justify-between">
+    <h1 class="text-xl font-bold">BrelseLang Visualizer</h1>
+  </header>
+
+  <!-- MAIN -->
+  <main class="max-w-3xl mx-auto px-6 py-10 space-y-12">
+    <!-- Input -->
+    <section>
+      <label for="inputText" class="block font-medium mb-2">Enter text to visualize:</label>
+      <textarea id="inputText" rows="3" class="w-full p-3 border rounded mb-4" placeholder="Type something like hello..."></textarea>
+      <button onclick="visualize()" class="px-4 py-2 bg-black text-white rounded">Visualize</button>
+    </section>
+
+    <!-- Output -->
+    <section>
+      <h2 class="text-xl font-semibold mb-4">Visualization Output</h2>
+      <div id="output" class="space-y-6"></div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="text-center text-gray-500 text-sm py-6 border-t">
+    &copy; 2025 BrelseLang — Visualizing Tactile Language
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    const brailleMap = {
+      a: "100000", b: "101000", c: "110000", d: "110100", e: "100100",
+      f: "111000", g: "111100", h: "101100", i: "011000", j: "011100",
+      k: "100010", l: "101010", m: "110010", n: "110110", o: "100110",
+      p: "111010", q: "111110", r: "101110", s: "011010", t: "011110",
+      u: "100011", v: "101011", w: "011101", x: "110011", y: "110111", z: "100111",
+      ' ': "000000"
+    };
+
+    const morseMap = {
+      a: ".-", b: "-...", c: "-.-.", d: "-..", e: ".",
+      f: "..-.", g: "--.", h: "....", i: "..", j: ".---",
+      k: "-.-", l: ".-..", m: "--", n: "-.", o: "---",
+      p: ".--.", q: "--.-", r: ".-.", s: "...", t: "-",
+      u: "..-", v: "...-", w: ".--", x: "-..-", y: "-.--", z: "--..",
+      ' ': "/"
+    };
+
+    function visualize() {
+      const input = document.getElementById("inputText").value.toLowerCase();
+      const output = document.getElementById("output");
+      output.innerHTML = "";
+
+      for (let ch of input) {
+        const braille = brailleMap[ch] || "000000";
+        const morse = morseMap[ch] || "?";
+
+        const charBlock = document.createElement("div");
+        charBlock.className = "border p-4 rounded bg-gray-50";
+
+        // Label
+        const label = document.createElement("div");
+        label.className = "mb-2 font-semibold";
+        label.innerText = `${ch.toUpperCase()} → Braille + Morse`;
+        charBlock.appendChild(label);
+
+        // Braille Grid (2x3)
+        const brailleGrid = document.createElement("div");
+        brailleGrid.className = "grid grid-cols-2 gap-1 w-max mb-2";
+        for (let i = 0; i < 6; i++) {
+          const dot = document.createElement("span");
+          dot.className = "dot " + (braille[i] === "1" ? "" : "empty");
+          brailleGrid.appendChild(dot);
+        }
+        charBlock.appendChild(brailleGrid);
+
+        // Morse visualization
+        const morseContainer = document.createElement("div");
+        for (let m of morse) {
+          const el = document.createElement("span");
+          if (m === ".") el.className = "morse-dot";
+          else if (m === "-") el.className = "morse-dash";
+          else el.style.marginRight = "8px"; // for gaps
+          morseContainer.appendChild(el);
+        }
+        charBlock.appendChild(morseContainer);
+
+        output.appendChild(charBlock);
+      }
+    }
+  </script>
+</body>
+        </html>
