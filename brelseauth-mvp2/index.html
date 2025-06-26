@@ -3,111 +3,131 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>BrelseAuth – Tactile OTP Verification</title>
+  <title>BrelseAuth – Tactile Authentication</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Inter', sans-serif; }
+    body {
+      background-color: #f9f8f6;
+      font-family: 'Inter', sans-serif;
+    }
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+    }
+    .dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      margin: 4px;
+      display: inline-block;
+      background-color: #ddd;
+      cursor: pointer;
+    }
+    .dot.active {
+      background-color: black;
+    }
   </style>
 </head>
-<body class="bg-gray-100 text-black px-6 py-10 max-w-xl mx-auto">
+<body class="min-h-screen flex flex-col justify-center items-center px-4 text-center text-[#1a1a1a]">
 
-  <h1 class="text-3xl font-bold mb-6 text-center">🔐 BrelseAuth</h1>
+  <h1 class="text-4xl font-bold mb-2">🔐 BrelseAuth</h1>
+  <p class="text-lg mb-6">Tactile Authentication Demo</p>
 
-  <!-- OTP Generator -->
-  <section class="mb-8">
-    <h2 class="text-xl font-semibold mb-2">1. Generate OTP</h2>
-    <button onclick="generateOTP()" class="bg-black text-white px-4 py-2 rounded">Generate</button>
-    <div id="generatedOutput" class="mt-4 p-3 bg-white rounded border font-mono"></div>
-    <button onclick="playMorse()" class="mt-2 text-sm underline">🔊 Play Morse</button>
-  </section>
+  <div class="bg-white shadow-md rounded-lg p-6 w-full max-w-md border border-gray-200">
+    <h2 class="text-xl font-semibold mb-4">Tap your code to unlock</h2>
 
-  <!-- OTP Verification -->
-  <section>
-    <h2 class="text-xl font-semibold mb-2">2. Enter Received Code</h2>
-    <input id="userInput" type="text" class="w-full p-3 rounded border font-mono" placeholder="Enter BrelseLang OTP here...">
-    <button onclick="verifyCode()" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded">Verify</button>
-    <div id="result" class="mt-4 font-semibold"></div>
-  </section>
+    <!-- Mode Toggle -->
+    <div class="mb-4">
+      <label for="mode" class="font-medium mr-2">Mode:</label>
+      <select id="mode" class="border border-gray-300 rounded px-2 py-1" onchange="toggleInput()">
+        <option value="braille">Braille</option>
+        <option value="morse">Morse</option>
+        <option value="hybrid">Hybrid</option>
+      </select>
+    </div>
+
+    <!-- Braille Grid -->
+    <div id="brailleInput" class="mb-4 grid grid-cols-3 gap-2 justify-center">
+      <div class="dot" onclick="toggleDot(0)"></div>
+      <div class="dot" onclick="toggleDot(1)"></div>
+      <div class="dot" onclick="toggleDot(2)"></div>
+      <div class="dot" onclick="toggleDot(3)"></div>
+      <div class="dot" onclick="toggleDot(4)"></div>
+      <div class="dot" onclick="toggleDot(5)"></div>
+    </div>
+
+    <!-- Morse Buttons -->
+    <div id="morseInput" class="mb-4 hidden">
+      <button onclick="addMorse('.')" class="px-3 py-1 rounded bg-gray-800 text-white mx-1">•</button>
+      <button onclick="addMorse('-')" class="px-3 py-1 rounded bg-gray-800 text-white mx-1">–</button>
+      <button onclick="confirmMorseChar()" class="px-3 py-1 rounded bg-gray-500 text-white mx-1">⏎</button>
+      <p class="mt-2 text-sm text-gray-600">Current: <span id="morseBuffer"></span></p>
+    </div>
+
+    <!-- Set & Verify -->
+    <button onclick="setPasscode()" class="mt-4 w-full bg-black text-white rounded py-2 font-semibold">Set Passcode</button>
+    <input type="text" id="verifyInput" class="mt-4 w-full border rounded p-2 text-center" placeholder="Enter Code to Verify"/>
+    <button onclick="verifyCode()" class="mt-3 w-full bg-gray-900 text-white rounded py-2 font-semibold">Verify</button>
+
+    <p id="resultMsg" class="mt-3 text-sm font-medium"></p>
+  </div>
 
   <script>
-    const morseMap = {
-      a: ".-", b: "-...", c: "-.-.", d: "-..", e: ".", f: "..-.", g: "--.",
-      h: "....", i: "..", j: ".---", k: "-.-", l: ".-..", m: "--", n: "-.",
-      o: "---", p: ".--.", q: "--.-", r: ".-.", s: "...", t: "-", u: "..-",
-      v: "...-", w: ".--", x: "-..-", y: "-.--", z: "--..", '0': "-----",
-      '1': ".----", '2': "..---", '3': "...--", '4': "....-", '5': ".....",
-      '6': "-....", '7': "--...", '8': "---..", '9': "----.", ' ': "/"
-    };
+    let brailleState = [0, 0, 0, 0, 0, 0];
+    let morseSequence = '';
+    let morseBuffer = '';
+    let storedCode = '';
 
-    let generatedCode = "";
-
-    function generateOTP() {
-      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-      let text = "";
-      for (let i = 0; i < 6; i++) {
-        text += chars[Math.floor(Math.random() * chars.length)];
-      }
-
-      generatedCode = text;
-      let output = "";
-      for (let ch of text.toLowerCase()) {
-        output += `${ch.toUpperCase()}: ${morseMap[ch] || "?"}\n`;
-      }
-
-      document.getElementById("generatedOutput").innerText = output;
+    function toggleDot(index) {
+      brailleState[index] = brailleState[index] === 1 ? 0 : 1;
+      document.querySelectorAll('#brailleInput .dot')[index].classList.toggle('active');
     }
 
-    function playMorse() {
-      const text = generatedCode.toLowerCase();
-      if (!text) return alert("Please generate OTP first.");
-      const context = new AudioContext();
-      let time = context.currentTime;
-      const unit = 0.15;
-      const freq = 600;
+    function addMorse(symbol) {
+      morseBuffer += symbol;
+      document.getElementById('morseBuffer').textContent = morseBuffer;
+    }
 
-      function beep(duration) {
-        const osc = context.createOscillator();
-        const gain = context.createGain();
-        osc.connect(gain);
-        gain.connect(context.destination);
-        osc.frequency.value = freq;
-        gain.gain.setValueAtTime(1, time);
-        gain.gain.exponentialRampToValueAtTime(0.0001, time + duration);
-        osc.start(time);
-        osc.stop(time + duration);
-        time += duration + 0.05;
-      }
+    function confirmMorseChar() {
+      morseSequence += morseBuffer + ' ';
+      morseBuffer = '';
+      document.getElementById('morseBuffer').textContent = '';
+    }
 
-      for (let ch of text) {
-        const code = morseMap[ch] || "";
-        for (let symbol of code) {
-          if (symbol === ".") beep(unit);
-          else if (symbol === "-") beep(unit * 3);
-          else if (symbol === "/") time += unit * 4;
-        }
-        time += unit * 2;
+    function setPasscode() {
+      const mode = document.getElementById('mode').value;
+      if (mode === 'braille') {
+        storedCode = brailleState.join('');
+      } else if (mode === 'morse') {
+        storedCode = morseSequence.trim();
+        morseSequence = '';
+      } else {
+        storedCode = brailleState.join('') + ' | ' + morseSequence.trim();
+        morseSequence = '';
       }
+      document.getElementById('resultMsg').textContent = "✔️ Passcode set!";
+      document.getElementById('resultMsg').classList.remove('text-red-500');
+      document.getElementById('resultMsg').classList.add('text-green-600');
     }
 
     function verifyCode() {
-      const userInput = document.getElementById("userInput").value.trim().toUpperCase();
-      const result = document.getElementById("result");
-
-      if (!generatedCode) {
-        result.innerText = "❗ Generate an OTP first.";
-        result.className = "text-red-600 mt-4 font-semibold";
-        return;
-      }
-
-      if (userInput === generatedCode) {
-        result.innerText = "✅ Code Verified!";
-        result.className = "text-green-600 mt-4 font-semibold";
+      const input = document.getElementById('verifyInput').value.trim();
+      if (input === storedCode) {
+        document.getElementById('resultMsg').textContent = "✅ Access Granted!";
+        document.getElementById('resultMsg').classList.remove('text-red-500');
+        document.getElementById('resultMsg').classList.add('text-green-600');
       } else {
-        result.innerText = "❌ Incorrect Code.";
-        result.className = "text-red-600 mt-4 font-semibold";
+        document.getElementById('resultMsg').textContent = "❌ Incorrect Code.";
+        document.getElementById('resultMsg').classList.remove('text-green-600');
+        document.getElementById('resultMsg').classList.add('text-red-500');
       }
     }
-  </script>
 
+    function toggleInput() {
+      const mode = document.getElementById('mode').value;
+      document.getElementById('brailleInput').style.display = mode === 'morse' ? 'none' : 'grid';
+      document.getElementById('morseInput').style.display = mode === 'braille' ? 'none' : 'block';
+    }
+  </script>
 </body>
-  </html>
+</html>
