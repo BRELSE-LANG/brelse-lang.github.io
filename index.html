@@ -1,586 +1,3 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BrelseLang – From Dots to Data</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <style>
-    html, body {
-      scroll-behavior: smooth;
-      font-family: 'Inter', sans-serif;
-    }
-    
-    h1, h2, h3, h4 {
-      font-family: 'Space Grotesk', sans-serif;
-    }
-    
-    :root {
-      --primary-red: #E53935;
-      --secondary-red: #D32F2F;
-      --accent-red: #FF5722;
-      --light-red: #FFEBEE;
-      --dark-red: #C62828;
-    }
-    
-    .bg-primary {
-      background-color: var(--primary-red);
-    }
-    
-    .bg-secondary {
-      background-color: var(--secondary-red);
-    }
-    
-    .card {
-      background: rgba(255, 255, 255, 0.98);
-      border-radius: 1rem;
-      box-shadow: 0 10px 40px rgba(229, 57, 53, 0.15);
-      padding: 2rem;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      border: 1px solid rgba(229, 57, 53, 0.1);
-    }
-    
-    .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 60px rgba(229, 57, 53, 0.25);
-    }
-    
-    .btn-primary {
-      background: rgba(255, 255, 255, 0.2);
-      color: white;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      backdrop-filter: blur(10px);
-      transition: all 0.3s ease;
-      font-weight: 500;
-    }
-    
-    .btn-primary:hover {
-      background: rgba(255, 255, 255, 0.9);
-      color: var(--primary-red);
-      border-color: rgba(255, 255, 255, 0.9);
-      transform: translateY(-2px);
-    }
-    
-    .btn-secondary {
-      background: transparent;
-      color: white;
-      border: 2px solid white;
-      transition: all 0.3s ease;
-      font-weight: 500;
-    }
-    
-    .btn-secondary:hover {
-      background: white;
-      color: var(--primary-red);
-      transform: translateY(-2px);
-    }
-    
-    .floating {
-      animation: float 3s ease-in-out infinite;
-    }
-    
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-    }
-    
-    .hero-text {
-      font-size: clamp(3rem, 8vw, 8rem);
-      font-weight: 700;
-      line-height: 0.9;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-    }
-    
-    .gradient-text {
-      background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.8) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    
-    .interactive-dot {
-      width: 16px;
-      height: 16px;
-      background: white;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-    }
-    
-    .interactive-dot:hover {
-      transform: scale(1.3);
-      background: var(--accent-red);
-      border-color: white;
-      box-shadow: 0 0 20px rgba(255, 87, 34, 0.6);
-    }
-    
-    .braille-pattern {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      width: 50px;
-      height: 75px;
-      margin: 0 auto;
-    }
-    
-    .navbar-blur {
-      backdrop-filter: blur(20px);
-      background: rgba(229, 57, 53, 0.95);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .typewriter {
-      overflow: hidden;
-      border-right: 3px solid white;
-      white-space: nowrap;
-      animation: typewriter 3s steps(40) 1s forwards, blink 1s infinite;
-      width: 0;
-    }
-    
-    @keyframes typewriter {
-      to { width: 100%; }
-    }
-    
-    @keyframes blink {
-      50% { border-color: transparent; }
-    }
-    
-    .section-red {
-      background: linear-gradient(135deg, var(--primary-red) 0%, var(--secondary-red) 100%);
-    }
-    
-    .section-light {
-      background: linear-gradient(135deg, #ffffff 0%, var(--light-red) 100%);
-    }
-    
-    .icon-bounce {
-      animation: bounce 2s infinite;
-    }
-    
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-    
-    .text-shadow {
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-    }
-    
-    @media (max-width: 768px) {
-      .hero-text {
-        font-size: clamp(2.5rem, 12vw, 4rem);
-      }
-    }
-  </style>
-</head>
-<body class="bg-white text-gray-900 overflow-x-hidden">
-
-<!-- NAVIGATION -->
-<nav class="navbar-blur fixed top-0 left-0 right-0 z-50 px-6 py-4 transition-all duration-300" id="navbar">
-  <div class="max-w-7xl mx-auto flex items-center justify-between">
-    <span class="text-2xl font-bold tracking-tight text-white floating">BRELSELANG</span>
-    
-    <!-- Desktop Menu -->
-    <div class="hidden md:flex space-x-8">
-      <a href="#hero" class="text-white hover:text-red-200 transition-colors duration-300 font-medium">Home</a>
-      <a href="#about" class="text-white hover:text-red-200 transition-colors duration-300 font-medium">About</a>
-      <a href="#services" class="text-white hover:text-red-200 transition-colors duration-300 font-medium">Services</a>
-      <a href="#mvp" class="text-white hover:text-red-200 transition-colors duration-300 font-medium">MVP Dashboard</a>
-      <a href="#contact" class="text-white hover:text-red-200 transition-colors duration-300 font-medium">Contact</a>
-    </div>
-    
-    <!-- Mobile Menu Button -->
-    <button class="md:hidden p-2" id="mobile-menu-btn">
-      <i data-lucide="menu" class="w-6 h-6 text-white"></i>
-    </button>
-  </div>
-  
-  <!-- Mobile Menu -->
-  <div class="md:hidden mt-4 space-y-2 hidden" id="mobile-menu">
-    <a href="#hero" class="block px-4 py-2 text-white hover:bg-red-600 rounded-lg transition-colors">Home</a>
-    <a href="#about" class="block px-4 py-2 text-white hover:bg-red-600 rounded-lg transition-colors">About</a>
-    <a href="#services" class="block px-4 py-2 text-white hover:bg-red-600 rounded-lg transition-colors">Services</a>
-    <a href="#mvp" class="block px-4 py-2 text-white hover:bg-red-600 rounded-lg transition-colors">MVP Dashboard</a>
-    <a href="#contact" class="block px-4 py-2 text-white hover:bg-red-600 rounded-lg transition-colors">Contact</a>
-  </div>
-</nav>
-
-<!-- HERO SECTION -->
-<section class="section-red text-white text-center min-h-screen flex flex-col justify-center px-6 relative overflow-hidden" id="hero">
-  <!-- Background Pattern -->
-  <div class="absolute inset-0 opacity-10">
-    <div class="absolute top-10 left-10 w-2 h-2 bg-white rounded-full animate-pulse"></div>
-    <div class="absolute top-20 right-20 w-3 h-3 bg-white rounded-full animate-pulse" style="animation-delay: 1s;"></div>
-    <div class="absolute bottom-20 left-1/4 w-2 h-2 bg-white rounded-full animate-pulse" style="animation-delay: 2s;"></div>
-    <div class="absolute bottom-10 right-1/3 w-3 h-3 bg-white rounded-full animate-pulse" style="animation-delay: 0.5s;"></div>
-  </div>
-  
-  <div class="max-w-6xl mx-auto relative z-10">
-    <div class="floating mb-8">
-      <h1 class="hero-text gradient-text mb-6" data-aos="fade-up">
-        BrelseLang
-      </h1>
-    </div>
-    
-    <div class="max-w-3xl mx-auto">
-      <div class="typewriter text-2xl md:text-3xl mb-12 font-light inline-block" data-aos="fade-up" data-aos-delay="500">
-        Empower your creativity with BrelseLang
-      </div>
-    </div>
-    
-    <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16" data-aos="fade-up" data-aos-delay="1000">
-      <button class="btn-primary px-8 py-4 text-lg rounded-full font-semibold min-w-[160px]">
-        Get Started
-      </button>
-      <button class="btn-secondary px-8 py-4 text-lg rounded-full font-semibold min-w-[160px]" onclick="scrollToMVP()">
-        Try MVP Dashboard
-      </button>
-    </div>
-    
-    <!-- Interactive Braille Pattern -->
-    <div class="mt-16" data-aos="fade-up" data-aos-delay="1200">
-      <p class="text-lg mb-8 text-red-100">Experience Tactile Computing</p>
-      <div class="flex justify-center space-x-12">
-        <div class="braille-pattern" id="braille-demo">
-          <div class="interactive-dot" data-dot="1"></div>
-          <div class="interactive-dot" data-dot="2"></div>
-          <div class="interactive-dot" data-dot="3"></div>
-          <div class="interactive-dot" data-dot="4"></div>
-          <div class="interactive-dot" data-dot="5"></div>
-          <div class="interactive-dot" data-dot="6"></div>
-        </div>
-      </div>
-      <p class="text-sm text-red-200 mt-6">Click the dots to explore patterns</p>
-    </div>
-  </div>
-</section>
-
-<!-- FEATURES SECTION -->
-<section class="section-light py-20 px-6" id="services" data-aos="fade-up">
-  <div class="max-w-7xl mx-auto">
-    <h2 class="text-5xl font-bold text-center mb-6 text-red-600">Our Services</h2>
-    <p class="text-xl text-center mb-16 text-gray-600 max-w-3xl mx-auto">
-      Revolutionary tactile computing solutions for the future
-    </p>
-    
-    <div class="grid md:grid-cols-3 gap-8">
-      <div class="card text-center group" data-aos="fade-up" data-aos-delay="100">
-        <div class="icon-bounce mb-6">
-          <i data-lucide="shield" class="w-16 h-16 mx-auto text-red-500"></i>
-        </div>
-        <h3 class="font-bold text-2xl mb-4 text-red-600">Cybersecurity</h3>
-        <p class="text-gray-700 text-lg leading-relaxed">
-          Revolutionary hybrid language enabling secure, tactile communication impossible to intercept digitally
-        </p>
-      </div>
-      
-      <div class="card text-center group" data-aos="fade-up" data-aos-delay="200">
-        <div class="icon-bounce mb-6" style="animation-delay: 0.5s;">
-          <i data-lucide="heart-handshake" class="w-16 h-16 mx-auto text-red-500"></i>
-        </div>
-        <h3 class="font-bold text-2xl mb-4 text-red-600">Assistive Technology</h3>
-        <p class="text-gray-700 text-lg leading-relaxed">
-          Breaking barriers with inclusive design that makes technology truly accessible to everyone
-        </p>
-      </div>
-      
-      <div class="card text-center group" data-aos="fade-up" data-aos-delay="300">
-        <div class="icon-bounce mb-6" style="animation-delay: 1s;">
-          <i data-lucide="cpu" class="w-16 h-16 mx-auto text-red-500"></i>
-        </div>
-        <h3 class="font-bold text-2xl mb-4 text-red-600">Tactile Computing</h3>
-        <p class="text-gray-700 text-lg leading-relaxed">
-          Next-generation interfaces that respond to touch, creating seamless human-machine interaction
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- MVP1 DASHBOARD SECTION -->
-<section class="py-20 px-6 bg-gray-50" id="mvp" data-aos="fade-up">
-  <div class="max-w-7xl mx-auto">
-    <div class="text-center mb-16">
-      <h2 class="text-5xl font-bold mb-6 text-red-600">Try Our MVP1 Dashboard</h2>
-      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-        Experience BrelseLang in action with our interactive encoder and decoder tools
-      </p>
-    </div>
-
-    <!-- MVP Dashboard Container -->
-    <div class="bg-white rounded-2xl shadow-xl border border-red-100 overflow-hidden">
-      <!-- MVP Header -->
-      <div class="bg-gradient-to-r from-red-500 to-red-600 text-white px-8 py-6">
-        <h3 class="text-2xl font-bold">BrelseLang Dashboard</h3>
-        <p class="text-red-100 mt-2">Convert between text and BrelseLang codes</p>
-      </div>
-
-      <!-- MVP Content -->
-      <div class="p-8 space-y-12">
-
-        <!-- ENCODER SECTION -->
-        <div id="encoder">
-          <div class="flex items-center gap-3 mb-6">
-            <i data-lucide="code" class="w-8 h-8 text-red-500"></i>
-            <h3 class="text-3xl font-semibold text-gray-800">Text to Brelse Encoder</h3>
-          </div>
-          
-          <div class="card bg-gray-50">
-            <form id="bresle-form" class="space-y-6">
-              <div>
-                <label for="message" class="block font-semibold mb-3 text-gray-700 text-lg">Enter Message to Encode:</label>
-                <textarea 
-                  id="message" 
-                  rows="4" 
-                  class="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-red-500 focus:outline-none transition-colors text-lg" 
-                  placeholder="Type your text here...">
-                </textarea>
-              </div>
-              
-              <div class="flex flex-wrap gap-6">
-                <label class="inline-flex items-center text-lg">
-                  <input type="checkbox" id="brailleOnly" class="mr-3 w-5 h-5 text-red-500 rounded focus:ring-red-500"> 
-                  <span class="font-medium">Braille Only</span>
-                </label>
-                <label class="inline-flex items-center text-lg">
-                  <input type="checkbox" id="morseOnly" class="mr-3 w-5 h-5 text-red-500 rounded focus:ring-red-500"> 
-                  <span class="font-medium">Morse Only</span>
-                </label>
-              </div>
-              
-              <button 
-                type="button" 
-                class="px-8 py-4 bg-red-500 hover:bg-red-600 text-white rounded-xl font-semibold text-lg transition-colors flex items-center gap-2"
-                onclick="convertToBrelse()">
-                <i data-lucide="play" class="w-5 h-5"></i>
-                Convert to Brelse Code
-              </button>
-            </form>
-            
-            <div id="output" class="mt-8 whitespace-pre-line text-sm font-mono bg-white p-6 rounded-xl border-2 border-gray-200 min-h-[100px]"></div>
-            
-            <div class="mt-6">
-              <button 
-                class="px-6 py-3 bg-gray-800 hover:bg-gray-900 text-white rounded-xl font-semibold flex items-center gap-2 transition-colors" 
-                onclick="downloadOutput()">
-                <i data-lucide="download" class="w-5 h-5"></i>
-                Download Output
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- DECODER SECTION -->
-        <div id="decoder">
-          <div class="flex items-center gap-3 mb-6">
-            <i data-lucide="decode" class="w-8 h-8 text-red-500"></i>
-            <h3 class="text-3xl font-semibold text-gray-800">Brelse to Text Decoder</h3>
-          </div>
-          
-          <div class="card bg-gray-50">
-            <textarea 
-              id="decoderInput" 
-              class="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-red-500 focus:outline-none transition-colors text-lg mb-6" 
-              rows="4" 
-              placeholder="Paste Brelse code here...">
-            </textarea>
-            
-            <button 
-              class="px-8 py-4 bg-red-500 hover:bg-red-600 text-white rounded-xl font-semibold text-lg transition-colors flex items-center gap-2 mb-6"
-              onclick="decodeFromBrelse()">
-              <i data-lucide="unlock" class="w-5 h-5"></i>
-              Decode to Text
-            </button>
-            
-            <div class="bg-white p-6 rounded-xl border-2 border-gray-200 min-h-[80px]">
-              <div id="decodedOutput" class="text-lg font-mono text-gray-800 mb-4"></div>
-              <button 
-                class="px-4 py-2 bg-gray-800 hover:bg-gray-900 text-white text-sm rounded-lg font-semibold flex items-center gap-2 transition-colors" 
-                onclick="copyDecodedText()">
-                <i data-lucide="copy" class="w-4 h-4"></i>
-                Copy Result
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- VISUALIZER SECTION -->
-        <div id="visualizer">
-          <div class="flex items-center gap-3 mb-6">
-            <i data-lucide="eye" class="w-8 h-8 text-red-500"></i>
-            <h3 class="text-3xl font-semibold text-gray-800">Live Code Visualizer</h3>
-          </div>
-          
-          <div class="card bg-gray-50">
-            <div class="w-full h-48 border-2 border-dashed border-gray-300 rounded-xl bg-white flex flex-col items-center justify-center text-gray-500">
-              <i data-lucide="monitor" class="w-16 h-16 mb-4 text-gray-400"></i>
-              <p class="text-lg font-medium">Advanced Visualization Coming Soon</p>
-              <p class="text-sm mt-2">Real-time pattern visualization and analysis</p>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- MVP Features -->
-    <div class="grid md:grid-cols-3 gap-8 mt-16">
-      <div class="text-center" data-aos="fade-up" data-aos-delay="100">
-        <div class="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-          <i data-lucide="zap" class="w-8 h-8 text-red-500"></i>
-        </div>
-        <h4 class="font-semibold text-xl mb-2 text-gray-800">Real-time Conversion</h4>
-        <p class="text-gray-600">Instantly convert between text and BrelseLang patterns</p>
-      </div>
-      
-      <div class="text-center" data-aos="fade-up" data-aos-delay="200">
-        <div class="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-          <i data-lucide="download" class="w-8 h-8 text-red-500"></i>
-        </div>
-        <h4 class="font-semibold text-xl mb-2 text-gray-800">Export Ready</h4>
-        <p class="text-gray-600">Download encoded results for external use</p>
-      </div>
-      
-      <div class="text-center" data-aos="fade-up" data-aos-delay="300">
-        <div class="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-          <i data-lucide="settings" class="w-8 h-8 text-red-500"></i>
-        </div>
-        <h4 class="font-semibold text-xl mb-2 text-gray-800">Flexible Options</h4>
-        <p class="text-gray-600">Choose Braille-only or Morse-only encoding</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ABOUT SECTION -->
-<section class="section-light py-20 px-6" id="about" data-aos="fade-up">
-  <div class="max-w-5xl mx-auto">
-    <div class="card">
-      <h3 class="text-5xl font-bold mb-8 flex items-center gap-4 text-red-600">
-        <i data-lucide="lightbulb" class="w-12 h-12 text-red-500"></i> 
-        About BrelseLang
-      </h3>
-      <div class="prose prose-xl max-w-none">
-        <p class="text-gray-700 text-xl leading-relaxed mb-6">
-          BrelseLang represents a revolutionary approach to human-computer interaction, seamlessly blending the spatial intelligence of Braille with the temporal precision of Morse Code.
-        </p>
-        <p class="text-gray-700 text-lg leading-relaxed">
-          This groundbreaking tactile-first language opens new frontiers in assistive technology, cybersecurity, and inclusive design. 
-          By enabling users to <em class="text-red-600 font-semibold">feel</em> data directly, BrelseLang creates unprecedented opportunities for 
-          screenless computing, secure communications, and truly universal accessibility.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FEATURES GRID -->
-<section class="py-20 px-6 bg-gray-50" data-aos="fade-up">
-  <div class="max-w-7xl mx-auto">
-    <h3 class="text-5xl font-bold text-center mb-16 text-red-600">Key Features</h3>
-    <div class="grid md:grid-cols-3 gap-8">
-      <div class="card group" data-aos="fade-up" data-aos-delay="100">
-        <div class="mb-6">
-          <i data-lucide="grid-3x3" class="w-12 h-12 text-red-500 group-hover:scale-110 transition-transform"></i>
-        </div>
-        <h4 class="font-semibold text-xl mb-4 text-red-600">6-Dot Grid System</h4>
-        <p class="text-gray-700 leading-relaxed">Universal tactile structure based on Braille fundamentals, enabling intuitive spatial decoding and pattern recognition.</p>
-      </div>
-      
-      <div class="card group" data-aos="fade-up" data-aos-delay="200">
-        <div class="mb-6">
-          <i data-lucide="clock" class="w-12 h-12 text-red-500 group-hover:scale-110 transition-transform"></i>
-        </div>
-        <h4 class="font-semibold text-xl mb-4 text-red-600">Time Pulse Encoding</h4>
-        <p class="text-gray-700 leading-relaxed">Advanced Morse timing integration for sequential pattern-based messaging and sophisticated machine interfacing.</p>
-      </div>
-      
-      <div class="card group" data-aos="fade-up" data-aos-delay="300">
-        <div class="mb-6">
-          <i data-lucide="puzzle" class="w-12 h-12 text-red-500 group-hover:scale-110 transition-transform"></i>
-        </div>
-        <h4 class="font-semibold text-xl mb-4 text-red-600">Modular Integration</h4>
-        <p class="text-gray-700 leading-relaxed">Seamlessly integrate BrelseLang into wearables, haptic engines, drones, or cutting-edge neurotech interfaces.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA SECTION -->
-<section class="section-red text-white py-20 px-6" id="contact" data-aos="fade-up">
-  <div class="max-w-4xl mx-auto text-center">
-    <h2 class="text-5xl font-bold mb-8 text-shadow">Ready to Feel the Future?</h2>
-    <p class="text-xl mb-12 text-red-100">Join the tactile computing revolution and be part of the next evolution in human-machine interaction.</p>
-    
-    <div class="flex flex-col sm:flex-row gap-6 justify-center">
-      <button class="btn-primary px-8 py-4 text-lg rounded-full font-semibold min-w-[200px] flex items-center justify-center gap-3">
-        <i data-lucide="download" class="w-5 h-5"></i>
-        Get Started Now
-      </button>
-      <button onclick="scrollToMVP()" 
-              class="btn-secondary px-8 py-4 text-lg rounded-full font-semibold min-w-[200px] flex items-center justify-center gap-3">
-        <i data-lucide="play" class="w-5 h-5"></i>
-        Try MVP Dashboard
-      </button>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="bg-gray-900 text-white py-16 px-6">
-  <div class="max-w-7xl mx-auto">
-    <div class="grid md:grid-cols-4 gap-10 mb-12">
-      <div class="md:col-span-2">
-        <h4 class="font-bold text-3xl mb-6 text-red-400">BRELSELANG</h4>
-        <p class="text-gray-300 text-lg leading-relaxed mb-8">
-          Pioneering the future of tactile computing and inclusive technology design.
-        </p>
-        <div class="flex space-x-6">
-          <a href="#" class="text-gray-400 hover:text-red-400 transition-colors">
-            <i data-lucide="github" class="w-7 h-7"></i>
-          </a>
-          <a href="#" class="text-gray-400 hover:text-red-400 transition-colors">
-            <i data-lucide="linkedin" class="w-7 h-7"></i>
-          </a>
-          <a href="#" class="text-gray-400 hover:text-red-400 transition-colors">
-            <i data-lucide="twitter" class="w-7 h-7"></i>
-          </a>
-        </div>
-      </div>
-      
-      <div>
-        <h4 class="font-semibold text-lg mb-6 text-red-400">Company</h4>
-        <ul class="space-y-3 text-gray-300">
-          <li><a href="#about" class="hover:text-white transition-colors">About</a></li>
-          <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
-          <li><a href="#" class="hover:text-white transition-colors">Team</a></li>
-          <li><a href="#contact" class="hover:text-white transition-colors">Contact</a></li>
-        </ul>
-      </div>
-      
-      <div>
-        <h4 class="font-semibold text-lg mb-6 text-red-400">Resources</h4>
-        <ul class="space-y-3 text-gray-300">
-          <li><a href="#" class="hover:text-white transition-colors">Documentation</a></li>
-          <li><a href="#" class="hover:text-white transition-colors">Research</a></li>
-          <li><a href="#" class="hover:text-white transition-colors">Community</a></li>
-          <li><a href="#" class="hover:text-white transition-colors">Support</a></li>
-        </ul>
-      </div>
-    </div>
-    
-    <div class="text-center text-gray-400 pt-8 border-t border-gray-800">
-      <p class="text-lg">&copy; 2025 BrelseLang — Built to Be Felt.</p>
-    </div>
-  </div>
-</footer>
-
-<!-- SCRIPTS -->
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
   // Initialize AOS
   AOS.init({
@@ -601,6 +18,11 @@
     mobileMenu.classList.toggle('hidden');
   });
   
+  // Smooth scroll to MVP section
+  function scrollToMVP() {
+    document.getElementById("mvp").scrollIntoView({ behavior: "smooth" });
+  }
+
   // Interactive Braille demo
   const brailleDots = document.querySelectorAll('.interactive-dot');
   const activeDots = new Set();
@@ -618,176 +40,68 @@
         activeDots.add(dotNum);
         dot.style.background = '#FF5722';
         dot.style.transform = 'scale(1.3)';
-        dot.style.boxShadow = '0 0 20px rgba(255, 87, 34, 0.8)';
+        dot.style.boxShadow = '0 0 20px rgba(255, 87, 34, 0.6)';
       }
     });
   });
-  
-  // Demo converter
-  const demoInput = document.getElementById('demo-input');
-  const morseOutput = document.getElementById('morse-output');
-  const brailleOutput = document.getElementById('braille-output');
-  
-  const morseCode = {
-    'a': '.-', 'b': '-...', 'c': '-.-.', 'd': '-..', 'e': '.', 'f': '..-.',
-    'g': '--.', 'h': '....', 'i': '..', 'j': '.---', 'k': '-.-', 'l': '.-..',
-    'm': '--', 'n': '-.', 'o': '---', 'p': '.--.', 'q': '--.-', 'r': '.-.',
-    's': '...', 't': '-', 'u': '..-', 'v': '...-', 'w': '.--', 'x': '-..-',
-    'y': '-.--', 'z': '--..', '1': '.----', '2': '..---', '3': '...--',
-    '4': '....-', '5': '.....', '6': '-....', '7': '--...', '8': '---..',
-    '9': '----.', '0': '-----', ' ': '/'
-  };
-  
-  const brailleCode = {
-    'a': '⠁', 'b': '⠃', 'c': '⠉', 'd': '⠙', 'e': '⠑', 'f': '⠋', 'g': '⠛',
-    'h': '⠓', 'i': '⠊', 'j': '⠚', 'k': '⠅', 'l': '⠇', 'm': '⠍', 'n': '⠝',
-    'o': '⠕', 'p': '⠏', 'q': '⠟', 'r': '⠗', 's': '⠎', 't': '⠞', 'u': '⠥',
-    'v': '⠧', 'w': '⠺', 'x': '⠭', 'y': '⠽', 'z': '⠵', '1': '⠼⠁', '2': '⠼⠃',
-    '3': '⠼⠉', '4': '⠼⠙', '5': '⠼⠑', '6': '⠼⠋', '7': '⠼⠛', '8': '⠼⠓',
-    '9': '⠼⠊', '0': '⠼⠚', ' ': '⠀'
-  };
-  
-  function textToMorse(text) {
-    return text.toLowerCase().split('').map(char => morseCode[char] || '').join(' ');
-  }
-  
-  function textToBraille(text) {
-    return text.toLowerCase().split('').map(char => brailleCode[char] || '').join('');
-  }
-  
-  demoInput.addEventListener('input', (e) => {
-    const text = e.target.value;
-    const morse = textToMorse(text);
-    const braille = textToBraille(text);
-    
-    morseOutput.textContent = morse || 'Enter text to see Morse code...';
-    brailleOutput.textContent = braille || 'Enter text to see Braille...';
-  });
-  
-  // Smooth scroll function
-  function scrollToMVP() {
-    document.getElementById('mvp').scrollIntoView({ 
-      behavior: 'smooth',
-      block: 'center'
-    });
-  }
-  
-  // Original demo converter functions (for the simple demo)
-  const demoInput = document.getElementById('demo-input');
-  const morseOutput = document.getElementById('morse-output');
-  const brailleOutput = document.getElementById('braille-output');
-  
-  // MVP1 Dashboard Functions
-  const brailleMap = {
-    a: "100000", b: "101000", c: "110000", d: "110100", e: "100100",
-    f: "111000", g: "111100", h: "101100", i: "011000", j: "011100",
-    k: "100010", l: "101010", m: "110010", n: "110110", o: "100110",
-    p: "111010", q: "111110", r: "101110", s: "011010", t: "011110",
-    u: "100011", v: "101011", w: "011101", x: "110011", y: "110111", z: "100111",
-    ' ': "000000"
-  };
 
-  const morseMapMVP = {
-    a: ".-", b: "-...", c: "-.-.", d: "-..", e: ".",
-    f: "..-.", g: "--.", h: "....", i: "..", j: ".---",
-    k: "-.-", l: ".-..", m: "--", n: "-.", o: "---",
-    p: ".--.", q: "--.-", r: ".-.", s: "...", t: "-",
-    u: "..-", v: "...-", w: ".--", x: "-..-", y: "-.--", z: "--..",
-    ' ': "/"
-  };
-
+  // Encoder (mock logic for now)
   function convertToBrelse() {
-    const text = document.getElementById('message').value.toLowerCase();
-    const brailleOnly = document.getElementById('brailleOnly').checked;
-    const morseOnly = document.getElementById('morseOnly').checked;
-    let output = "";
+    const input = document.getElementById("message").value.trim();
+    const brailleOnly = document.getElementById("brailleOnly").checked;
+    const morseOnly = document.getElementById("morseOnly").checked;
+    const output = document.getElementById("output");
 
-    for (let ch of text) {
-      const braille = brailleMap[ch] || "------";
-      const morse = morseMapMVP[ch] || "?";
-      if (brailleOnly) {
-        output += `${ch.toUpperCase()}: ${braille}\n`;
-      } else if (morseOnly) {
-        output += `${ch.toUpperCase()}: ${morse}\n`;
-      } else {
-        output += `${ch.toUpperCase()}: ${braille} | ${morse}\n`;
-      }
-    }
-
-    document.getElementById("output").innerText = output;
-  }
-
-  function downloadOutput() {
-    const text = document.getElementById("output").innerText;
-    if (!text) {
-      alert('Please convert some text first!');
+    if (!input) {
+      output.innerText = "⚠️ Please enter a message first.";
       return;
     }
-    const blob = new Blob([text], { type: "text/plain" });
+
+    // Placeholder encoding logic
+    let result = "";
+    if (brailleOnly) {
+      result = "[Braille encoding of]: " + input;
+    } else if (morseOnly) {
+      result = "[Morse encoding of]: " + input;
+    } else {
+      result = "[Brelse hybrid encoding of]: " + input;
+    }
+
+    output.innerText = result;
+  }
+
+  // Download output
+  function downloadOutput() {
+    const outputText = document.getElementById("output").innerText;
+    if (!outputText) return;
+
+    const blob = new Blob([outputText], { type: "text/plain" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = "bresle_output.txt";
+    link.download = "bresle-output.txt";
     link.click();
   }
 
+  // Decoder (mock logic)
   function decodeFromBrelse() {
     const input = document.getElementById("decoderInput").value.trim();
+    const decodedOutput = document.getElementById("decodedOutput");
+
     if (!input) {
-      alert('Please enter some Brelse code to decode!');
+      decodedOutput.innerText = "⚠️ Please paste Brelse code first.";
       return;
     }
-    
-    const lines = input.split('\n');
-    let decoded = "";
 
-    const brailleReverse = Object.fromEntries(Object.entries(brailleMap).map(([k, v]) => [v, k]));
-    const morseReverse = Object.fromEntries(Object.entries(morseMapMVP).map(([k, v]) => [v, k]));
-
-    for (let line of lines) {
-      const parts = line.split(":");
-      if (parts.length >= 2) {
-        const code = parts[1].trim();
-        const [braille, morse] = code.includes("|") ? code.split("|").map(s => s.trim()) : [code.trim(), ""];
-        if (brailleReverse[braille]) decoded += brailleReverse[braille];
-        else if (morseReverse[morse]) decoded += morseReverse[morse];
-        else decoded += "?";
-      }
-    }
-
-    document.getElementById("decodedOutput").innerText = decoded.toUpperCase();
+    decodedOutput.innerText = "[Decoded text of]: " + input;
   }
 
+  // Copy decoded result
   function copyDecodedText() {
-    const decoded = document.getElementById("decodedOutput").innerText;
-    if (!decoded) {
-      alert('Nothing to copy! Please decode some text first.');
-      return;
-    }
+    const text = document.getElementById("decodedOutput").innerText;
+    if (!text) return;
     
-    navigator.clipboard.writeText(decoded).then(() => {
-      // Create a temporary success message
-      const button = event.target;
-      const originalText = button.innerHTML;
-      button.innerHTML = '<i data-lucide="check" class="w-4 h-4 mr-2"></i>Copied!';
-      button.classList.add('bg-green-600');
-      
-      setTimeout(() => {
-        button.innerHTML = originalText;
-        button.classList.remove('bg-green-600');
-        lucide.createIcons(); // Refresh icons
-      }, 2000);
-    }).catch(() => {
-      alert("Failed to copy to clipboard!");
+    navigator.clipboard.writeText(text).then(() => {
+      alert("✅ Result copied to clipboard!");
     });
   }
-  
-  // Loading animation
-  window.addEventListener('load', () => {
-    document.body.style.opacity = '1';
-  });
-  
-  document.body.style.opacity = '0';
-  document.body.style.transition = 'opacity 0.5s ease-in';
 </script>
-</body>
-  </html>
