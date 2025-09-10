@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BrelseLang – Our Team</title>
+  <meta name="description" content="Meet the BrelseLang team — innovators in tactile computing, accessibility, and cybersecurity.">
+  <meta name="theme-color" content="#E53935">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root{
+      --primary-red:#E53935;
+      --secondary-red:#D32F2F;
+      --accent-red:#FF5722;
+      --light-red:#FFEBEE;
+    }
+    html,body { font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+    .brelselang-font { font-family: 'Playfair Display', serif; }
+    :focus { outline: 3px solid rgba(229,57,53,0.16); outline-offset: 2px; }
+  </style>
+</head>
+<body class="bg-white text-gray-900">
+
+  <!-- NAV -->
+  <nav class="fixed top-0 left-0 right-0 z-50 navbar-blur bg-gradient-to-r from-[rgba(229,57,53,0.95)] to-[rgba(211,47,47,0.95)] backdrop-blur-md border-b border-white/10">
+    <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+      <a href="index.html" class="brelselang-font text-white text-2xl font-semibold tracking-tight" aria-label="BrelseLang home">BrelseLang</a>
+      <div class="flex items-center gap-6 text-white">
+        <a href="index.html#hero" class="hover:text-red-200">Home</a>
+        <a href="team.html" class="hover:text-red-200 font-semibold">Team</a>
+        <a href="index.html#contact" class="hover:text-red-200">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- TEAM PAGE HERO -->
+  <header class="min-h-[40vh] flex items-center justify-center bg-gradient-to-r from-[#E53935] to-[#D32F2F] text-white mt-16">
+    <h1 class="brelselang-font text-4xl md:text-6xl font-bold">Meet Our Team</h1>
+  </header>
+
+  <!-- TEAM MEMBERS -->
+  <section class="py-16 px-6 max-w-6xl mx-auto">
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="card p-6 bg-white rounded-xl shadow-md text-center">
+        <h4 class="text-xl font-semibold mb-1">Shankar Kumar</h4>
+        <p class="text-red-600 mb-2 text-sm">Founder & Developer</p>
+        <p class="text-gray-700 text-sm">
+          Designer turned deep-tech innovator. 7+ years in menswear design (NIFT Delhi alumnus). Creator of <span class="brelselang-font">BrelseLang</span> — building tactile authentication and assistive language systems.
+        </p>
+      </div>
+
+      <div class="card p-6 bg-white rounded-xl shadow-md text-center">
+        <h4 class="text-xl font-semibold mb-1">Future Team Members</h4>
+        <p class="text-gray-700 text-sm">
+          We are expanding the core team with engineers, UX researchers, and hardware integrators. Opportunities coming soon.
+        </p>
+      </div>
+
+      <div class="card p-6 bg-white rounded-xl shadow-md text-center">
+        <h4 class="text-xl font-semibold mb-1">Advisory Board</h4>
+        <p class="text-gray-700 text-sm">
+          Advisors in cybersecurity, accessibility, and defense — guiding BrelseLang’s growth and impact.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-900 text-white py-8">
+    <div class="max-w-7xl mx-auto px-6 text-center flex flex-col md:flex-row justify-center items-center gap-4">
+      <p class="text-sm">&copy; <span class="brelselang-font">BrelseLang</span> 2025 — From dots to the data.</p>
+      <div class="flex gap-4">
+        <a href="https://twitter.com/yourhandle" target="_blank" rel="noopener" class="hover:text-red-400">Twitter</a>
+        <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener" class="hover:text-red-400">LinkedIn</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
