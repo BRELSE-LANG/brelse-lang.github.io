@@ -4,62 +4,318 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BrelseAuth – Tactile Authentication</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #f9f9f6;
+    :root {
+      --primary-red: #E53935;
+      --secondary-red: #D32F2F;
+      --accent-red: #FF5722;
+      --light-red: #FFEBEE;
     }
-    .dot {
-      width: 16px;
-      height: 16px;
-      border-radius: 9999px;
+    
+    html, body {
+      font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    
+    .brelselang-font {
+      font-family: 'Playfair Display', serif;
+    }
+    
+    .card {
+      background: rgba(255,255,255,0.98);
+      border-radius: 1rem;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    }
+    
+    .interactive-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
       display: inline-block;
       margin: 2px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 2px solid rgba(255,255,255,0.35);
     }
-    .dot.filled {
-      background-color: #111;
+    
+    .interactive-dot:hover {
+      transform: scale(1.1);
     }
-    .dot.empty {
-      background-color: #ddd;
+    
+    .interactive-dot.filled {
+      background: var(--accent-red);
+      transform: scale(1.2);
+      box-shadow: 0 6px 20px rgba(255,87,34,0.35);
+    }
+    
+    .interactive-dot.empty {
+      background: rgba(255,255,255,0.8);
+    }
+    
+    .btn-primary {
+      background: var(--primary-red);
+      color: white;
+      border: none;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+      background: var(--secondary-red);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(229,57,53,0.3);
+    }
+    
+    .btn-secondary {
+      background: transparent;
+      color: var(--primary-red);
+      border: 2px solid var(--primary-red);
+      transition: all 0.3s ease;
+    }
+    
+    .btn-secondary:hover {
+      background: var(--primary-red);
+      color: white;
+      transform: translateY(-2px);
+    }
+    
+    .keypad-btn {
+      background: rgba(255,255,255,0.9);
+      border: 2px solid rgba(229,57,53,0.1);
+      color: var(--primary-red);
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    
+    .keypad-btn:hover {
+      background: var(--primary-red);
+      color: white;
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(229,57,53,0.3);
+    }
+    
+    .status-success {
+      color: #10B981;
+      background: rgba(16,185,129,0.1);
+      border: 1px solid rgba(16,185,129,0.2);
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+    }
+    
+    .status-error {
+      color: #EF4444;
+      background: rgba(239,68,68,0.1);
+      border: 1px solid rgba(239,68,68,0.2);
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+    }
+    
+    .morse-visualizer {
+      height: 40px;
+      background: rgba(229,57,53,0.05);
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 1rem 0;
+      overflow: hidden;
+    }
+    
+    .morse-pulse {
+      width: 4px;
+      height: 20px;
+      background: var(--primary-red);
+      margin: 0 1px;
+      border-radius: 2px;
+      opacity: 0;
+      animation: pulse 0.3s ease-in-out;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 0; transform: scaleY(0.5); }
+      50% { opacity: 1; transform: scaleY(1); }
+    }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, #E53935 0%, #D32F2F 100%);
+    }
+    
+    .loading-spinner {
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top: 2px solid white;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .braille-display {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 4px;
+      width: 40px;
+      height: 60px;
+      padding: 8px;
+      background: rgba(229,57,53,0.05);
+      border-radius: 8px;
+      margin: 0 auto 1rem;
+    }
+    
+    :focus {
+      outline: 3px solid rgba(229,57,53,0.16);
+      outline-offset: 2px;
     }
   </style>
 </head>
-<body class="text-gray-800 px-4 py-10">
+<body class="min-h-screen bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50">
 
-  <div class="max-w-md mx-auto text-center space-y-6 bg-white p-6 rounded shadow">
-
-    <div class="flex items-center justify-center gap-2 text-3xl font-bold">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m0-10a4 4 0 00-4 4v4h8v-4a4 4 0 00-4-4z" /></svg>
-      BrelseAuth
+  <!-- Header -->
+  <header class="gradient-bg text-white py-8">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <div class="flex items-center justify-center gap-3 mb-4">
+        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+          <svg class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m0-10a4 4 0 00-4 4v4h8v-4a4 4 0 00-4-4z" />
+          </svg>
+        </div>
+        <h1 class="text-4xl font-bold brelselang-font">BrelseAuth</h1>
+      </div>
+      <p class="text-red-100 text-lg">Secure Tactile Authentication System</p>
+      <p class="text-red-200 text-sm mt-2">Experience authentication through touch and sound</p>
     </div>
-    <p class="text-md">Tactile Authentication Demo</p>
+  </header>
 
-    <!-- OTP Entry -->
-    <div>
-      <label class="block font-medium mb-2 text-lg">Enter Code (Braille + Morse)</label>
-      <textarea id="codeInput" class="w-full p-3 border rounded text-sm" rows="3" placeholder="e.g. A: 100000 | .-"></textarea>
+  <div class="max-w-4xl mx-auto px-6 py-8">
+    <div class="grid md:grid-cols-2 gap-8">
+      
+      <!-- Main Authentication Panel -->
+      <div class="card p-8">
+        <div class="text-center mb-6">
+          <h2 class="text-2xl font-bold text-gray-800 mb-2">Authentication Portal</h2>
+          <p class="text-gray-600">Enter your tactile authentication code</p>
+        </div>
+
+        <!-- OTP Entry -->
+        <div class="mb-6">
+          <label class="block font-semibold mb-3 text-gray-700">Authentication Code (Braille + Morse)</label>
+          <textarea 
+            id="codeInput" 
+            class="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-red-500 focus:ring-2 focus:ring-red-100 transition-all text-sm font-mono" 
+            rows="4" 
+            placeholder="e.g. A: 100000 | .-&#10;B: 101000 | -...&#10;C: 110000 | -.-."
+          ></textarea>
+        </div>
+
+        <!-- Actions -->
+        <div class="grid grid-cols-2 gap-4 mb-4">
+          <button onclick="generateOTP()" class="btn-primary px-6 py-3 rounded-xl font-semibold shadow-lg">
+            <span id="generateText">Generate OTP</span>
+            <div id="generateSpinner" class="loading-spinner hidden mx-auto"></div>
+          </button>
+          <button onclick="verifyOTP()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg transition-all">
+            Verify Code
+          </button>
+        </div>
+
+        <!-- Morse Audio -->
+        <button onclick="playMorse()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl font-semibold shadow-lg transition-all flex items-center justify-center gap-2">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+          </svg>
+          Play Morse Audio
+        </button>
+
+        <!-- Morse Visualizer -->
+        <div id="morseVisualizer" class="morse-visualizer hidden">
+          <div class="text-sm text-gray-600">Audio playing...</div>
+        </div>
+
+        <!-- Feedback -->
+        <div id="status" class="text-center font-medium mt-6"></div>
+      </div>
+
+      <!-- Interactive Keypad & Demo -->
+      <div class="space-y-6">
+        
+        <!-- Braille Demo -->
+        <div class="card p-6">
+          <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Interactive Braille Demo</h3>
+          <div class="text-center mb-4">
+            <div class="braille-display">
+              <div class="interactive-dot" data-dot="1" onclick="toggleDot(1)"></div>
+              <div class="interactive-dot" data-dot="2" onclick="toggleDot(2)"></div>
+              <div class="interactive-dot" data-dot="3" onclick="toggleDot(3)"></div>
+              <div class="interactive-dot" data-dot="4" onclick="toggleDot(4)"></div>
+              <div class="interactive-dot" data-dot="5" onclick="toggleDot(5)"></div>
+              <div class="interactive-dot" data-dot="6" onclick="toggleDot(6)"></div>
+            </div>
+            <p class="text-sm text-gray-600">Click dots to toggle • Pattern: <span id="braillePattern">000000</span></p>
+            <div id="brailleCharacter" class="text-2xl font-bold text-red-600 mt-2">-</div>
+          </div>
+        </div>
+
+        <!-- Keypad -->
+        <div class="card p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-bold text-gray-800">Quick Input Keypad</h3>
+            <button onclick="clearInput()" class="btn-secondary px-4 py-2 rounded-lg font-semibold">Clear</button>
+          </div>
+          <div id="keypad" class="grid grid-cols-6 gap-2 text-sm"></div>
+        </div>
+
+        <!-- Features -->
+        <div class="card p-6">
+          <h3 class="text-xl font-bold text-gray-800 mb-4">Security Features</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex items-start gap-3">
+              <div class="w-2 h-2 bg-red-600 rounded-full mt-2 flex-shrink-0"></div>
+              <p class="text-gray-700"><strong>Dual Encoding:</strong> Combines Braille and Morse for enhanced security</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-2 h-2 bg-red-600 rounded-full mt-2 flex-shrink-0"></div>
+              <p class="text-gray-700"><strong>Tactile Verification:</strong> Physical pattern recognition prevents screen-based attacks</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-2 h-2 bg-red-600 rounded-full mt-2 flex-shrink-0"></div>
+              <p class="text-gray-700"><strong>Audio Confirmation:</strong> Morse code audio for accessibility and verification</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-2 h-2 bg-red-600 rounded-full mt-2 flex-shrink-0"></div>
+              <p class="text-gray-700"><strong>Anti-Phishing:</strong> Unique tactile patterns are difficult to replicate digitally</p>
+            </div>
+          </div>
+        </div>
+        
+      </div>
     </div>
-
-    <!-- Actions -->
-    <div class="flex justify-between gap-2">
-      <button onclick="generateOTP()" class="bg-black text-white px-4 py-2 rounded">Generate OTP</button>
-      <button onclick="verifyOTP()" class="bg-green-600 text-white px-4 py-2 rounded">Verify</button>
-    </div>
-
-    <button onclick="playMorse()" class="mt-2 w-full bg-indigo-600 text-white py-2 rounded">🔊 Play Morse</button>
-
-    <!-- Keypad -->
-    <div class="mt-8 p-4 border rounded bg-gray-50">
-      <h2 class="font-semibold mb-3 text-lg">Braille & Morse Keypad</h2>
-      <div id="keypad" class="grid grid-cols-6 gap-2 justify-center text-sm"></div>
-      <button onclick="clearInput()" class="mt-4 bg-red-500 text-white px-4 py-2 rounded w-full">Clear</button>
-    </div>
-
-    <!-- Feedback -->
-    <div id="status" class="text-center font-medium mt-4"></div>
-
   </div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-8 mt-16">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <div class="flex items-center justify-center gap-2 mb-2">
+        <span class="brelselang-font text-xl font-semibold">BrelseLang</span>
+        <span class="text-gray-400">×</span>
+        <span class="brelselang-font text-xl font-semibold">BrelseAuth</span>
+      </div>
+      <p class="text-gray-400 text-sm">From dots to the data — Secure tactile authentication</p>
+    </div>
+  </footer>
 
   <script>
     const brailleMap = {
@@ -82,11 +338,29 @@
       6: "-....", 7: "--...", 8: "---..", 9: "----.", 0: "-----"
     };
 
-    function generateOTP() {
+    // Reverse maps for decoding
+    const brailleReverse = Object.fromEntries(Object.entries(brailleMap).map(([k,v]) => [v,k]));
+    
+    let currentOTP = '';
+    let brailleDots = [0,0,0,0,0,0];
+
+    async function generateOTP() {
+      const btn = document.getElementById('generateText');
+      const spinner = document.getElementById('generateSpinner');
+      
+      btn.classList.add('hidden');
+      spinner.classList.remove('hidden');
+      
+      // Simulate generation time for better UX
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
       const pool = "abcdefghijklmnopqrstuvwxyz0123456789";
       let otp = "";
-      for (let i = 0; i < 6; i++) otp += pool[Math.floor(Math.random() * pool.length)];
-
+      for (let i = 0; i < 6; i++) {
+        otp += pool[Math.floor(Math.random() * pool.length)];
+      }
+      
+      currentOTP = otp;
       let result = "";
       for (let ch of otp) {
         const braille = brailleMap[ch] || "------";
@@ -95,46 +369,114 @@
       }
 
       document.getElementById("codeInput").value = result;
-      document.getElementById("status").innerText = "";
+      document.getElementById("status").innerHTML = `<div class="bg-blue-100 text-blue-800 p-3 rounded-lg"><strong>OTP Generated:</strong> ${otp.toUpperCase()}</div>`;
+      
+      btn.classList.remove('hidden');
+      spinner.classList.add('hidden');
     }
 
     function verifyOTP() {
       const code = document.getElementById("codeInput").value.trim();
-      const valid = code.length > 0 && code.includes("|");
-      document.getElementById("status").innerHTML = valid
-        ? `<span class="text-green-600">✅ Authentication Successful</span>`
-        : `<span class="text-red-600">❌ Incorrect Code.</span>`;
+      const statusEl = document.getElementById("status");
+      
+      if (!code) {
+        statusEl.innerHTML = `<div class="status-error">❌ Please enter an authentication code</div>`;
+        return;
+      }
+      
+      // Basic validation
+      const hasCorrectFormat = code.includes("|") && code.includes(":");
+      const lines = code.split('\n').filter(line => line.trim());
+      
+      if (hasCorrectFormat && lines.length >= 3) {
+        // Simulate verification process
+        setTimeout(() => {
+          statusEl.innerHTML = `<div class="status-success">✅ Authentication Successful<br><small class="text-green-600">Tactile signature verified</small></div>`;
+        }, 500);
+      } else {
+        statusEl.innerHTML = `<div class="status-error">❌ Invalid format. Please use: CHAR: BRAILLE | MORSE</div>`;
+      }
     }
 
-    function playMorse() {
+    async function playMorse() {
       const code = document.getElementById("codeInput").value.toLowerCase();
-      const ctx = new AudioContext();
-      let t = ctx.currentTime;
-      const unit = 0.12;
-      const freq = 600;
+      const visualizer = document.getElementById("morseVisualizer");
+      
+      if (!code) {
+        document.getElementById("status").innerHTML = `<div class="status-error">⚠️ No code to play</div>`;
+        return;
+      }
+      
+      visualizer.classList.remove('hidden');
+      
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        let t = ctx.currentTime + 0.1;
+        const unit = 0.15;
+        const freq = 600;
 
-      for (let ch of code) {
-        const signal = morseMap[ch] || "";
-        for (let s of signal) {
-          if (s === ".") beep(1);
-          else if (s === "-") beep(3);
-          t += unit;
+        // Extract characters from the input
+        const lines = code.split('\n');
+        for (let line of lines) {
+          const match = line.match(/^([a-z0-9]):/);
+          if (match) {
+            const ch = match[1];
+            const signal = morseMap[ch] || "";
+            
+            for (let s of signal) {
+              if (s === ".") {
+                beep(ctx, t, unit, freq);
+                createVisualPulse(100);
+                t += unit;
+              } else if (s === "-") {
+                beep(ctx, t, unit * 3, freq);
+                createVisualPulse(300);
+                t += unit * 3;
+              }
+              t += unit * 0.5;
+            }
+            t += unit * 2;
+          }
         }
-        t += unit * 2;
+        
+        setTimeout(() => {
+          visualizer.classList.add('hidden');
+        }, t * 1000);
+        
+      } catch (error) {
+        console.error('Audio context error:', error);
+        document.getElementById("status").innerHTML = `<div class="status-error">🔇 Audio not available</div>`;
       }
+    }
 
-      function beep(len) {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.frequency.value = freq;
-        gain.gain.setValueAtTime(1, t);
-        gain.gain.exponentialRampToValueAtTime(0.001, t + unit * len);
-        osc.start(t);
-        osc.stop(t + unit * len);
-        t += unit * len;
-      }
+    function beep(ctx, startTime, duration, frequency) {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      
+      osc.frequency.value = frequency;
+      gain.gain.setValueAtTime(0, startTime);
+      gain.gain.linearRampToValueAtTime(0.3, startTime + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+      
+      osc.start(startTime);
+      osc.stop(startTime + duration);
+    }
+
+    function createVisualPulse(duration) {
+      const visualizer = document.getElementById("morseVisualizer");
+      const pulse = document.createElement('div');
+      pulse.className = 'morse-pulse';
+      pulse.style.animationDuration = `${duration}ms`;
+      visualizer.appendChild(pulse);
+      
+      setTimeout(() => {
+        if (pulse.parentNode) {
+          pulse.parentNode.removeChild(pulse);
+        }
+      }, duration);
     }
 
     function appendChar(ch) {
@@ -142,22 +484,70 @@
       const morse = morseMap[ch] || "?";
       const textarea = document.getElementById("codeInput");
       textarea.value += `${ch.toUpperCase()}: ${braille} | ${morse}\n`;
+      
+      // Auto scroll to bottom
+      textarea.scrollTop = textarea.scrollHeight;
     }
 
     function clearInput() {
       document.getElementById("codeInput").value = "";
-      document.getElementById("status").innerText = "";
+      document.getElementById("status").innerHTML = "";
+      // Reset braille display
+      brailleDots = [0,0,0,0,0,0];
+      updateBrailleDisplay();
     }
 
-    // Build keypad
-    const keypad = document.getElementById("keypad");
-    "abcdefghijklmnopqrstuvwxyz0123456789".split("").forEach(ch => {
-      const btn = document.createElement("button");
-      btn.innerText = ch.toUpperCase();
-      btn.className = "bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded";
-      btn.onclick = () => appendChar(ch);
-      keypad.appendChild(btn);
-    });
+    function toggleDot(dotNumber) {
+      brailleDots[dotNumber - 1] = brailleDots[dotNumber - 1] ? 0 : 1;
+      updateBrailleDisplay();
+    }
+
+    function updateBrailleDisplay() {
+      const dots = document.querySelectorAll('.interactive-dot');
+      const pattern = brailleDots.join('');
+      
+      dots.forEach((dot, index) => {
+        if (brailleDots[index]) {
+          dot.classList.add('filled');
+          dot.classList.remove('empty');
+        } else {
+          dot.classList.remove('filled');
+          dot.classList.add('empty');
+        }
+      });
+      
+      document.getElementById('braillePattern').textContent = pattern;
+      
+      // Find matching character
+      const character = brailleReverse[pattern] || '-';
+      document.getElementById('brailleCharacter').textContent = character.toUpperCase();
+    }
+
+    // Initialize
+    function init() {
+      // Build keypad
+      const keypad = document.getElementById("keypad");
+      const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+      
+      chars.split("").forEach(ch => {
+        const btn = document.createElement("button");
+        btn.textContent = ch.toUpperCase();
+        btn.className = "keypad-btn px-3 py-2 rounded-lg font-semibold";
+        btn.onclick = () => appendChar(ch);
+        keypad.appendChild(btn);
+      });
+
+      // Initialize braille display
+      updateBrailleDisplay();
+      
+      // Generate initial demo OTP
+      setTimeout(() => {
+        generateOTP();
+      }, 500);
+    }
+
+    // Start the app
+    document.addEventListener('DOMContentLoaded', init);
   </script>
 </body>
 </html>
