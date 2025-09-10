@@ -1,87 +1,224 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>BrelseLang – Our Team</title>
-  <meta name="description" content="Meet the BrelseLang team — innovators in tactile computing, accessibility, and cybersecurity.">
-  <meta name="theme-color" content="#E53935">
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- Tailwind (CDN) -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact BrelseLang – From Dots to Data</title>
   <script src="https://cdn.tailwindcss.com"></script>
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
   <style>
-    :root{
-      --primary-red:#E53935;
-      --secondary-red:#D32F2F;
-      --accent-red:#FF5722;
-      --light-red:#FFEBEE;
+    html, body { scroll-behavior: smooth; font-family: 'Inter', sans-serif; }
+    h1,h2,h3,h4 { font-family: 'Space Grotesk', sans-serif; }
+    :root {
+      --primary-red: #E53935;
+      --secondary-red: #D32F2F;
+      --accent-red: #FF5722;
+      --light-red: #FFEBEE;
+      --dark-red: #C62828;
     }
-    html,body { font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
-    .brelselang-font { font-family: 'Playfair Display', serif; }
-    :focus { outline: 3px solid rgba(229,57,53,0.16); outline-offset: 2px; }
+    .bg-primary { background-color: var(--primary-red); }
+    .bg-secondary { background-color: var(--secondary-red); }
+    .btn-primary {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+    .btn-primary:hover {
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--primary-red);
+      border-color: rgba(255, 255, 255, 0.9);
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: white;
+      border: 2px solid white;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+    .btn-secondary:hover {
+      background: white;
+      color: var(--primary-red);
+      transform: translateY(-2px);
+    }
+    .hero-text {
+      font-size: clamp(3rem, 8vw, 8rem);
+      font-weight: 700;
+      line-height: 0.9;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.8) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .navbar-blur {
+      backdrop-filter: blur(20px);
+      background: rgba(229, 57, 53, 0.95);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .section-red { background: linear-gradient(135deg, var(--primary-red) 0%, var(--secondary-red) 100%); }
+    .section-light { background: linear-gradient(135deg, #ffffff 0%, var(--light-red) 100%); }
+    .card {
+      background: rgba(255,255,255,0.98);
+      border-radius: 1rem;
+      box-shadow: 0 10px 40px rgba(229,57,53,0.15);
+      padding: 2rem;
+      transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+      border: 1px solid rgba(229,57,53,0.1);
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(229,57,53,0.25);
+    }
   </style>
 </head>
-<body class="bg-white text-gray-900">
+<body class="bg-white text-gray-900 overflow-x-hidden">
 
-  <!-- NAV -->
-  <nav class="fixed top-0 left-0 right-0 z-50 navbar-blur bg-gradient-to-r from-[rgba(229,57,53,0.95)] to-[rgba(211,47,47,0.95)] backdrop-blur-md border-b border-white/10">
-    <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-      <a href="index.html" class="brelselang-font text-white text-2xl font-semibold tracking-tight" aria-label="BrelseLang home">BrelseLang</a>
-      <div class="flex items-center gap-6 text-white">
-        <a href="index.html#hero" class="hover:text-red-200">Home</a>
-        <a href="team.html" class="hover:text-red-200 font-semibold">Team</a>
-        <a href="index.html#contact" class="hover:text-red-200">Contact</a>
+<!-- NAVIGATION -->
+<nav class="navbar-blur fixed top-0 left-0 right-0 z-50 px-6 py-4 transition-all duration-300" id="navbar">
+  <div class="max-w-7xl mx-auto flex items-center justify-between">
+    <span class="text-2xl font-bold tracking-tight text-white floating">BRELSELANG</span>
+    <div class="hidden md:flex space-x-8">
+      <a href="index.html#hero" class="text-white hover:text-red-200 transition-colors duration-300 font-medium">Home</a>
+      <a href="index.html#about" class="text-white hover:text-red-200 transition-colors duration-300 font-medium">About</a>
+      <a href="index.html#services" class="text-white hover:text-red-200 transition-colors duration-300 font-medium">Services</a>
+      <a href="index.html#mvp" class="text-white hover:text-red-200 transition-colors duration-300 font-medium">MVP Dashboard</a>
+      <a href="#contact" class="text-white hover:text-red-200 transition-colors duration-300 font-medium">Contact</a>
+    </div>
+    <button class="md:hidden p-2" id="mobile-menu-btn" aria-label="Toggle Menu">
+      <i data-lucide="menu" class="w-6 h-6 text-white"></i>
+    </button>
+  </div>
+  <div class="md:hidden mt-4 space-y-2 hidden" id="mobile-menu">
+    <a href="index.html#hero" class="block px-4 py-2 text-white hover:bg-red-600 rounded-lg transition-colors">Home</a>
+    <a href="index.html#about" class="block px-4 py-2 text-white hover:bg-red-600 rounded-lg transition-colors">About</a>
+    <a href="index.html#services" class="block px-4 py-2 text-white hover:bg-red-600 rounded-lg transition-colors">Services</a>
+    <a href="index.html#mvp" class="block px-4 py-2 text-white hover:bg-red-600 rounded-lg transition-colors">MVP Dashboard</a>
+    <a href="#contact" class="block px-4 py-2 text-white hover:bg-red-600 rounded-lg transition-colors">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="section-red text-white text-center min-h-screen flex flex-col justify-center px-6 relative overflow-hidden" id="hero">
+  <div class="max-w-6xl mx-auto relative z-10">
+    <h1 class="hero-text gradient-text mb-6" data-aos="fade-up">Contact Us</h1>
+    <p class="text-xl md:text-2xl font-light mb-12" data-aos="fade-up" data-aos-delay="300">
+      Have a question or idea? We’d love to hear from you.
+    </p>
+    <div class="flex justify-center">
+      <a href="#contactForm" class="btn-primary px-8 py-4 rounded-full text-lg font-semibold" data-aos="fade-up" data-aos-delay="500">Reach Out</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT FORM -->
+<section class="section-light py-20 px-6" id="contactForm" data-aos="fade-up">
+  <div class="max-w-4xl mx-auto">
+    <div class="card">
+      <h2 class="text-4xl font-bold text-red-600 mb-8 flex items-center gap-4">
+        <i data-lucide="mail" class="w-10 h-10 text-red-500"></i>
+        Get in Touch
+      </h2>
+      <form id="contact-form" class="space-y-6" onsubmit="submitForm(event)">
+        <div>
+          <label for="name" class="block font-semibold mb-2 text-gray-700 text-lg">Name</label>
+          <input type="text" id="name" class="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-red-500 focus:outline-none text-lg" placeholder="Your full name" required>
+        </div>
+        <div>
+          <label for="email" class="block font-semibold mb-2 text-gray-700 text-lg">Email</label>
+          <input type="email" id="email" class="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-red-500 focus:outline-none text-lg" placeholder="you@example.com" required>
+        </div>
+        <div>
+          <label for="message" class="block font-semibold mb-2 text-gray-700 text-lg">Message</label>
+          <textarea id="message" rows="5" class="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-red-500 focus:outline-none text-lg" placeholder="Your message..." required></textarea>
+        </div>
+        <button type="submit" class="btn-primary px-8 py-4 rounded-xl text-lg font-semibold flex items-center gap-2">
+          <i data-lucide="send" class="w-5 h-5"></i> Send Message
+        </button>
+      </form>
+      <div id="formFeedback" class="mt-4 text-green-600 font-medium"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-gray-900 text-white py-16 px-6 mt-20">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid md:grid-cols-4 gap-10 mb-12">
+      <div class="md:col-span-2">
+        <h4 class="font-bold text-3xl mb-6 text-red-400">BRELSELANG</h4>
+        <p class="text-gray-300 text-lg leading-relaxed mb-8">
+          Pioneering the future of tactile computing and inclusive technology design.
+        </p>
+        <div class="flex space-x-6">
+          <a href="#" class="text-gray-400 hover:text-red-400 transition-colors" aria-label="GitHub"><i data-lucide="github" class="w-7 h-7"></i></a>
+          <a href="#" class="text-gray-400 hover:text-red-400 transition-colors" aria-label="LinkedIn"><i data-lucide="linkedin" class="w-7 h-7"></i></a>
+          <a href="#" class="text-gray-400 hover:text-red-400 transition-colors" aria-label="Twitter"><i data-lucide="twitter" class="w-7 h-7"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="font-semibold text-lg mb-6 text-red-400">Company</h4>
+        <ul class="space-y-3 text-gray-300">
+          <li><a href="index.html#about" class="hover:text-white transition-colors">About</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Team</a></li>
+          <li><a href="#contactForm" class="hover:text-white transition-colors">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-semibold text-lg mb-6 text-red-400">Resources</h4>
+        <ul class="space-y-3 text-gray-300">
+          <li><a href="#" class="hover:text-white transition-colors">Documentation</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Research</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Community</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Support</a></li>
+        </ul>
       </div>
     </div>
-  </nav>
-
-  <!-- TEAM PAGE HERO -->
-  <header class="min-h-[40vh] flex items-center justify-center bg-gradient-to-r from-[#E53935] to-[#D32F2F] text-white mt-16">
-    <h1 class="brelselang-font text-4xl md:text-6xl font-bold">Meet Our Team</h1>
-  </header>
-
-  <!-- TEAM MEMBERS -->
-  <section class="py-16 px-6 max-w-6xl mx-auto">
-    <div class="grid md:grid-cols-3 gap-8">
-      <div class="card p-6 bg-white rounded-xl shadow-md text-center">
-        <h4 class="text-xl font-semibold mb-1">Shankar Kumar</h4>
-        <p class="text-red-600 mb-2 text-sm">Founder & Developer</p>
-        <p class="text-gray-700 text-sm">
-          Designer turned deep-tech innovator. 7+ years in menswear design (NIFT Delhi alumnus). Creator of <span class="brelselang-font">BrelseLang</span> — building tactile authentication and assistive language systems.
-        </p>
-      </div>
-
-      <div class="card p-6 bg-white rounded-xl shadow-md text-center">
-        <h4 class="text-xl font-semibold mb-1">Future Team Members</h4>
-        <p class="text-gray-700 text-sm">
-          We are expanding the core team with engineers, UX researchers, and hardware integrators. Opportunities coming soon.
-        </p>
-      </div>
-
-      <div class="card p-6 bg-white rounded-xl shadow-md text-center">
-        <h4 class="text-xl font-semibold mb-1">Advisory Board</h4>
-        <p class="text-gray-700 text-sm">
-          Advisors in cybersecurity, accessibility, and defense — guiding BrelseLang’s growth and impact.
-        </p>
-      </div>
+    <div class="text-center text-gray-400 pt-8 border-t border-gray-800">
+      <p class="text-lg">&copy; 2025 BrelseLang — Built to Be Felt.</p>
     </div>
-  </section>
+  </div>
+</footer>
 
-  <!-- FOOTER -->
-  <footer class="bg-gray-900 text-white py-8">
-    <div class="max-w-7xl mx-auto px-6 text-center flex flex-col md:flex-row justify-center items-center gap-4">
-      <p class="text-sm">&copy; <span class="brelselang-font">BrelseLang</span> 2025 — From dots to the data.</p>
-      <div class="flex gap-4">
-        <a href="https://twitter.com/yourhandle" target="_blank" rel="noopener" class="hover:text-red-400">Twitter</a>
-        <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener" class="hover:text-red-400">LinkedIn</a>
-      </div>
-    </div>
-  </footer>
+<!-- SCRIPTS -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 800, easing: 'ease-in-out', once: true, offset: 100 });
+  lucide.createIcons();
 
+  // Mobile menu toggle
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  mobileMenuBtn.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+
+  // Contact form submission (mock)
+  function submitForm(e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+    const feedback = document.getElementById('formFeedback');
+
+    if(!name || !email || !message) {
+      feedback.innerText = "⚠️ Please fill in all fields!";
+      feedback.classList.remove('text-green-600');
+      feedback.classList.add('text-red-600');
+      return;
+    }
+
+    feedback.innerText = "✅ Thank you! Your message has been sent.";
+    feedback.classList.remove('text-red-600');
+    feedback.classList.add('text-green-600');
+    document.getElementById('contact-form').reset();
+  }
+</script>
 </body>
-</html>
+    </html>
