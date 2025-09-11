@@ -1,1 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shakura - 茶楽</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        :root {
+            --primary-color: #2c2c2c;
+            --accent-color: #d4af37;
+            --text-light: #666;
+            --bg-paper: #fafafa;
+            --bg-white: #ffffff;
+            --shadow-soft: 0 2px 20px rgba(0, 0, 0, 0.05);
+            --shadow-medium: 0 8px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-weight: 300;
+            line-height: 1.8;
+            color: var(--primary-color);
+            background: var(--bg-paper);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: var(--primary-color);
+            letter-spacing: 2px;
+        }
+
+        .logo-jp {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-left: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 300;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 140px 0 100px;
+            text-align: center;
+            background: var(--bg-white);
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            width: 100%;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 300;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            letter-spacing: 8px;
+        }
+
+        .hero-jp {
+            font-size: 2rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 500px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-color);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .cta-button:hover::before {
+            left: 0;
+        }
+
+        .cta-button:hover {
+            color: white;
+        }
+
+        /* Product Showcase */
+        .product-showcase {
+            padding: 120px 0;
+            background: var(--bg-white);
+        }
+
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8rem;
+            align-items: center;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 500px;
+            background: url('https://images.unsplash.com/photo-1525385133512-2f3bdd039054?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') center/cover;
+            border-radius: 0;
+            position: relative;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .product-info h2 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            line-height: 1.3;
+        }
+
+        .product-description {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--text-light);
+            font-weight: 300;
+        }
+
+        /* Divider */
+        .divider {
+            width: 60px;
+            height: 1px;
+            background: var(--accent-color);
+            margin: 4rem auto;
+        }
+
+        /* Menu Section */
+        .menu-section {
+            padding: 120px 0;
+            background: var(--bg-paper);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 6rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1rem;
+            color: var(--text-light);
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 4rem;
+        }
+
+        .menu-item {
+            background: var(--bg-white);
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .menu-item-image {
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .menu-item:nth-child(1) .menu-item-image {
+            background-image: url('https://images.unsplash.com/photo-1525385133512-2f3bdd039054?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');
+        }
+
+        .menu-item:nth-child(2) .menu-item-image {
+            background-image: url('https://images.unsplash.com/photo-1556679343-c7306c1976bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');
+        }
+
+        .menu-item:nth-child(3) .menu-item-image {
+            background-image: url('https://images.unsplash.com/photo-1544145945-f90425340c7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');
+        }
+
+        .menu-item:nth-child(4) .menu-item-image {
+            background-image: url('https://images.unsplash.com/photo-1571091718767-18b5b1457add?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');
+        }
+
+        .menu-item:nth-child(5) .menu-item-image {
+            background-image: url('https://images.unsplash.com/photo-1572490122747-3968b75cc699?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');
+        }
+
+        .menu-item:nth-child(6) .menu-item-image {
+            background-image: url('https://images.unsplash.com/photo-1556679343-c7306c1976bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');
+        }
+
+        .menu-item-content {
+            padding: 2.5rem;
+        }
+
+        .menu-item h3 {
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .menu-item-description {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+
+        .menu-item-price {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: var(--accent-color);
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 120px 0;
+            background: var(--bg-white);
+            text-align: center;
+        }
+
+        .about-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .about-section h2 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: var(--primary-color);
+            margin-bottom: 3rem;
+        }
+
+        .about-text {
+            font-size: 1rem;
+            line-height: 2;
+            color: var(--text-light);
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        .about-image {
+            width: 200px;
+            height: 200px;
+            background: url('https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80') center/cover;
+            border-radius: 50%;
+            margin: 4rem auto;
+            box-shadow: var(--shadow-medium);
+        }
+
+        /* Stats */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 6rem;
+            margin: 6rem 0;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 300;
+            color: var(--primary-color);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            font-weight: 300;
+            margin-top: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-color);
+            color: white;
+            padding: 6rem 0 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 2rem;
+            font-weight: 400;
+            font-size: 1.1rem;
+        }
+
+        .footer-section p, 
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            margin-bottom: 1rem;
+            display: block;
+            font-weight: 300;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            font-weight: 300;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+                letter-spacing: 4px;
+            }
+
+            .hero-jp {
+                font-size: 1.5rem;
+            }
+
+            .showcase-grid {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .stats {
+                flex-direction: column;
+                gap: 3rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .product-info h2,
+            .section-header h2,
+            .about-section h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Subtle animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Japanese-inspired elements */
+        .zen-circle {
+            position: absolute;
+            top: 50%;
+            right: 10%;
+            transform: translateY(-50%);
+            width: 100px;
+            height: 100px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            opacity: 0.5;
+        }
+
+        .zen-circle::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                SHAKURA
+                <span class="logo-jp">茶楽</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#about">Philosophy</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>SHAKURA</h1>
+                    <div class="hero-jp">茶楽 - Tea Joy</div>
+                    <p class="hero-subtitle">
+                        Where ancient tea traditions meet modern craft. 
+                        Each cup embodies the Japanese philosophy of mindful simplicity.
+                    </p>
+                    <a href="#menu" class="cta-button">DISCOVER TEA</a>
+                </div>
+            </div>
+            <div class="zen-circle"></div>
+        </section>
+
+        <div class="divider"></div>
+
+        <section class="product-showcase">
+            <div class="container">
+                <div class="showcase-grid">
+                    <div class="product-image"></div>
+                    <div class="product-info fade-in">
+                        <h2>The Art of Tea</h2>
+                        <p class="product-description">
+                            In the spirit of Japanese craftsmanship, we approach each beverage as a meditation in flavor. 
+                            Our boba tea represents the harmony between traditional tea ceremony principles and contemporary taste, 
+                            creating moments of quiet joy in every sip.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="stats fade-in">
+                    <div class="stat">
+                        <span class="stat-number">一</span>
+                        <span class="stat-label">One Perfect Cup</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">心</span>
+                        <span class="stat-label">Heart & Soul</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">和</span>
+                        <span class="stat-label">Harmony</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="menu" class="menu-section">
+            <div class="container">
+                <div class="section-header fade-in">
+                    <h2>Tea Selection</h2>
+                    <p class="section-subtitle">
+                        Each blend carefully curated to honor the essence of tea while embracing the playful spirit of boba culture.
+                    </p>
+                </div>
+
+                <div class="menu-grid">
+                    <div class="menu-item fade-in">
+                        <div class="menu-item-image"></div>
+                        <div class="menu-item-content">
+                            <h3>Brown Sugar Harmony</h3>
+                            <p class="menu-item-description">
+                                Deep, caramelized brown sugar paired with premium milk tea. 
+                                A meditation on sweetness and balance.
+                            </p>
+                            <div class="menu-item-price">$5.99</div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item fade-in">
+                        <div class="menu-item-image"></div>
+                        <div class="menu-item-content">
+                            <h3>Sakura Matcha</h3>
+                            <p class="menu-item-description">
+                                Ceremonial grade matcha infused with delicate cherry blossom essence. 
+                                Spring in a cup.
+                            </p>
+                            <div class="menu-item-price">$6.49</div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item fade-in">
+                        <div class="menu-item-image"></div>
+                        <div class="menu-item-content">
+                            <h3>Golden Mango Zen</h3>
+                            <p class="menu-item-description">
+                                Tropical mango tea with crystalline pearls. 
+                                Sunshine captured in mindful simplicity.
+                            </p>
+                            <div class="menu-item-price">$6.29</div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item fade-in">
+                        <div class="menu-item-image"></div>
+                        <div class="menu-item-content">
+                            <h3>Moonlight Lychee</h3>
+                            <p class="menu-item-description">
+                                Ethereal lychee tea with rose petals and crystal pearls. 
+                                Poetry in liquid form.
+                            </p>
+                            <div class="menu-item-price">$6.79</div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item fade-in">
+                        <div class="menu-item-image"></div>
+                        <div class="menu-item-content">
+                            <h3>Dark Chocolate Ritual</h3>
+                            <p class="menu-item-description">
+                                Rich chocolate tea ceremony with traditional pearls. 
+                                Indulgence meets mindfulness.
+                            </p>
+                            <div class="menu-item-price">$6.99</div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item fade-in">
+                        <div class="menu-item-image"></div>
+                        <div class="menu-item-content">
+                            <h3>Ancient Oolong</h3>
+                            <p class="menu-item-description">
+                                Time-honored oolong with pure honey and traditional pearls. 
+                                Wisdom in every sip.
+                            </p>
+                            <div class="menu-item-price">$7.49</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <section id="about" class="about-section">
+            <div class="container">
+                <div class="about-content fade-in">
+                    <h2>Our Philosophy</h2>
+                    <div class="about-image"></div>
+                    <p class="about-text">
+                        Shakura embodies the Japanese aesthetic of wabi-sabi – finding beauty in simplicity and imperfection. 
+                        We believe that the perfect cup of boba tea is not about complexity, but about the harmony of few, carefully chosen elements.
+                    </p>
+                    <p class="about-text">
+                        In our quiet space, time slows down. Each drink is prepared with the same mindfulness as a traditional tea ceremony, 
+                        honoring both the ancient art of tea and the joyful spirit of modern boba culture.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Visit Our Tea House</h3>
+                    <p>123 Zen Garden Way</p>
+                    <p>Tranquil District, TD 12345</p>
+                    <p>Phone: (555) 123-CALM</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Hours of Contemplation</h3>
+                    <p>Monday - Friday: 9am - 9pm</p>
+                    <p>Saturday - Sunday: 10am - 10pm</p>
+                    <p>Closed on full moon days</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <a href="#">Instagram @shakura.tea</a>
+                    <a href="#">Facebook /shakuratea</a>
+                    <a href="#">Newsletter Subscription</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Shakura Tea House. Crafted with mindfulness and intention.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Subtle header effect
+        let lastScrollY = window.scrollY;
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.borderBottom = '1px solid rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.borderBottom = '1px solid rgba(0, 0, 0, 0.05)';
+            }
+        });
+    </script>
+</body>
+  </html>
