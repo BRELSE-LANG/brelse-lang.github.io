@@ -1,1 +1,680 @@
+import React, { useState } from "react";
 
+const FOOD_DB = {
+  roti: { name: "Roti (wheat, medium)", kcal: 100, protein: 3, allergens: ["gluten"], category: "grain" },
+  rice_cup: { name: "Cooked rice (1 cup)", kcal: 130, protein: 2.5, allergens: [], category: "grain" },
+  dal_cup: { name: "Cooked dal (1 cup)", kcal: 150, protein: 9, allergens: [], category: "legume" },
+  sabzi_cup: { name: "Vegetable sabzi (1 cup)", kcal: 120, protein: 3.5, allergens: [], category: "vegetable" },
+  paneer_100: { name: "Paneer (100g)", kcal: 260, protein: 18, allergens: ["dairy"], category: "dairy" },
+  egg_boiled: { name: "Boiled egg (1)", kcal: 70, protein: 6, allergens: ["egg"], category: "protein" },
+  chicken_100: { name: "Chicken breast (100g cooked)", kcal: 165, protein: 31, allergens: [], category: "meat" },
+  fish_100: { name: "Fish fillet (100g cooked)", kcal: 180, protein: 22, allergens: ["fish"], category: "seafood" },
+  milk_glass: { name: "Milk (250ml)", kcal: 120, protein: 8, allergens: ["dairy"], category: "dairy" },
+  buttermilk: { name: "Buttermilk (1 glass)", kcal: 35, protein: 2, allergens: ["dairy"], category: "dairy" },
+  roasted_chana_50: { name: "Roasted chana (50g)", kcal: 180, protein: 10, allergens: [], category: "legume" },
+  banana: { name: "Banana (1)", kcal: 100, protein: 1.2, allergens: [], category: "fruit" },
+  almonds_30g: { name: "Almonds (30g)", kcal: 170, protein: 6, allergens: ["nuts"], category: "nuts" },
+  yogurt_cup: { name: "Plain yogurt (1 cup)", kcal: 150, protein: 12, allergens: ["dairy"], category: "dairy" },
+  quinoa_cup: { name: "Cooked quinoa (1 cup)", kcal: 220, protein: 8, allergens: [], category: "grain" },
+  tofu_100g: { name: "Tofu (100g)", kcal: 70, protein: 8, allergens: ["soy"], category: "protein" }
+};
+
+const ALLERGEN_LIST = ["dairy", "egg", "gluten", "nuts", "soy", "fish", "shellfish", "sesame"];
+const DISLIKE_CATEGORIES = ["dairy", "meat", "seafood", "egg", "nuts", "soy", "spicy", "legume"];
+
+function calcBMR({ sex, weightKg, heightCm, age }) {
+  if (sex === "male") {
+    return 10 * weightKg + 6.25 * heightCm - 5 * age + 5;
+  } else {
+    return 10 * weightKg + 6.25 * heightCm - 5 * age - 161;
+  }
+}
+
+const activityMultipliers = {
+  sedentary: 1.2,
+  light: 1.375,
+  moderate: 1.55,
+  active: 1.725,
+  very_active: 1.9
+};
+
+function round(n) {
+  return Math.round(n * 10) / 10;
+}
+
+function canEat(food, allergies, dislikes) {
+  // Check allergies first (safety)
+  if (food.allergens && food.allergens.some(a => allergies.includes(a))) {
+    return false;
+  }
+  
+  // Check dislikes
+  if (dislikes.includes(food.category)) {
+    return false;
+  }
+  
+  return true;
+}
+
+function findSubstitute(originalKey, allergies, dislikes) {
+  const original = FOOD_DB[originalKey];
+  if (!original) return null;
+  
+  // Look for alternatives in same category
+  const alternatives = Object.entries(FOOD_DB).filter(([key, food]) => 
+    key !== originalKey && 
+    food.category === original.category &&
+    canEat(food, allergies, dislikes)
+  );
+  
+  if (alternatives.length > 0) {
+    return alternatives[0][0];
+  }
+  
+  // Look for similar protein content
+  const proteinAlternatives = Object.entries(FOOD_DB).filter(([key, food]) =>
+    key !== originalKey &&
+    canEat(food, allergies, dislikes) &&
+    Math.abs(food.protein - original.protein) < 3
+  );
+  
+  return proteinAlternatives.length > 0 ? proteinAlternatives[0][0] : null;
+}
+
+function createMealPlan(targetCalories, dietType, allergies, dislikes) {
+  const mealDistribution = {
+    breakfast: 0.18,
+    midmorning: 0.06,
+    lunch: 0.33,
+    evening: 0.08,
+    preDinner: 0.04,
+    dinner: 0.27,
+    bedtime: 0.04
+  };
+
+  const meals = [];
+
+  Object.entries(mealDistribution).forEach(([mealId, percentage]) => {
+    const calories = Math.round(targetCalories * percentage);
+    meals.push({
+      id: mealId,
+      name: mealId.charAt(0).toUpperCase() + mealId.slice(1).replace(/([A-Z])/g, ' $1'),
+      targetCalories: calories,
+      items: [],
+      warnings: []
+    });
+  });
+
+  function addFoodItem(mealId, foodKey, quantity = 1) {
+    const meal = meals.find(m => m.id === mealId);
+    if (!meal) return;
+
+    const food = FOOD_DB[foodKey];
+    if (!food) return;
+
+    if (canEat(food, allergies, dislikes)) {
+      meal.items.push({
+        name: food.name,
+        quantity,
+        calories: round(food.kcal * quantity),
+        protein: round(food.protein * quantity),
+        isSubstitute: false
+      });
+    } else {
+      const substitute = findSubstitute(foodKey, allergies, dislikes);
+      if (substitute) {
+        const subFood = FOOD_DB[substitute];
+        meal.items.push({
+          name: subFood.name,
+          quantity,
+          calories: round(subFood.kcal * quantity),
+          protein: round(subFood.protein * quantity),
+          isSubstitute: true,
+          originalName: food.name
+        });
+        meal.warnings.push(`Substituted ${food.name} with ${subFood.name}`);
+      } else {
+        meal.warnings.push(`Could not find substitute for ${food.name}`);
+      }
+    }
+  }
+
+  // Build meal plan based on diet type
+  // Breakfast
+  if (dietType === "veg") {
+    addFoodItem("breakfast", "paneer_100", 0.3);
+    addFoodItem("breakfast", "roti", 2);
+    addFoodItem("breakfast", "milk_glass", 0.5);
+  } else if (dietType === "nonveg") {
+    addFoodItem("breakfast", "egg_boiled", 2);
+    addFoodItem("breakfast", "roti", 2);
+    addFoodItem("breakfast", "milk_glass", 0.5);
+  } else if (dietType === "vegan") {
+    addFoodItem("breakfast", "roasted_chana_50", 0.7);
+    addFoodItem("breakfast", "roti", 2);
+    addFoodItem("breakfast", "banana", 0.5);
+  } else if (dietType === "eggetarian") {
+    addFoodItem("breakfast", "egg_boiled", 1);
+    addFoodItem("breakfast", "roti", 2);
+    addFoodItem("breakfast", "milk_glass", 0.5);
+  }
+
+  // Mid-morning
+  addFoodItem("midmorning", "banana", 1);
+
+  // Lunch
+  addFoodItem("lunch", "rice_cup", 1);
+  addFoodItem("lunch", "dal_cup", 1);
+  addFoodItem("lunch", "sabzi_cup", 1);
+  addFoodItem("lunch", "roti", 1);
+  
+  if (dietType === "nonveg") {
+    addFoodItem("lunch", "chicken_100", 0.8);
+  } else if (dietType === "veg") {
+    addFoodItem("lunch", "paneer_100", 0.4);
+  }
+
+  // Evening snack
+  addFoodItem("evening", "roasted_chana_50", 0.8);
+  addFoodItem("evening", "milk_glass", 0.3);
+
+  // Pre-dinner
+  addFoodItem("preDinner", "banana", 0.5);
+
+  // Dinner
+  addFoodItem("dinner", "roti", 2);
+  addFoodItem("dinner", "sabzi_cup", 1);
+  addFoodItem("dinner", "dal_cup", 0.7);
+  
+  if (dietType === "nonveg") {
+    addFoodItem("dinner", "fish_100", 0.6);
+  }
+
+  // Bedtime
+  addFoodItem("bedtime", "milk_glass", 1);
+
+  // Calculate totals for each meal
+  meals.forEach(meal => {
+    meal.totalCalories = round(meal.items.reduce((sum, item) => sum + item.calories, 0));
+    meal.totalProtein = round(meal.items.reduce((sum, item) => sum + item.protein, 0));
+  });
+
+  return meals;
+}
+
+export default function IndianDietCalculator() {
+  const [formData, setFormData] = useState({
+    age: 25,
+    sex: "male",
+    weight: 70,
+    height: 170,
+    activity: "moderate",
+    dietType: "veg",
+    goal: "balanced",
+    allergies: [],
+    dislikes: []
+  });
+
+  const [results, setResults] = useState(null);
+  const [isCalculating, setIsCalculating] = useState(false);
+  const [showRestrictions, setShowRestrictions] = useState(false);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleAllergyChange = (allergen) => {
+    setFormData(prev => ({
+      ...prev,
+      allergies: prev.allergies.includes(allergen)
+        ? prev.allergies.filter(a => a !== allergen)
+        : [...prev.allergies, allergen]
+    }));
+  };
+
+  const handleDislikeChange = (category) => {
+    setFormData(prev => ({
+      ...prev,
+      dislikes: prev.dislikes.includes(category)
+        ? prev.dislikes.filter(d => d !== category)
+        : [...prev.dislikes, category]
+    }));
+  };
+
+  const calculatePlan = async () => {
+    setIsCalculating(true);
+    
+    // Simulate calculation time
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    const age = Number(formData.age);
+    const weight = Number(formData.weight);
+    const height = Number(formData.height);
+
+    const bmr = calcBMR({ 
+      sex: formData.sex, 
+      weightKg: weight, 
+      heightCm: height, 
+      age 
+    });
+    
+    const tdee = bmr * activityMultipliers[formData.activity];
+    
+    let targetCalories = tdee;
+    if (formData.goal === "weight_loss") targetCalories = tdee - 500;
+    if (formData.goal === "muscle_gain") targetCalories = tdee + 300;
+    
+    const proteinPerKg = formData.goal === "muscle_gain" ? 1.8 : 
+                        formData.goal === "weight_loss" ? 1.6 : 1.4;
+    const proteinTarget = weight * proteinPerKg;
+    const fatTarget = (targetCalories * 0.25) / 9;
+    const carbsTarget = (targetCalories - (proteinTarget * 4) - (fatTarget * 9)) / 4;
+
+    const mealPlan = createMealPlan(
+      Math.round(targetCalories), 
+      formData.dietType, 
+      formData.allergies, 
+      formData.dislikes
+    );
+
+    setResults({
+      bmr: Math.round(bmr),
+      tdee: Math.round(tdee),
+      targetCalories: Math.round(targetCalories),
+      protein: Math.round(proteinTarget),
+      fat: Math.round(fatTarget),
+      carbs: Math.round(carbsTarget),
+      meals: mealPlan
+    });
+
+    setIsCalculating(false);
+  };
+
+  return (
+    <div className="min-h-screen bg-black text-white">
+      {/* Header */}
+      <div className="bg-gradient-to-b from-green-900/20 to-black p-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center gap-4 mb-4">
+            <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            </div>
+            <div>
+              <h1 className="text-5xl font-black tracking-tight">Diet Calculator</h1>
+              <p className="text-gray-400 text-lg">Personalized Indian meal plans</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-6 pb-8">
+        {/* Form */}
+        <div className="bg-gray-900 rounded-lg p-8 mb-8">
+          <h2 className="text-2xl font-bold mb-6 text-green-400">Your Details</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div>
+              <label className="block text-sm font-semibold text-gray-300 mb-2 uppercase tracking-wide">Age</label>
+              <input 
+                type="number" 
+                name="age" 
+                value={formData.age} 
+                onChange={handleInputChange}
+                className="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-colors"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-300 mb-2 uppercase tracking-wide">Sex</label>
+              <select 
+                name="sex" 
+                value={formData.sex} 
+                onChange={handleInputChange}
+                className="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-colors"
+              >
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-300 mb-2 uppercase tracking-wide">Weight (kg)</label>
+              <input 
+                type="number" 
+                name="weight" 
+                value={formData.weight} 
+                onChange={handleInputChange}
+                className="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-colors"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-300 mb-2 uppercase tracking-wide">Height (cm)</label>
+              <input 
+                type="number" 
+                name="height" 
+                value={formData.height} 
+                onChange={handleInputChange}
+                className="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-colors"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-300 mb-2 uppercase tracking-wide">Activity</label>
+              <select 
+                name="activity" 
+                value={formData.activity} 
+                onChange={handleInputChange}
+                className="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-colors"
+              >
+                <option value="sedentary">Sedentary</option>
+                <option value="light">Light</option>
+                <option value="moderate">Moderate</option>
+                <option value="active">Active</option>
+                <option value="very_active">Very Active</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-300 mb-2 uppercase tracking-wide">Diet</label>
+              <select 
+                name="dietType" 
+                value={formData.dietType} 
+                onChange={handleInputChange}
+                className="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-colors"
+              >
+                <option value="veg">Vegetarian</option>
+                <option value="nonveg">Non-Vegetarian</option>
+                <option value="vegan">Vegan</option>
+                <option value="eggetarian">Eggetarian</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-300 mb-2 uppercase tracking-wide">Goal</label>
+              <select 
+                name="goal" 
+                value={formData.goal} 
+                onChange={handleInputChange}
+                className="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-colors"
+              >
+                <option value="balanced">Maintain</option>
+                <option value="weight_loss">Weight Loss</option>
+                <option value="muscle_gain">Muscle Gain</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Restrictions Section */}
+          <div className="border-t border-gray-700 pt-6">
+            <button
+              onClick={() => setShowRestrictions(!showRestrictions)}
+              className="flex items-center gap-2 text-green-400 font-semibold mb-4 hover:text-green-300 transition-colors"
+            >
+              <svg className={`w-5 h-5 transition-transform ${showRestrictions ? 'rotate-90' : ''}`} fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+              </svg>
+              Allergies & Food Preferences
+            </button>
+
+            {showRestrictions && (
+              <div className="space-y-6">
+                {/* Allergy Warning */}
+                <div className="bg-red-900/20 border border-red-600/30 rounded p-4">
+                  <div className="flex gap-3">
+                    <div className="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="white">
+                        <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-red-400 mb-1">Medical Allergies Warning</h4>
+                      <p className="text-gray-300 text-sm">
+                        This app cannot guarantee complete allergen avoidance. Always read labels and consult healthcare providers for severe allergies.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Allergies */}
+                <div>
+                  <h4 className="text-white font-semibold mb-3">Medical Allergies</h4>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    {ALLERGEN_LIST.map(allergen => (
+                      <label key={allergen} className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={formData.allergies.includes(allergen)}
+                          onChange={() => handleAllergyChange(allergen)}
+                          className="w-4 h-4 text-red-500 bg-gray-800 border-gray-600 rounded focus:ring-red-500"
+                        />
+                        <span className="text-gray-300 text-sm capitalize">{allergen}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Dislikes */}
+                <div>
+                  <h4 className="text-white font-semibold mb-3">Foods I Don't Like</h4>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    {DISLIKE_CATEGORIES.map(category => (
+                      <label key={category} className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={formData.dislikes.includes(category)}
+                          onChange={() => handleDislikeChange(category)}
+                          className="w-4 h-4 text-yellow-500 bg-gray-800 border-gray-600 rounded focus:ring-yellow-500"
+                        />
+                        <span className="text-gray-300 text-sm capitalize">{category}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Calculate Button */}
+          <div className="mt-8">
+            <button 
+              onClick={calculatePlan}
+              disabled={isCalculating}
+              className="bg-green-500 text-black font-bold py-4 px-8 rounded-full text-lg hover:bg-green-400 transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+            >
+              {isCalculating ? (
+                <span className="flex items-center gap-3">
+                  <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
+                  Calculating...
+                </span>
+              ) : (
+                "Calculate My Plan"
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Results */}
+        {results && (
+          <div className="space-y-8">
+            {/* Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <div className="bg-gray-900 rounded p-6 border-l-4 border-green-500">
+                <div className="text-3xl font-black text-white">{results.bmr}</div>
+                <div className="text-gray-400 font-medium">BMR</div>
+                <div className="text-xs text-gray-500 uppercase">kcal/day</div>
+              </div>
+              
+              <div className="bg-gray-900 rounded p-6 border-l-4 border-blue-500">
+                <div className="text-3xl font-black text-white">{results.tdee}</div>
+                <div className="text-gray-400 font-medium">TDEE</div>
+                <div className="text-xs text-gray-500 uppercase">kcal/day</div>
+              </div>
+              
+              <div className="bg-gray-900 rounded p-6 border-l-4 border-purple-500">
+                <div className="text-3xl font-black text-white">{results.targetCalories}</div>
+                <div className="text-gray-400 font-medium">Target</div>
+                <div className="text-xs text-gray-500 uppercase">kcal/day</div>
+              </div>
+              
+              <div className="bg-gray-900 rounded p-6 border-l-4 border-yellow-500">
+                <div className="text-3xl font-black text-white">{results.protein}g</div>
+                <div className="text-gray-400 font-medium">Protein</div>
+                <div className="text-xs text-gray-500 uppercase">daily target</div>
+              </div>
+            </div>
+
+            {/* Macros */}
+            <div className="bg-gray-900 rounded p-6">
+              <h3 className="text-2xl font-bold mb-6 text-green-400">Daily Macros</h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-gray-800 rounded p-4 text-center">
+                  <div className="text-3xl font-black text-red-400">{results.protein}g</div>
+                  <div className="text-gray-300">Protein</div>
+                </div>
+                <div className="bg-gray-800 rounded p-4 text-center">
+                  <div className="text-3xl font-black text-yellow-400">{results.fat}g</div>
+                  <div className="text-gray-300">Fat</div>
+                </div>
+                <div className="bg-gray-800 rounded p-4 text-center">
+                  <div className="text-3xl font-black text-green-400">{results.carbs}g</div>
+                  <div className="text-gray-300">Carbs</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Meal Plan */}
+            <div className="bg-gray-900 rounded p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-2xl font-bold text-green-400">Your Meal Plan</h3>
+                <div className="text-gray-400 text-sm">
+                  {results.meals.length} meals • {results.targetCalories} kcal
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                {results.meals.map((meal, index) => (
+                  <div key={meal.id} className="bg-gray-800 rounded p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 bg-gray-700 rounded flex items-center justify-center text-gray-400 font-bold">
+                          {index + 1}
+                        </div>
+                        <div>
+                          <h4 className="text-white font-bold">{meal.name}</h4>
+                          <p className="text-gray-400 text-sm">{meal.totalCalories} kcal • {meal.totalProtein}g protein</p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {meal.warnings.length > 0 && (
+                      <div className="mb-4 space-y-1">
+                        {meal.warnings.map((warning, i) => (
+                          <div key={i} className="text-xs text-orange-400 bg-orange-900/20 px-2 py-1 rounded">
+                            {warning}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    
+                    <div className="space-y-2">
+                      {meal.items.map((item, i) => (
+                        <div key={i} className="flex justify-between items-center text-gray-300">
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm">{item.name} × {item.quantity}</span>
+                            {item.isSubstitute && (
+                              <span className="text-xs bg-blue-900/30 text-blue-400 px-1 rounded">sub</span>
+                            )}
+                          </div>
+                          <span className="text-xs">{item.calories} kcal</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Active Restrictions */}
+            {(formData.allergies.length > 0 || formData.dislikes.length > 0) && (
+              <div className="bg-gray-900 rounded p-6">
+                <h3 className="text-lg font-bold text-green-400 mb-4">Active Restrictions</h3>
+                <div className="space-y-3">
+                  {formData.allergies.length > 0 && (
+                    <div>
+                      <h4 className="text-red-400 font-semibold mb-2">Allergies</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {formData.allergies.map(allergen => (
+                          <span key={allergen} className="bg-red-900/30 text-red-300 px-2 py-1 rounded text-xs capitalize">
+                            {allergen}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {formData.dislikes.length > 0 && (
+                    <div>
+                      <h4 className="text-yellow-400 font-semibold mb-2">Food Preferences</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {formData.dislikes.map(dislike => (
+                          <span key={dislike} className="bg-yellow-900/30 text-yellow-300 px-2 py-1 rounded text-xs capitalize">
+                            Avoiding {dislike}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Disclaimers */}
+            <div className="space-y-4">
+              {formData.allergies.length > 0 && (
+                <div className="bg-red-900/20 border border-red-600/30 rounded p-6">
+                  <div className="flex gap-4">
+                    <div className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="white">
+                        <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-red-400 mb-2">Allergy Safety Warning</h4>
+                      <p className="text-gray-300 text-sm leading-relaxed">
+                        This app cannot guarantee complete allergen avoidance. Cross-contamination, hidden ingredients, 
+                        and processing facilities may pose risks. Always read labels, inform restaurants about allergies, 
+                        and carry emergency medication if prescribed. Consult your allergist before following meal plans.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <div className="bg-yellow-900/20 border border-yellow-600/30 rounded p-6">
+                <div className="flex gap-4">
+                  <div className="w-6 h-6 bg-yellow-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="black">
+                      <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-yellow-400 mb-2">Medical Disclaimer</h4>
+                    <p className="text-gray-300 text-sm leading-relaxed">
+                      This meal plan is for educational purposes only and not a substitute for professional medical advice. 
+                      Individual nutritional needs vary based on medical conditions, metabolic rate, and other factors. 
+                      For medical conditions, eating disorders, or specialized dietary requirements, consult a registered 
+                      dietitian or healthcare professional before making dietary changes.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
