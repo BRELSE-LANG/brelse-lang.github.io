@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Indian Diet Calculator</title>
+  <title>Health & Wellness Calculator</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="min-h-screen bg-black text-white">
@@ -18,269 +18,265 @@
           </svg>
         </div>
         <div>
-          <h1 class="text-5xl font-black tracking-tight">Diet Calculator</h1>
-          <p class="text-gray-400 text-lg">Personalized Indian meal plans</p>
+          <h1 class="text-5xl font-black tracking-tight">Health & Wellness Calculator</h1>
+          <p class="text-gray-400 text-lg">Diet, Sleep & Dream Analysis</p>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Navigation Tabs -->
+  <div class="max-w-6xl mx-auto px-6 mb-8">
+    <div class="flex flex-wrap gap-4 bg-gray-900 rounded-lg p-2">
+      <button id="dietTab" class="tab-btn active px-6 py-3 rounded-lg font-semibold transition-all">Diet Calculator</button>
+      <button id="sleepTab" class="tab-btn px-6 py-3 rounded-lg font-semibold transition-all">Sleep Tracker</button>
+      <button id="dreamTab" class="tab-btn px-6 py-3 rounded-lg font-semibold transition-all">Dream Journal</button>
+    </div>
+  </div>
+
   <div class="max-w-6xl mx-auto px-6 pb-8">
-    <!-- Form -->
-    <div class="bg-gray-900 rounded-lg p-8 mb-8">
-      <h2 class="text-2xl font-bold mb-6 text-green-400">Your Details</h2>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div>
-          <label class="block text-sm font-semibold text-gray-300 mb-2 uppercase tracking-wide">Age</label>
-          <input 
-            type="number" 
-            id="age" 
-            value="25"
-            class="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-colors"
-          />
+
+    <!-- Diet Calculator Tab -->
+    <div id="dietContent" class="tab-content">
+      <!-- Form -->
+      <div class="bg-gray-900 rounded-lg p-8 mb-8">
+        <h2 class="text-2xl font-bold mb-6 text-green-400">Your Details</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div>
+            <label class="block text-sm font-semibold text-gray-300 mb-2 uppercase tracking-wide">Age</label>
+            <input 
+              type="number" 
+              id="age" 
+              value="25"
+              class="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-colors"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-300 mb-2 uppercase tracking-wide">Sex</label>
+            <select 
+              id="sex"
+              class="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-colors"
+            >
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-300 mb-2 uppercase tracking-wide">Weight (kg)</label>
+            <input 
+              type="number" 
+              id="weight" 
+              value="70"
+              class="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-colors"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-300 mb-2 uppercase tracking-wide">Height (cm)</label>
+            <input 
+              type="number" 
+              id="height" 
+              value="170"
+              class="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-colors"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-300 mb-2 uppercase tracking-wide">Activity</label>
+            <select 
+              id="activity"
+              class="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-colors"
+            >
+              <option value="sedentary">Sedentary</option>
+              <option value="light">Light</option>
+              <option value="moderate" selected>Moderate</option>
+              <option value="active">Active</option>
+              <option value="very_active">Very Active</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-300 mb-2 uppercase tracking-wide">Diet</label>
+            <select 
+              id="dietType"
+              class="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-colors"
+            >
+              <option value="veg" selected>Vegetarian</option>
+              <option value="nonveg">Non-Vegetarian</option>
+              <option value="vegan">Vegan</option>
+              <option value="eggetarian">Eggetarian</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-300 mb-2 uppercase tracking-wide">Goal</label>
+            <select 
+              id="goal"
+              class="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-colors"
+            >
+              <option value="balanced" selected>Maintain</option>
+              <option value="weight_loss">Weight Loss</option>
+              <option value="muscle_gain">Muscle Gain</option>
+            </select>
+          </div>
         </div>
 
-        <div>
-          <label class="block text-sm font-semibold text-gray-300 mb-2 uppercase tracking-wide">Sex</label>
-          <select 
-            id="sex"
-            class="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-colors"
+        <!-- Calculate Button -->
+        <div class="mt-8">
+          <button 
+            id="calculateBtn"
+            class="bg-green-500 text-black font-bold py-4 px-8 rounded-full text-lg hover:bg-green-400 transform hover:scale-105 transition-all"
           >
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="block text-sm font-semibold text-gray-300 mb-2 uppercase tracking-wide">Weight (kg)</label>
-          <input 
-            type="number" 
-            id="weight" 
-            value="70"
-            class="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-colors"
-          />
-        </div>
-
-        <div>
-          <label class="block text-sm font-semibold text-gray-300 mb-2 uppercase tracking-wide">Height (cm)</label>
-          <input 
-            type="number" 
-            id="height" 
-            value="170"
-            class="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-colors"
-          />
-        </div>
-
-        <div>
-          <label class="block text-sm font-semibold text-gray-300 mb-2 uppercase tracking-wide">Activity</label>
-          <select 
-            id="activity"
-            class="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-colors"
-          >
-            <option value="sedentary">Sedentary</option>
-            <option value="light">Light</option>
-            <option value="moderate" selected>Moderate</option>
-            <option value="active">Active</option>
-            <option value="very_active">Very Active</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="block text-sm font-semibold text-gray-300 mb-2 uppercase tracking-wide">Diet</label>
-          <select 
-            id="dietType"
-            class="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-colors"
-          >
-            <option value="veg" selected>Vegetarian</option>
-            <option value="nonveg">Non-Vegetarian</option>
-            <option value="vegan">Vegan</option>
-            <option value="eggetarian">Eggetarian</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="block text-sm font-semibold text-gray-300 mb-2 uppercase tracking-wide">Goal</label>
-          <select 
-            id="goal"
-            class="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-colors"
-          >
-            <option value="balanced" selected>Maintain</option>
-            <option value="weight_loss">Weight Loss</option>
-            <option value="muscle_gain">Muscle Gain</option>
-          </select>
+            Calculate My Plan
+          </button>
         </div>
       </div>
 
-      <!-- Restrictions Section -->
-      <div class="border-t border-gray-700 pt-6">
-        <button
-          id="toggleRestrictions"
-          class="flex items-center gap-2 text-green-400 font-semibold mb-4 hover:text-green-300 transition-colors"
-        >
-          <svg id="restrictionIcon" class="w-5 h-5 transition-transform" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-          </svg>
-          Allergies & Food Preferences
-        </button>
-
-        <div id="restrictionsPanel" class="hidden space-y-6">
-          <!-- Allergy Warning -->
-          <div class="bg-red-900/20 border border-red-600/30 rounded p-4">
-            <div class="flex gap-3">
-              <div class="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="white">
-                  <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
-                </svg>
-              </div>
-              <div>
-                <h4 class="font-bold text-red-400 mb-1">Medical Allergies Warning</h4>
-                <p class="text-gray-300 text-sm">
-                  This app cannot guarantee complete allergen avoidance. Always read labels and consult healthcare providers for severe allergies.
-                </p>
-              </div>
-            </div>
+      <!-- Results -->
+      <div id="dietResults" class="hidden space-y-8">
+        <!-- Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div class="bg-gray-900 rounded p-6 border-l-4 border-green-500">
+            <div id="bmr" class="text-3xl font-black text-white">0</div>
+            <div class="text-gray-400 font-medium">BMR</div>
+            <div class="text-xs text-gray-500 uppercase">kcal/day</div>
           </div>
-
-          <!-- Allergies -->
-          <div>
-            <h4 class="text-white font-semibold mb-3">Medical Allergies</h4>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-red-500 bg-gray-800 border-gray-600 rounded focus:ring-red-500 allergy-check" value="dairy">
-                <span class="text-gray-300 text-sm">Dairy</span>
-              </label>
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-red-500 bg-gray-800 border-gray-600 rounded focus:ring-red-500 allergy-check" value="egg">
-                <span class="text-gray-300 text-sm">Egg</span>
-              </label>
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-red-500 bg-gray-800 border-gray-600 rounded focus:ring-red-500 allergy-check" value="gluten">
-                <span class="text-gray-300 text-sm">Gluten</span>
-              </label>
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-red-500 bg-gray-800 border-gray-600 rounded focus:ring-red-500 allergy-check" value="nuts">
-                <span class="text-gray-300 text-sm">Nuts</span>
-              </label>
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-red-500 bg-gray-800 border-gray-600 rounded focus:ring-red-500 allergy-check" value="soy">
-                <span class="text-gray-300 text-sm">Soy</span>
-              </label>
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-red-500 bg-gray-800 border-gray-600 rounded focus:ring-red-500 allergy-check" value="fish">
-                <span class="text-gray-300 text-sm">Fish</span>
-              </label>
-            </div>
+          
+          <div class="bg-gray-900 rounded p-6 border-l-4 border-blue-500">
+            <div id="tdee" class="text-3xl font-black text-white">0</div>
+            <div class="text-gray-400 font-medium">TDEE</div>
+            <div class="text-xs text-gray-500 uppercase">kcal/day</div>
           </div>
+          
+          <div class="bg-gray-900 rounded p-6 border-l-4 border-purple-500">
+            <div id="targetCalories" class="text-3xl font-black text-white">0</div>
+            <div class="text-gray-400 font-medium">Target</div>
+            <div class="text-xs text-gray-500 uppercase">kcal/day</div>
+          </div>
+          
+          <div class="bg-gray-900 rounded p-6 border-l-4 border-yellow-500">
+            <div id="protein" class="text-3xl font-black text-white">0g</div>
+            <div class="text-gray-400 font-medium">Protein</div>
+            <div class="text-xs text-gray-500 uppercase">daily target</div>
+          </div>
+        </div>
 
-          <!-- Dislikes -->
-          <div>
-            <h4 class="text-white font-semibold mb-3">Foods I Don't Like</h4>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-yellow-500 bg-gray-800 border-gray-600 rounded focus:ring-yellow-500 dislike-check" value="dairy">
-                <span class="text-gray-300 text-sm">Dairy</span>
-              </label>
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-yellow-500 bg-gray-800 border-gray-600 rounded focus:ring-yellow-500 dislike-check" value="meat">
-                <span class="text-gray-300 text-sm">Meat</span>
-              </label>
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-yellow-500 bg-gray-800 border-gray-600 rounded focus:ring-yellow-500 dislike-check" value="seafood">
-                <span class="text-gray-300 text-sm">Seafood</span>
-              </label>
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-yellow-500 bg-gray-800 border-gray-600 rounded focus:ring-yellow-500 dislike-check" value="spicy">
-                <span class="text-gray-300 text-sm">Spicy</span>
-              </label>
+        <!-- Macros -->
+        <div class="bg-gray-900 rounded p-6">
+          <h3 class="text-2xl font-bold mb-6 text-green-400">Daily Macros</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-gray-800 rounded p-4 text-center">
+              <div id="proteinMacro" class="text-3xl font-black text-red-400">0g</div>
+              <div class="text-gray-300">Protein</div>
+            </div>
+            <div class="bg-gray-800 rounded p-4 text-center">
+              <div id="fatMacro" class="text-3xl font-black text-yellow-400">0g</div>
+              <div class="text-gray-300">Fat</div>
+            </div>
+            <div class="bg-gray-800 rounded p-4 text-center">
+              <div id="carbsMacro" class="text-3xl font-black text-green-400">0g</div>
+              <div class="text-gray-300">Carbs</div>
             </div>
           </div>
         </div>
-      </div>
-
-      <!-- Calculate Button -->
-      <div class="mt-8">
-        <button 
-          id="calculateBtn"
-          class="bg-green-500 text-black font-bold py-4 px-8 rounded-full text-lg hover:bg-green-400 transform hover:scale-105 transition-all"
-        >
-          Calculate My Plan
-        </button>
       </div>
     </div>
 
-    <!-- Results -->
-    <div id="results" class="hidden space-y-8">
-      <!-- Stats -->
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div class="bg-gray-900 rounded p-6 border-l-4 border-green-500">
-          <div id="bmr" class="text-3xl font-black text-white">0</div>
-          <div class="text-gray-400 font-medium">BMR</div>
-          <div class="text-xs text-gray-500 uppercase">kcal/day</div>
-        </div>
+    <!-- Sleep Tracker Tab -->
+    <div id="sleepContent" class="tab-content hidden">
+      <div class="bg-gray-900 rounded-lg p-8 mb-8">
+        <h2 class="text-2xl font-bold mb-6 text-blue-400">Sleep Tracker</h2>
         
-        <div class="bg-gray-900 rounded p-6 border-l-4 border-blue-500">
-          <div id="tdee" class="text-3xl font-black text-white">0</div>
-          <div class="text-gray-400 font-medium">TDEE</div>
-          <div class="text-xs text-gray-500 uppercase">kcal/day</div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <label class="block text-sm font-semibold text-gray-300 mb-2">Bedtime</label>
+            <input 
+              type="time" 
+              id="bedtime" 
+              value="23:00"
+              class="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:border-blue-500 transition-colors"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-300 mb-2">Wake Time</label>
+            <input 
+              type="time" 
+              id="waketime" 
+              value="07:00"
+              class="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:border-blue-500 transition-colors"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-300 mb-2">Sleep Quality (1-10)</label>
+            <input 
+              type="range" 
+              id="sleepQuality" 
+              min="1" 
+              max="10" 
+              value="7"
+              class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+            />
+            <div class="text-center text-blue-400 mt-2">
+              <span id="qualityValue">7</span>/10
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-300 mb-2">How do you feel?</label>
+            <select 
+              id="sleepFeeling"
+              class="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:border-blue-500 transition-colors"
+            >
+              <option value="refreshed">Refreshed & Energetic</option>
+              <option value="okay" selected>Okay</option>
+              <option value="tired">Tired</option>
+              <option value="exhausted">Exhausted</option>
+            </select>
+          </div>
         </div>
-        
-        <div class="bg-gray-900 rounded p-6 border-l-4 border-purple-500">
-          <div id="targetCalories" class="text-3xl font-black text-white">0</div>
-          <div class="text-gray-400 font-medium">Target</div>
-          <div class="text-xs text-gray-500 uppercase">kcal/day</div>
-        </div>
-        
-        <div class="bg-gray-900 rounded p-6 border-l-4 border-yellow-500">
-          <div id="protein" class="text-3xl font-black text-white">0g</div>
-          <div class="text-gray-400 font-medium">Protein</div>
-          <div class="text-xs text-gray-500 uppercase">daily target</div>
-        </div>
+
+        <button 
+          id="analyzeSleep"
+          class="bg-blue-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-400 transition-all"
+        >
+          Analyze Sleep Impact
+        </button>
       </div>
 
-      <!-- Macros -->
-      <div class="bg-gray-900 rounded p-6">
-        <h3 class="text-2xl font-bold mb-6 text-green-400">Daily Macros</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Sleep Analysis Results -->
+      <div id="sleepResults" class="hidden bg-gray-900 rounded-lg p-8">
+        <h3 class="text-2xl font-bold mb-6 text-blue-400">Sleep Analysis</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
           <div class="bg-gray-800 rounded p-4 text-center">
-            <div id="proteinMacro" class="text-3xl font-black text-red-400">0g</div>
-            <div class="text-gray-300">Protein</div>
+            <div id="sleepDuration" class="text-3xl font-black text-blue-400">0h</div>
+            <div class="text-gray-300">Sleep Duration</div>
           </div>
           <div class="bg-gray-800 rounded p-4 text-center">
-            <div id="fatMacro" class="text-3xl font-black text-yellow-400">0g</div>
-            <div class="text-gray-300">Fat</div>
+            <div id="sleepScore" class="text-3xl font-black text-green-400">0</div>
+            <div class="text-gray-300">Sleep Score</div>
           </div>
           <div class="bg-gray-800 rounded p-4 text-center">
-            <div id="carbsMacro" class="text-3xl font-black text-green-400">0g</div>
-            <div class="text-gray-300">Carbs</div>
+            <div id="calorieAdjustment" class="text-3xl font-black text-yellow-400">+0</div>
+            <div class="text-gray-300">Calorie Impact</div>
           </div>
         </div>
-      </div>
 
-      <!-- Sample Meal Plan -->
-      <div class="bg-gray-900 rounded p-6">
-        <h3 class="text-2xl font-bold text-green-400 mb-6">Sample Meal Plan</h3>
-        <div class="space-y-4">
-          <div class="bg-gray-800 rounded p-4">
-            <h4 class="text-white font-bold mb-2">Breakfast</h4>
-            <p class="text-gray-300 text-sm">2 Roti + Paneer (50g) + Milk (1 glass)</p>
-            <p class="text-gray-400 text-xs">~400 kcal • 20g protein</p>
-          </div>
-          <div class="bg-gray-800 rounded p-4">
-            <h4 class="text-white font-bold mb-2">Lunch</h4>
-            <p class="text-gray-300 text-sm">Rice (1 cup) + Dal (1 cup) + Sabzi (1 cup) + Roti (1)</p>
-            <p class="text-gray-400 text-xs">~600 kcal • 25g protein</p>
-          </div>
-          <div class="bg-gray-800 rounded p-4">
-            <h4 class="text-white font-bold mb-2">Dinner</h4>
-            <p class="text-gray-300 text-sm">Roti (2) + Dal (1 cup) + Sabzi (1 cup)</p>
-            <p class="text-gray-400 text-xs">~450 kcal • 18g protein</p>
-          </div>
+        <div id="sleepRecommendations" class="space-y-4">
+          <!-- Recommendations will be populated by JavaScript -->
         </div>
       </div>
+    </div>
 
-      <!-- Disclaimer -->
-      <div class="bg-yellow-900/20 border border-yellow-600/30 rounded p-6">
+    <!-- Dream Journal Tab -->
+    <div id="dreamContent" class="tab-content hidden">
+      <!-- Dream Interpretation Disclaimer -->
+      <div class="bg-yellow-900/20 border border-yellow-600/30 rounded-lg p-6 mb-8">
         <div class="flex gap-4">
           <div class="w-6 h-6 bg-yellow-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="black">
@@ -288,31 +284,174 @@
             </svg>
           </div>
           <div>
-            <h4 class="font-bold text-yellow-400 mb-2">Medical Disclaimer</h4>
+            <h4 class="font-bold text-yellow-400 mb-2">Dream Analysis Disclaimer</h4>
             <p class="text-gray-300 text-sm leading-relaxed">
-              This meal plan is for educational purposes only and not a substitute for professional medical advice. 
-              Individual nutritional needs vary based on medical conditions, metabolic rate, and other factors. 
-              For medical conditions, eating disorders, or specialized dietary requirements, consult a registered 
-              dietitian or healthcare professional before making dietary changes.
+              Dream interpretations provided here are for entertainment and self-reflection only. 
+              There is no scientific evidence that dreams predict the future or have universal meanings. 
+              Dreams are highly personal and can be influenced by daily experiences, stress, and brain processing. 
+              Do not make important life decisions based on dream interpretations.
             </p>
           </div>
+        </div>
+      </div>
+
+      <div class="bg-gray-900 rounded-lg p-8 mb-8">
+        <h2 class="text-2xl font-bold mb-6 text-purple-400">Dream Journal</h2>
+        
+        <div class="space-y-6">
+          <div>
+            <label class="block text-sm font-semibold text-gray-300 mb-2">Describe your dream</label>
+            <textarea 
+              id="dreamDescription"
+              rows="4"
+              class="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:border-purple-500 transition-colors"
+              placeholder="Share the details of your dream..."
+            ></textarea>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-semibold text-gray-300 mb-2">Dream Emotion</label>
+              <select 
+                id="dreamEmotion"
+                class="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:border-purple-500 transition-colors"
+              >
+                <option value="">Select emotion</option>
+                <option value="happy">Happy/Joyful</option>
+                <option value="fearful">Fearful/Anxious</option>
+                <option value="sad">Sad/Melancholic</option>
+                <option value="angry">Angry/Frustrated</option>
+                <option value="confused">Confused/Lost</option>
+                <option value="excited">Excited/Thrilled</option>
+                <option value="peaceful">Peaceful/Calm</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-sm font-semibold text-gray-300 mb-2">Dream Theme</label>
+              <select 
+                id="dreamTheme"
+                class="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:border-purple-500 transition-colors"
+              >
+                <option value="">Select theme</option>
+                <option value="flying">Flying/Freedom</option>
+                <option value="falling">Falling/Loss of Control</option>
+                <option value="chased">Being Chased</option>
+                <option value="water">Water/Ocean</option>
+                <option value="animals">Animals</option>
+                <option value="family">Family/Relationships</option>
+                <option value="work">Work/School</option>
+                <option value="death">Death/Endings</option>
+                <option value="nature">Nature/Outdoors</option>
+                <option value="travel">Travel/Journey</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-300 mb-2">Dream Clarity (1-10)</label>
+            <input 
+              type="range" 
+              id="dreamClarity" 
+              min="1" 
+              max="10" 
+              value="5"
+              class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+            />
+            <div class="text-center text-purple-400 mt-2">
+              <span id="clarityValue">5</span>/10 - <span id="clarityLabel">Moderate</span>
+            </div>
+          </div>
+
+          <button 
+            id="interpretDream"
+            class="bg-purple-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-purple-400 transition-all"
+          >
+            Generate Interpretation
+          </button>
+        </div>
+      </div>
+
+      <!-- Dream Interpretation Results -->
+      <div id="dreamResults" class="hidden bg-gray-900 rounded-lg p-8">
+        <h3 class="text-2xl font-bold mb-6 text-purple-400">Dream Analysis</h3>
+        <div id="dreamInterpretation" class="space-y-4">
+          <!-- Interpretation will be populated by JavaScript -->
+        </div>
+
+        <!-- Dream Journal History -->
+        <div class="mt-8 pt-6 border-t border-gray-700">
+          <h4 class="text-lg font-semibold text-gray-300 mb-4">Dream Journal Entries</h4>
+          <div id="dreamHistory" class="space-y-3">
+            <!-- Previous dreams will be listed here -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- General Disclaimer -->
+    <div class="bg-red-900/20 border border-red-600/30 rounded-lg p-6 mt-8">
+      <div class="flex gap-4">
+        <div class="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="white">
+            <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+          </svg>
+        </div>
+        <div>
+          <h4 class="font-bold text-red-400 mb-2">Medical Disclaimer</h4>
+          <p class="text-gray-300 text-sm leading-relaxed">
+            This application is for informational and entertainment purposes only. It is not a substitute for 
+            professional medical, nutritional, or psychological advice. For sleep disorders, persistent health issues, 
+            or concerning dream patterns, consult qualified healthcare professionals.
+          </p>
         </div>
       </div>
     </div>
   </div>
 
+  <style>
+    .tab-btn {
+      color: #9CA3AF;
+      background: transparent;
+    }
+    .tab-btn.active {
+      color: white;
+      background: #10B981;
+    }
+    .tab-btn:hover {
+      color: #D1FAE5;
+      background: rgba(16, 185, 129, 0.1);
+    }
+  </style>
+
   <script>
-    const FOOD_DB = {
-      roti: { name: "Roti (wheat, medium)", kcal: 100, protein: 3, allergens: ["gluten"], category: "grain" },
-      rice_cup: { name: "Cooked rice (1 cup)", kcal: 130, protein: 2.5, allergens: [], category: "grain" },
-      dal_cup: { name: "Cooked dal (1 cup)", kcal: 150, protein: 9, allergens: [], category: "legume" },
-      sabzi_cup: { name: "Vegetable sabzi (1 cup)", kcal: 120, protein: 3.5, allergens: [], category: "vegetable" },
-      paneer_100: { name: "Paneer (100g)", kcal: 260, protein: 18, allergens: ["dairy"], category: "dairy" },
-      egg_boiled: { name: "Boiled egg (1)", kcal: 70, protein: 6, allergens: ["egg"], category: "protein" },
-      chicken_100: { name: "Chicken breast (100g cooked)", kcal: 165, protein: 31, allergens: [], category: "meat" },
-      fish_100: { name: "Fish fillet (100g cooked)", kcal: 180, protein: 22, allergens: ["fish"], category: "seafood" },
-      milk_glass: { name: "Milk (250ml)", kcal: 120, protein: 8, allergens: ["dairy"], category: "dairy" }
-    };
+    // Tab switching functionality
+    const tabs = document.querySelectorAll('.tab-btn');
+    const contents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Remove active class from all tabs and hide all contents
+        tabs.forEach(t => t.classList.remove('active'));
+        contents.forEach(c => c.classList.add('hidden'));
+        
+        // Add active class to clicked tab
+        tab.classList.add('active');
+        
+        // Show corresponding content
+        const contentId = tab.id.replace('Tab', 'Content');
+        document.getElementById(contentId).classList.remove('hidden');
+      });
+    });
+
+    // Diet Calculator Functions
+    function calcBMR(sex, weightKg, heightCm, age) {
+      if (sex === "male") {
+        return 10 * weightKg + 6.25 * heightCm - 5 * age + 5;
+      } else {
+        return 10 * weightKg + 6.25 * heightCm - 5 * age - 161;
+      }
+    }
 
     const activityMultipliers = {
       sedentary: 1.2,
@@ -322,29 +461,7 @@
       very_active: 1.9
     };
 
-    function calcBMR(sex, weightKg, heightCm, age) {
-      if (sex === "male") {
-        return 10 * weightKg + 6.25 * heightCm - 5 * age + 5;
-      } else {
-        return 10 * weightKg + 6.25 * heightCm - 5 * age - 161;
-      }
-    }
-
-    // Toggle restrictions panel
-    document.getElementById('toggleRestrictions').addEventListener('click', function() {
-      const panel = document.getElementById('restrictionsPanel');
-      const icon = document.getElementById('restrictionIcon');
-      
-      if (panel.classList.contains('hidden')) {
-        panel.classList.remove('hidden');
-        icon.style.transform = 'rotate(90deg)';
-      } else {
-        panel.classList.add('hidden');
-        icon.style.transform = 'rotate(0deg)';
-      }
-    });
-
-    // Calculate button
+    // Diet calculation
     document.getElementById('calculateBtn').addEventListener('click', function() {
       const age = parseInt(document.getElementById('age').value);
       const sex = document.getElementById('sex').value;
@@ -353,22 +470,18 @@
       const activity = document.getElementById('activity').value;
       const goal = document.getElementById('goal').value;
 
-      // Calculate BMR and TDEE
       const bmr = Math.round(calcBMR(sex, weight, height, age));
       const tdee = Math.round(bmr * activityMultipliers[activity]);
       
-      // Adjust for goals
       let targetCalories = tdee;
       if (goal === "weight_loss") targetCalories = Math.round(tdee - 500);
       if (goal === "muscle_gain") targetCalories = Math.round(tdee + 300);
 
-      // Calculate macros
       const proteinPerKg = goal === "muscle_gain" ? 1.8 : goal === "weight_loss" ? 1.6 : 1.4;
       const proteinTarget = Math.round(weight * proteinPerKg);
       const fatTarget = Math.round((targetCalories * 0.25) / 9);
       const carbsTarget = Math.round((targetCalories - (proteinTarget * 4) - (fatTarget * 9)) / 4);
 
-      // Update display
       document.getElementById('bmr').textContent = bmr;
       document.getElementById('tdee').textContent = tdee;
       document.getElementById('targetCalories').textContent = targetCalories;
@@ -378,12 +491,111 @@
       document.getElementById('fatMacro').textContent = fatTarget + 'g';
       document.getElementById('carbsMacro').textContent = carbsTarget + 'g';
 
-      // Show results
-      document.getElementById('results').classList.remove('hidden');
-      
-      // Scroll to results
-      document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('dietResults').classList.remove('hidden');
+      document.getElementById('dietResults').scrollIntoView({ behavior: 'smooth' });
     });
-  </script>
-</body>
-</html>
+
+    // Sleep Quality Slider
+    document.getElementById('sleepQuality').addEventListener('input', function() {
+      document.getElementById('qualityValue').textContent = this.value;
+    });
+
+    // Dream Clarity Slider
+    document.getElementById('dreamClarity').addEventListener('input', function() {
+      const value = this.value;
+      document.getElementById('clarityValue').textContent = value;
+      
+      let label = 'Poor';
+      if (value >= 8) label = 'Very Clear';
+      else if (value >= 6) label = 'Clear';
+      else if (value >= 4) label = 'Moderate';
+      else if (value >= 2) label = 'Fuzzy';
+      
+      document.getElementById('clarityLabel').textContent = label;
+    });
+
+    // Sleep Analysis
+    document.getElementById('analyzeSleep').addEventListener('click', function() {
+      const bedtime = document.getElementById('bedtime').value;
+      const waketime = document.getElementById('waketime').value;
+      const quality = parseInt(document.getElementById('sleepQuality').value);
+      const feeling = document.getElementById('sleepFeeling').value;
+
+      // Calculate sleep duration
+      const bed = new Date('2024-01-01T' + bedtime);
+      let wake = new Date('2024-01-01T' + waketime);
+      
+      // Handle overnight sleep
+      if (wake < bed) {
+        wake.setDate(wake.getDate() + 1);
+      }
+      
+      const durationMs = wake - bed;
+      const durationHours = Math.round(durationMs / (1000 * 60 * 60) * 10) / 10;
+
+      // Calculate sleep score
+      let sleepScore = quality * 10;
+      if (durationHours >= 7 && durationHours <= 9) sleepScore += 20;
+      else if (durationHours >= 6 && durationHours <= 10) sleepScore += 10;
+      
+      if (feeling === 'refreshed') sleepScore += 10;
+      else if (feeling === 'exhausted') sleepScore -= 20;
+      else if (feeling === 'tired') sleepScore -= 10;
+
+      sleepScore = Math.max(0, Math.min(100, sleepScore));
+
+      // Calorie adjustment based on sleep
+      let calorieAdjustment = 0;
+      if (durationHours < 6) calorieAdjustment = 200; // Poor sleep increases hunger
+      else if (durationHours > 9) calorieAdjustment = -100; // Oversleep may reduce metabolism
+      else if (quality < 5) calorieAdjustment = 150; // Poor quality increases cortisol
+
+      document.getElementById('sleepDuration').textContent = durationHours + 'h';
+      document.getElementById('sleepScore').textContent = sleepScore;
+      document.getElementById('calorieAdjustment').textContent = (calorieAdjustment > 0 ? '+' : '') + calorieAdjustment;
+
+      // Generate recommendations
+      let recommendations = [];
+      if (durationHours < 7) {
+        recommendations.push("Try to get at least 7-9 hours of sleep for optimal health and metabolism.");
+      }
+      if (quality < 6) {
+        recommendations.push("Consider improving sleep hygiene: dark room, cool temperature, no screens before bed.");
+      }
+      if (feeling === 'tired' || feeling === 'exhausted') {
+        recommendations.push("Poor sleep increases hunger hormones and cravings for high-calorie foods.");
+      }
+      if (sleepScore >= 80) {
+        recommendations.push("Excellent sleep! This supports healthy metabolism and appetite regulation.");
+      }
+
+      const recEl = document.getElementById('sleepRecommendations');
+      recEl.innerHTML = recommendations.map(rec => 
+        `<div class="bg-gray-800 rounded p-4"><p class="text-gray-300">${rec}</p></div>`
+      ).join('');
+
+      document.getElementById('sleepResults').classList.remove('hidden');
+      document.getElementById('sleepResults').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Dream interpretation data
+    const dreamInterpretations = {
+      emotions: {
+        happy: "Happiness in dreams often reflects contentment or optimism in waking life, or a desire for more joy.",
+        fearful: "Fear in dreams may represent anxiety about upcoming changes or unresolved concerns in daily life.",
+        sad: "Sadness in dreams could indicate grief, disappointment, or the need to process difficult emotions.",
+        angry: "Anger in dreams might reflect frustration, feelings of powerlessness, or suppressed emotions.",
+        confused: "Confusion in dreams often mirrors feeling overwhelmed or uncertain about decisions in waking life.",
+        excited: "Excitement in dreams may represent anticipation, hope, or enthusiasm about future possibilities.",
+        peaceful: "Peaceful dreams often indicate inner harmony, stress relief, or successful resolution of conflicts."
+      },
+      themes: {
+        flying: "Flying dreams are often associated with feelings of freedom, ambition, or desire to escape limitations.",
+        falling: "Falling dreams commonly represent feelings of losing control, fear of failure, or anxiety about life changes.",
+        chased: "Being chased in dreams may reflect avoidance of responsibilities, fears, or unresolved issues in waking life.",
+        water: "Water in dreams often symbolizes emotions, the unconscious mind, or life transitions and cleansing.",
+        animals: "Animals in dreams can represent instincts, natural behaviors, or aspects of personality and relationships.",
+        family: "Family dreams often reflect relationship dynamics, childhood memories, or feelings about support systems.",
+        work: "Work-related dreams may indicate stress about performance, career concerns, or feelings about daily responsibilities.",
+        death: "Death in dreams rarely predicts actual death; it often represents endings, transitions, or transformation.",
+        nature: "Nature dreams often represent growth, renewal, connection to natural cycles, or need for grounding.",
