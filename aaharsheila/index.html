@@ -1,204 +1,517 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="antialiased">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>AahaarSheela — Health & Wellness</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    :root {
+      --bg-color: #000;
+      --text-color: #fff;
+      --card-bg: #111;
+      --border-color: #333;
+      --accent-color: #fff;
+    }
     body {
-      background-color: #E0F2F7; /* Light Blue Background */
-      color: #1A202C; /* Dark text for contrast */
-      font-family: 'Inter', sans-serif;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      background: var(--bg-color);
+      color: var(--text-color);
     }
-    .neumorphic-button {
-      background: #E0F2F7;
+    .vercel-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
       border-radius: 12px;
-      box-shadow: 6px 6px 12px #B0D8E4, -6px -6px 12px #FFFFFF;
-      transition: all 0.2s ease-in-out;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
     }
-    .neumorphic-button:hover {
-      box-shadow: 3px 3px 6px #B0D8E4, -3px -3px 6px #FFFFFF;
+    .vercel-input {
+      background: #1A1A1A;
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      border-radius: 6px;
+      transition: border-color 0.2s;
     }
-    .neumorphic-button:active {
-      box-shadow: inset 2px 2px 5px #B0D8E4, inset -2px -2px 5px #FFFFFF;
-    }
-    .neumorphic-card {
-      background: #E0F2F7;
-      border-radius: 20px;
-      box-shadow: 8px 8px 16px #B0D8E4, -8px -8px 16px #FFFFFF;
-    }
-    .neumorphic-input {
-      background: #E0F2F7;
-      border-radius: 8px;
-      padding: 8px 12px;
-      box-shadow: inset 2px 2px 5px #B0D8E4, inset -2px -2px 5px #FFFFFF;
-      color: #1A202C;
-    }
-    .neumorphic-input:focus {
+    .vercel-input:focus {
       outline: none;
-      box-shadow: inset 1px 1px 3px #B0D8E4, inset -1px -1px 3px #FFFFFF, 0 0 0 2px #4299E1; /* Blue ring on focus */
+      border-color: var(--accent-color);
     }
-    .header-style {
-      background-color: #4299E1; /* Strong Blue for Header */
-      color: #FFFFFF;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    .vercel-button {
+      background: var(--text-color);
+      color: var(--bg-color);
+      font-weight: 500;
+      border-radius: 6px;
+      transition: background 0.2s;
     }
-    .section-title {
-      color: #2B6CB0; /* Darker blue for titles */
-      font-weight: 700;
+    .vercel-button:hover {
+      background: #eee;
     }
-    .text-highlight {
-      color: #4299E1; /* Blue for highlighted text */
+    .tabs-container {
+        display: inline-flex;
+        border-radius: 6px;
+        background: #111;
+        padding: 4px;
+        border: 1px solid #333;
     }
-    .text-secondary {
-      color: #718096; /* Gray for secondary text */
+    .tab-btn {
+      padding: 8px 16px;
+      border-radius: 4px;
+      color: #777;
+      font-weight: 500;
+      transition: background 0.2s, color 0.2s;
+    }
+    .tab-btn.active {
+        background: #333;
+        color: #fff;
     }
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
-<body class="min-h-screen flex flex-col">
+<body class="p-6">
 
-  <header class="p-4 header-style text-center font-bold text-xl">
-    🌿 AahaarSheela — Health & Wellness
-  </header>
-
-  <main class="flex-1 p-4 space-y-8 max-w-4xl mx-auto w-full">
+  <div class="max-w-2xl mx-auto space-y-8">
     
-    <section id="diet">
-      <div class="p-6 neumorphic-card">
-        <h2 class="text-2xl section-title mb-4">🥗 Smart Diet Calculator</h2>
-        <form id="dietForm" class="space-y-4">
-          <input id="age" type="number" placeholder="Age" class="w-full neumorphic-input" required>
-          <input id="weight" type="number" placeholder="Weight (kg)" class="w-full neumorphic-input" required>
-          <input id="height" type="number" placeholder="Height (cm)" class="w-full neumorphic-input" required>
-          <select id="activity" class="w-full neumorphic-input">
-            <option value="1.2">Sedentary</option>
-            <option value="1.375">Lightly Active</option>
-            <option value="1.55">Moderately Active</option>
-            <option value="1.725">Very Active</option>
+    <header class="flex items-center justify-center p-4">
+      <h1 class="text-2xl font-bold">AahaarSheela — Health & Wellness</h1>
+    </header>
+
+    <div class="flex justify-center">
+      <div class="tabs-container">
+        <button class="tab-btn active" data-section="diet">Diet</button>
+        <button class="tab-btn" data-section="sleep">Sleep</button>
+        <button class="tab-btn" data-section="dream">Dream</button>
+      </div>
+    </div>
+    
+    <div id="sections-container">
+
+      <div id="diet" class="vercel-card p-6 space-y-6">
+        <h2 class="text-lg font-bold text-white">Smart Diet Calculator</h2>
+        <p class="text-sm text-gray-400">Personalized Indian meal suggestions & macros</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input id="age" type="number" placeholder="Age" class="vercel-input p-2" value="25">
+          <select id="sex" class="vercel-input p-2">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
           </select>
-          <button type="submit" class="w-full neumorphic-button py-3 font-semibold text-highlight">Calculate</button>
-        </form>
-        <div id="dietResult" class="mt-5 text-base text-secondary"></div>
+          <input id="weight" type="number" placeholder="Weight (kg)" class="vercel-input p-2" value="70">
+          <input id="height" type="number" placeholder="Height (cm)" class="vercel-input p-2" value="170">
+          <select id="activity" class="vercel-input p-2">
+            <option value="sedentary">Sedentary</option>
+            <option value="light">Light</option>
+            <option value="moderate" selected>Moderate</option>
+            <option value="active">Active</option>
+            <option value="very_active">Very Active</option>
+          </select>
+          <select id="dietType" class="vercel-input p-2">
+            <option value="veg" selected>Vegetarian</option>
+            <option value="nonveg">Non-Veg</option>
+            <option value="vegan">Vegan</option>
+            <option value="eggetarian">Eggetarian</option>
+          </select>
+          <select id="goal" class="vercel-input p-2 col-span-1 md:col-span-2">
+            <option value="balanced" selected>Maintain</option>
+            <option value="weight_loss">Weight Loss</option>
+            <option value="muscle_gain">Muscle Gain</option>
+          </select>
+        </div>
+        
+        <button id="calculateBtn" class="vercel-button w-full py-2">Calculate</button>
+        
+        <div id="dietResult" class="text-sm text-gray-300 space-y-2"></div>
+        <div id="mealSuggestions" class="mt-4 space-y-4"></div>
       </div>
-    </section>
 
-    <section id="sleep" class="hidden">
-      <div class="p-6 neumorphic-card">
-        <h2 class="text-2xl section-title mb-4">😴 Sleep Tracker</h2>
-        <form id="sleepForm" class="space-y-4">
-          <label class="block text-secondary">Bedtime:
-            <input id="bedtime" type="time" class="w-full neumorphic-input mt-1">
+      <div id="sleep" class="vercel-card p-6 space-y-6 hidden">
+        <h2 class="text-lg font-bold text-white">Sleep Tracker</h2>
+        <p class="text-sm text-gray-400">Duration, score & caloric impact</p>
+        
+        <div class="grid grid-cols-2 gap-4">
+          <label class="block">
+            <span class="text-sm text-gray-400">Bedtime</span>
+            <input id="bedtime" type="time" class="vercel-input w-full p-2 mt-1" value="23:00">
           </label>
-          <label class="block text-secondary">Wake Time:
-            <input id="waketime" type="time" class="w-full neumorphic-input mt-1">
+          <label class="block">
+            <span class="text-sm text-gray-400">Wake Time</span>
+            <input id="waketime" type="time" class="vercel-input w-full p-2 mt-1" value="07:00">
           </label>
-          <button type="submit" class="w-full neumorphic-button py-3 font-semibold text-highlight">Analyze</button>
-        </form>
-        <div id="sleepResult" class="mt-5 text-base text-secondary"></div>
+        </div>
+        
+        <div>
+          <span class="text-sm text-gray-400">Sleep Quality (1-10)</span>
+          <input id="sleepQuality" type="range" min="1" max="10" value="7" class="w-full h-2 rounded-full mt-2">
+          <div class="text-xs text-gray-500 mt-1">Score: <span id="qualityValue">7</span>/10</div>
+        </div>
+        
+        <button id="analyzeSleep" class="vercel-button w-full py-2">Analyze</button>
+        
+        <div id="sleepResults" class="text-sm text-gray-300"></div>
       </div>
-    </section>
-
-    <section id="dream" class="hidden">
-      <div class="p-6 neumorphic-card">
-        <h2 class="text-2xl section-title mb-4">🌙 Dream Journal</h2>
-        <form id="dreamForm" class="space-y-4">
-          <textarea id="dreamText" placeholder="Write your dream..." class="w-full neumorphic-input h-32 resize-none" rows="4"></textarea>
-          <button type="submit" class="w-full neumorphic-button py-3 font-semibold text-highlight">Save & Interpret</button>
-        </form>
-        <div id="dreamResult" class="mt-5 text-base text-secondary"></div>
-        <h3 class="font-semibold mt-6 text-lg section-title">Saved Dreams</h3>
-        <ul id="dreamHistory" class="mt-3 text-sm text-secondary space-y-2"></ul>
+      
+      <div id="dream" class="vercel-card p-6 space-y-6 hidden">
+        <h2 class="text-lg font-bold text-white">Dream Journal + Interpreter</h2>
+        <p class="text-sm text-gray-400">Write, interpret, and preserve your dreams</p>
+        
+        <textarea id="dreamDescription" rows="4" class="vercel-input w-full p-3" placeholder="Describe your dream..."></textarea>
+        
+        <div class="grid grid-cols-2 gap-4">
+          <select id="dreamEmotion" class="vercel-input p-2">
+            <option value="">Emotion (optional)</option>
+            <option value="happy">Happy</option>
+            <option value="fearful">Fearful</option>
+            <option value="sad">Sad</option>
+            <option value="angry">Angry</option>
+            <option value="confused">Confused</option>
+            <option value="peaceful">Peaceful</option>
+          </select>
+          <select id="dreamTheme" class="vercel-input p-2">
+            <option value="">Theme (optional)</option>
+            <option value="flying">Flying</option>
+            <option value="falling">Falling</option>
+            <option value="chased">Being chased</option>
+            <option value="water">Water</option>
+            <option value="animals">Animals</option>
+            <option value="family">Family</option>
+            <option value="work">Work</option>
+            <option value="travel">Travel</option>
+          </select>
+        </div>
+        
+        <div>
+          <span class="text-sm text-gray-400">Clarity (1-10)</span>
+          <input id="dreamClarity" type="range" min="1" max="10" value="5" class="w-full h-2 rounded-full mt-2">
+          <div class="text-xs text-gray-500 mt-1">Score: <span id="clarityValue">5</span>/10</div>
+        </div>
+        
+        <button id="interpretDream" class="vercel-button w-full py-2">Interpret Dream</button>
+        
+        <div id="dreamInterpretation" class="text-sm text-gray-300"></div>
+        
+        <div class="mt-6">
+          <h3 class="text-md font-medium text-gray-200">Dream History</h3>
+          <div id="dreamHistory" class="mt-2 space-y-2 text-xs"></div>
+        </div>
       </div>
-    </section>
-  </main>
 
-  <nav class="sticky bottom-0 w-full bg-transparent flex justify-around py-4">
-    <button data-target="diet" class="nav-btn neumorphic-button px-6 py-3 font-semibold text-highlight text-lg">🥗 Diet</button>
-    <button data-target="sleep" class="nav-btn neumorphic-button px-6 py-3 font-semibold text-secondary text-lg">😴 Sleep</button>
-    <button data-target="dream" class="nav-btn neumorphic-button px-6 py-3 font-semibold text-secondary text-lg">🌙 Dream</button>
-  </nav>
+    </div>
+  </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // Tab Navigation
-      const navBtns = document.querySelectorAll(".nav-btn");
-      const sections = document.querySelectorAll("main section");
-      navBtns.forEach(btn => {
-        btn.addEventListener("click", () => {
-          sections.forEach(sec => sec.classList.add("hidden"));
-          document.getElementById(btn.dataset.target).classList.remove("hidden");
-          navBtns.forEach(b => b.classList.remove("text-highlight"));
-          navBtns.forEach(b => b.classList.add("text-secondary"));
-          btn.classList.remove("text-secondary");
-          btn.classList.add("text-highlight");
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      // --- Tab Navigation ---
+      const tabButtons = document.querySelectorAll('.tab-btn');
+      const sections = {
+        'diet': document.getElementById('diet'),
+        'sleep': document.getElementById('sleep'),
+        'dream': document.getElementById('dream')
+      };
+
+      tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          // Remove active state from all buttons and hide all sections
+          tabButtons.forEach(b => b.classList.remove('active'));
+          Object.values(sections).forEach(s => s.classList.add('hidden'));
+
+          // Add active state to the clicked button and show the corresponding section
+          btn.classList.add('active');
+          sections[btn.dataset.section].classList.remove('hidden');
         });
       });
 
-      // Diet Calculator
-      const dietForm = document.getElementById("dietForm");
-      const dietResult = document.getElementById("dietResult");
-      dietForm.addEventListener("submit", e => {
-        e.preventDefault();
-        const age = +document.getElementById("age").value;
-        const weight = +document.getElementById("weight").value;
-        const height = +document.getElementById("height").value;
-        const activity = +document.getElementById("activity").value;
-        const bmr = 10 * weight + 6.25 * height - 5 * age + 5;
-        const calories = Math.round(bmr * activity);
-        let suggestion = calories < 1800 ? "Add rice & dal khichdi" :
-                         calories < 2200 ? "Balanced: roti, sabzi, curd" :
-                         "High energy: paneer, nuts, ghee roti";
-        dietResult.textContent = `Your daily calorie need: ${calories} kcal. Suggestion: ${suggestion}`;
-      });
+      // --- Core Logic (Restored from the original code) ---
 
-      // Sleep Tracker
-      const sleepForm = document.getElementById("sleepForm");
-      const sleepResult = document.getElementById("sleepResult");
-      sleepForm.addEventListener("submit", e => {
-        e.preventDefault();
-        const bed = document.getElementById("bedtime").value;
-        const wake = document.getElementById("waketime").value;
-        if (!bed || !wake) return;
-        const [bh,bm] = bed.split(":").map(Number);
-        const [wh,wm] = wake.split(":").map(Number);
-        let start = new Date(0,0,0,bh,bm);
-        let end = new Date(0,0,0,wh,wm);
-        if (end <= start) end.setDate(end.getDate()+1);
-        const hours = (end-start)/3600000;
-        let msg = hours < 6 ? "Too little sleep! Try earlier bedtime." :
-                  hours <= 8 ? "Perfect sleep duration!" :
-                  "Oversleeping a bit, adjust schedule.";
-        sleepResult.textContent = `You slept ${hours.toFixed(1)} hrs. ${msg}`;
-      });
-
-      // Dream Journal
-      const dreamForm = document.getElementById("dreamForm");
-      const dreamText = document.getElementById("dreamText");
-      const dreamResult = document.getElementById("dreamResult");
-      const dreamHistory = document.getElementById("dreamHistory");
-      let dreams = JSON.parse(localStorage.getItem("dreams") || "[]");
-
-      function renderDreams() {
-        dreamHistory.innerHTML = dreams.map(d => `<li>${d.date}: ${d.text} — ${d.interpretation}</li>`).join("");
+      // Utility: BMR & multipliers
+      function calcBMR(sex, weightKg, heightCm, age) {
+        if (sex === 'male') return 10 * weightKg + 6.25 * heightCm - 5 * age + 5;
+        return 10 * weightKg + 6.25 * heightCm - 5 * age - 161;
       }
-      renderDreams();
+      const activityMultipliers = {
+        sedentary: 1.2,
+        light: 1.375,
+        moderate: 1.55,
+        active: 1.725,
+        very_active: 1.9
+      };
 
-      dreamForm.addEventListener("submit", e => {
-        e.preventDefault();
-        const text = dreamText.value.trim();
-        if (!text) return;
-        let interpretation = text.includes("water") ? "Emotions flowing" :
-                             text.includes("flying") ? "Freedom desire" :
-                             "Subconscious thoughts";
-        const entry = {date:new Date().toLocaleString(), text, interpretation};
-        dreams.unshift(entry);
-        localStorage.setItem("dreams", JSON.stringify(dreams));
-        dreamResult.textContent = `Interpretation: ${interpretation}`;
-        dreamText.value="";
-        renderDreams();
+      // Indian food DB (small)
+      const foodDB = [
+        {name:'Roti (1 medium)', cal:80, p:3, c:12, f:2, tags:['veg','vegan','eggetarian']},
+        {name:'Rice (1 cup cooked)', cal:200, p:4, c:45, f:0.5, tags:['veg','vegan','eggetarian']},
+        {name:'Dal (1 cup)', cal:180, p:9, c:20, f:5, tags:['veg','vegan','eggetarian']},
+        {name:'Paneer Curry (1 serving)', cal:280, p:14, c:8, f:20, tags:['veg']},
+        {name:'Mixed Veg Sabzi (1 cup)', cal:120, p:3, c:14, f:6, tags:['veg','vegan']},
+        {name:'Dosa (1)', cal:150, p:4, c:25, f:3, tags:['veg']},
+        {name:'Idli (1)', cal:60, p:2, c:12, f:0.5, tags:['veg']},
+        {name:'Egg (1 large)', cal:70, p:6, c:0.4, f:5, tags:['eggetarian','nonveg']},
+        {name:'Chicken Curry (1 serving)', cal:350, p:25, c:6, f:22, tags:['nonveg']},
+        {name:'Fish Curry (1 serving)', cal:300, p:22, c:4, f:18, tags:['nonveg']},
+        {name:'Poha (1 plate)', cal:220, p:5, c:36, f:6, tags:['veg','vegan']},
+        {name:'Curd (100g)', cal:60, p:3, c:4, f:3, tags:['veg']},
+        {name:'Nuts (handful)', cal:160, p:5, c:6, f:14, tags:['veg','vegan']},
+        {name:'Salad (1 bowl)', cal:50, p:1, c:10, f:0.5, tags:['veg','vegan']}
+      ];
+
+      // Smart meal suggester
+      function suggestMeals(targetCalories, dietType) {
+        const pf = foodDB.filter(item => {
+          if (dietType === 'veg') return item.tags.includes('veg') || item.tags.includes('eggetarian');
+          if (dietType === 'vegan') return item.tags.includes('vegan');
+          if (dietType === 'eggetarian') return item.tags.includes('eggetarian') || item.tags.includes('veg');
+          if (dietType === 'nonveg') return true;
+          return true;
+        });
+
+        const buckets = {
+          breakfast: Math.round(targetCalories * 0.25),
+          lunch: Math.round(targetCalories * 0.35),
+          dinner: Math.round(targetCalories * 0.30),
+          snack: Math.round(targetCalories * 0.10)
+        };
+
+        function buildMeal(calGoal) {
+          const sorted = pf.slice().sort((a,b) => b.cal - a.cal);
+          const meal = [];
+          let remaining = calGoal;
+          for (let i=0;i<sorted.length && remaining>0;i++){
+            const item = sorted[i];
+            if (item.cal <= remaining + 80) {
+              meal.push(item);
+              remaining -= item.cal;
+            }
+          }
+          if (meal.length === 0 && pf.length) meal.push(pf[pf.length-1]);
+          const total = meal.reduce((s,x)=>s+x.cal,0);
+          const protein = meal.reduce((s,x)=>s+x.p,0);
+          const carbs = meal.reduce((s,x)=>s+x.c,0);
+          const fat = meal.reduce((s,x)=>s+x.f,0);
+          return {items: meal, cal: total, p: Math.round(protein), c: Math.round(carbs), f: Math.round(fat)};
+        }
+
+        const breakfast = buildMeal(buckets.breakfast);
+        const lunch = buildMeal(buckets.lunch);
+        const dinner = buildMeal(buckets.dinner);
+        const snack = buildMeal(buckets.snack);
+        return {breakfast, lunch, dinner, snack};
+      }
+
+      // Diet calculation + UI flow
+      const calculateBtn = document.getElementById('calculateBtn');
+      const dietResultEl = document.getElementById('dietResult');
+      const mealSuggestionsEl = document.getElementById('mealSuggestions');
+
+      function renderMealBlock(title, meal) {
+        return `
+          <div class="p-4 border border-gray-700 rounded-lg">
+            <div class="font-medium text-sm text-white">${title} — ${meal.cal} kcal</div>
+            <div class="text-xs text-gray-400 mt-1">${meal.items.map(it => it.name).join(' • ')}</div>
+            <div class="text-xs text-gray-500 mt-1">P ${meal.p}g • C ${meal.c}g • F ${meal.f}g</div>
+          </div>
+        `;
+      }
+
+      calculateBtn.addEventListener('click', () => {
+        const age = Number(document.getElementById('age').value);
+        const sex = document.getElementById('sex').value;
+        const weight = Number(document.getElementById('weight').value);
+        const height = Number(document.getElementById('height').value);
+        const activity = document.getElementById('activity').value;
+        const dietType = document.getElementById('dietType').value;
+        const goal = document.getElementById('goal').value;
+
+        if (!age || !sex || !weight || !height || !activity) {
+          dietResultEl.innerHTML = '<div class="text-red-400 font-medium">Please fill all fields to calculate.</div>';
+          return;
+        }
+
+        const bmr = Math.round(calcBMR(sex, weight, height, age));
+        const multiplier = activityMultipliers[activity] || 1.2;
+        const tdee = Math.round(bmr * multiplier);
+        let targetCalories = tdee;
+        if (goal === 'weight_loss') targetCalories = Math.max(1200, tdee - 500);
+        if (goal === 'muscle_gain') targetCalories = tdee + 300;
+
+        const proteinPerKg = goal === 'muscle_gain' ? 1.8 : goal === 'weight_loss' ? 1.6 : 1.4;
+        const proteinTarget = Math.round(weight * proteinPerKg);
+
+        dietResultEl.innerHTML = `
+          <div class="text-sm border-b border-gray-700 pb-4">
+            <div><strong>BMR:</strong> ${bmr} kcal/day</div>
+            <div><strong>TDEE:</strong> ${tdee} kcal/day</div>
+            <div><strong>Target Calories:</strong> ${targetCalories} kcal/day</div>
+            <div><strong>Protein Target:</strong> ${proteinTarget} g/day</div>
+          </div>
+        `;
+
+        const meals = suggestMeals(targetCalories, dietType);
+        mealSuggestionsEl.innerHTML = `
+          ${renderMealBlock('Breakfast', meals.breakfast)}
+          ${renderMealBlock('Lunch', meals.lunch)}
+          ${renderMealBlock('Dinner', meals.dinner)}
+          ${renderMealBlock('Snack', meals.snack)}
+        `;
       });
+
+      // Sleep logic
+      const sleepQualityInput = document.getElementById('sleepQuality');
+      const qualityValueSpan = document.getElementById('qualityValue');
+      sleepQualityInput.addEventListener('input', (e) => qualityValueSpan.textContent = e.target.value);
+      
+      function calcSleep(bedtime, waketime, quality) {
+        const [bh, bm] = bedtime.split(':').map(Number);
+        const [wh, wm] = waketime.split(':').map(Number);
+        let bedMin = bh*60 + bm;
+        let wakeMin = wh*60 + wm;
+        if (wakeMin <= bedMin) wakeMin += 24*60;
+        const durationHrs = Math.round(((wakeMin - bedMin)/60) * 10) / 10;
+        
+        let score = quality * 10;
+        if (durationHrs >= 7 && durationHrs <= 9) score += 20;
+        else if (durationHrs >= 6 && durationHrs <= 10) score += 10;
+        score = Math.max(0, Math.min(100, score));
+
+        let calorieAdj = 0;
+        if (durationHrs < 6) calorieAdj = 200;
+        else if (durationHrs > 9) calorieAdj = -100;
+        else if (quality < 5) calorieAdj = 150;
+        return {durationHrs, score, calorieAdj};
+      }
+
+      document.getElementById('analyzeSleep').addEventListener('click', () => {
+        const bedtime = document.getElementById('bedtime').value;
+        const waketime = document.getElementById('waketime').value;
+        const quality = Number(document.getElementById('sleepQuality').value);
+
+        if (!bedtime || !waketime) {
+          document.getElementById('sleepResults').innerHTML = '<div class="text-red-400">Please enter both bedtime and wake time.</div>';
+          return;
+        }
+
+        const res = calcSleep(bedtime, waketime, quality);
+        const msg = `
+          <div class="text-sm border-t border-gray-700 pt-4 mt-4">
+            <div><strong>Sleep Duration:</strong> ${res.durationHrs} h</div>
+            <div><strong>Sleep Score:</strong> ${res.score}/100</div>
+            <div><strong>Calorie Impact:</strong> ${res.calorieAdj > 0 ? '+' : ''}${res.calorieAdj} kcal</div>
+          </div>
+        `;
+        document.getElementById('sleepResults').innerHTML = msg;
+      });
+
+      // Dream interpreter (basic rule-based)
+      const dreamRules = {
+        keywords: {
+          water: "Emotions, intuition, cleansing, or transition.",
+          flying: "Freedom, ambition, or desire to rise above challenges.",
+          falling: "Loss of control, insecurity, or fear of failure.",
+          chased: "Avoidance of problem or stress you are running from.",
+          animals: "Primal instincts, relationships, or personality aspects.",
+          family: "Connection to relationships, support, or early memories.",
+          death: "Endings, transformation, or big changes (not literal).",
+          travel: "Journey, discovery, or life transition.",
+          work: "Career stress, task load, or performance anxiety."
+        },
+        emotions: {
+          happy: "A reflection of contentment, positive change, or inner satisfaction.",
+          fearful: "Heightened anxiety or expectation of upcoming stressors.",
+          sad: "Need to process loss, disappointment, or unmet needs.",
+          angry: "Suppressed frustration or boundary issues that need addressing.",
+          confused: "Uncertainty about a decision or feeling pulled in multiple directions.",
+          peaceful: "Inner calm, successful stress resolution, or healing."
+        }
+      };
+
+      function interpretDreamText(text, theme, emotion, clarity) {
+        const lower = text.toLowerCase();
+        const hits = [];
+        for (const k in dreamRules.keywords) {
+          if (lower.includes(k)) hits.push({type:'keyword', key:k, meaning:dreamRules.keywords[k]});
+        }
+        
+        let intro = '';
+        if (hits.length === 0 && !theme && !emotion) {
+          intro = 'No strong universal symbol found.';
+        }
+        
+        const parts = [];
+        if (hits.length) {
+          parts.push('Symbols found: ' + hits.map(h => `${h.key} (${h.meaning})`).join(' • '));
+        }
+        if (theme && dreamRules.keywords[theme]) {
+          parts.push(`Theme (${theme}): ${dreamRules.keywords[theme]}`);
+        }
+        if (emotion && dreamRules.emotions[emotion]) {
+          parts.push(`Emotion (${emotion}): ${dreamRules.emotions[emotion]}`);
+        }
+
+        let clarityNote = '';
+        if (clarity >= 8) clarityNote = 'The dream is very vivid, pay close attention to its details.';
+        else if (clarity <= 3) clarityNote = 'A fuzzy dream, focus on the overall feeling rather than specific symbols.';
+
+        return {
+          text: intro || 'Interpretation based on key elements: ' + parts.join(' | ') + (clarityNote ? ' | ' + clarityNote : ''),
+          details: parts,
+          advice: [] // Simplified for this version
+        };
+      }
+      
+      const dreamText = document.getElementById('dreamDescription');
+      const dreamResult = document.getElementById('dreamInterpretation');
+      const dreamHistory = document.getElementById('dreamHistory');
+      let dreams = JSON.parse(localStorage.getItem('as_dreams') || '[]');
+
+      function renderDreamHistory() {
+        if (dreams.length === 0) {
+          dreamHistory.innerHTML = '<div class="text-sm text-gray-500">No dreams saved yet.</div>';
+          return;
+        }
+        dreamHistory.innerHTML = dreams.slice(0, 5).map(d => {
+          return `<div class="p-3 border border-gray-700 rounded-lg">
+            <div class="text-xs text-gray-500">${new Date(d.date).toLocaleString()}</div>
+            <div class="text-sm mt-1 text-gray-300">${d.text.slice(0, 100)}${d.text.length > 100 ? '...' : ''}</div>
+            <div class="text-xs text-gray-400 mt-1">Interpretation: ${d.interpretation.text}</div>
+          </div>`;
+        }).join('');
+      }
+      renderDreamHistory();
+
+      document.getElementById('interpretDream').addEventListener('click', () => {
+        const text = dreamText.value.trim();
+        const theme = document.getElementById('dreamTheme').value;
+        const emotion = document.getElementById('dreamEmotion').value;
+        const clarity = Number(document.getElementById('dreamClarity').value);
+
+        if (!text) {
+          dreamResult.innerHTML = '<div class="text-red-400">Please write your dream description.</div>';
+          return;
+        }
+
+        const interpretation = interpretDreamText(text, theme, emotion, clarity);
+        dreamResult.innerHTML = `<div class="p-3 border border-gray-700 rounded-lg">
+          <div class="text-sm text-gray-300">${interpretation.text}</div>
+        </div>`;
+
+        const newDream = {
+          text: text,
+          theme: theme,
+          emotion: emotion,
+          clarity: clarity,
+          interpretation: interpretation,
+          date: new Date().toISOString()
+        };
+        
+        dreams.unshift(newDream);
+        localStorage.setItem('as_dreams', JSON.stringify(dreams));
+        renderDreamHistory();
+      });
+
+      // Ensure clarity value updates label
+      const clarityInput = document.getElementById('dreamClarity');
+      const clarityLabel = document.getElementById('clarityValue');
+      clarityInput.addEventListener('input', (e) => clarityLabel.textContent = e.target.value);
+      const qualityInput = document.getElementById('sleepQuality');
+      const qualityLabel = document.getElementById('qualityValue');
+      qualityInput.addEventListener('input', (e) => qualityLabel.textContent = e.target.value);
+
     });
   </script>
 </body>
