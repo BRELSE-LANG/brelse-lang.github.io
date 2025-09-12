@@ -1,649 +1,145 @@
 <!DOCTYPE html>
-<html lang="en" class="antialiased">
+<html lang="en" class="dark scroll-smooth">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AahaarSheela — Health & Wellness</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    /* small custom additions */
-    .glass {
-      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
-      backdrop-filter: blur(6px);
-    }
-  </style>
 </head>
-<body class="bg-gray-900 text-gray-100 selection:bg-amber-300 selection:text-black">
+<body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col">
+  <!-- Header -->
+  <header class="p-4 text-center bg-gradient-to-r from-green-600 to-teal-600 shadow-lg">
+    <h1 class="text-2xl font-bold">🌿 AahaarSheela</h1>
+    <p class="text-sm">Smart Diet · Sleep Tracker · Dream Journal</p>
+  </header>
 
-  <div id="app" class="min-h-screen flex flex-col">
-
-    <!-- Top header -->
-    <header class="flex items-center justify-between px-6 py-4 border-b border-gray-800">
-      <div class="flex items-center gap-4">
-        <div class="w-12 h-12 rounded-full bg-amber-400 flex items-center justify-center text-gray-900 font-bold">AS</div>
-        <div>
-          <h1 class="text-xl font-extrabold leading-none">AahaarSheela</h1>
-          <p class="text-xs text-gray-400 -mt-1">Holistic Diet • Sleep • Dream</p>
-        </div>
+  <!-- Main Content -->
+  <main class="flex-1 p-4">
+    <!-- Diet Section -->
+    <section id="diet">
+      <div class="bg-gray-800 rounded-2xl shadow-md p-4 mb-6">
+        <h2 class="text-xl font-semibold mb-2">🥗 Smart Diet Calculator</h2>
+        <form id="dietForm" class="space-y-2">
+          <input type="number" id="age" placeholder="Age" class="w-full p-2 rounded bg-gray-700 text-white" required />
+          <input type="number" id="weight" placeholder="Weight (kg)" class="w-full p-2 rounded bg-gray-700 text-white" required />
+          <input type="number" id="height" placeholder="Height (cm)" class="w-full p-2 rounded bg-gray-700 text-white" required />
+          <select id="gender" class="w-full p-2 rounded bg-gray-700 text-white" required>
+            <option value="">Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+          <select id="activity" class="w-full p-2 rounded bg-gray-700 text-white" required>
+            <option value="">Activity Level</option>
+            <option value="1.2">Sedentary</option>
+            <option value="1.55">Moderate</option>
+            <option value="1.9">Active</option>
+          </select>
+          <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded">Calculate</button>
+        </form>
+        <div id="dietResult" class="mt-4 text-sm"></div>
       </div>
+    </section>
 
-      <div class="flex items-center gap-3">
-        <button id="darkToggle" class="px-3 py-2 rounded-md bg-gray-800 hover:bg-gray-700 text-sm">Toggle Dark</button>
+    <!-- Sleep Section -->
+    <section id="sleep" class="hidden">
+      <div class="bg-gray-800 rounded-2xl shadow-md p-4 mb-6">
+        <h2 class="text-xl font-semibold mb-2">😴 Sleep Tracker</h2>
+        <form id="sleepForm" class="space-y-2">
+          <label>Bedtime:</label>
+          <input type="time" id="bedtime" class="w-full p-2 rounded bg-gray-700 text-white" required />
+          <label>Wake-up Time:</label>
+          <input type="time" id="wake" class="w-full p-2 rounded bg-gray-700 text-white" required />
+          <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded">Analyze</button>
+        </form>
+        <div id="sleepResult" class="mt-4 text-sm"></div>
       </div>
-    </header>
+    </section>
 
-    <!-- Main content -->
-    <main class="flex-1 max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6">
+    <!-- Dream Section -->
+    <section id="dream" class="hidden">
+      <div class="bg-gray-800 rounded-2xl shadow-md p-4">
+        <h2 class="text-xl font-semibold mb-2">🌙 Dream Journal + Interpreter</h2>
+        <form id="dreamForm" class="space-y-2">
+          <textarea id="dreamText" placeholder="Describe your dream..." class="w-full p-2 rounded bg-gray-700 text-white" required></textarea>
+          <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded">Save & Interpret</button>
+        </form>
+        <div id="dreamResult" class="mt-4 text-sm"></div>
+        <div id="dreamHistory" class="mt-4 text-sm space-y-2"></div>
+      </div>
+    </section>
+  </main>
 
-      <!-- Cards grid -->
-      <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <!-- Bottom Navigation -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-gray-800 text-gray-200 flex justify-around p-2 shadow-inner">
+    <button data-target="diet" class="nav-btn text-center">🥗<br>Diet</button>
+    <button data-target="sleep" class="nav-btn text-center">😴<br>Sleep</button>
+    <button data-target="dream" class="nav-btn text-center">🌙<br>Dream</button>
+  </nav>
 
-        <!-- Diet card -->
-        <div class="glass rounded-2xl p-5 border border-gray-800 shadow-lg">
-          <h2 class="text-lg font-bold text-amber-300 mb-3">Smart Diet Calculator</h2>
-          <p class="text-xs text-gray-400 mb-4">Personalized Indian meal suggestions & macros</p>
-
-          <div class="space-y-3">
-            <div class="grid grid-cols-2 gap-3">
-              <input id="age" type="number" placeholder="Age" class="p-2 rounded bg-gray-800 border border-gray-700" value="25">
-              <select id="sex" class="p-2 rounded bg-gray-800 border border-gray-700">
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-              </select>
-            </div>
-
-            <div class="grid grid-cols-2 gap-3">
-              <input id="weight" type="number" placeholder="Weight (kg)" class="p-2 rounded bg-gray-800 border border-gray-700" value="70">
-              <input id="height" type="number" placeholder="Height (cm)" class="p-2 rounded bg-gray-800 border border-gray-700" value="170">
-            </div>
-
-            <div class="grid grid-cols-2 gap-3">
-              <select id="activity" class="p-2 rounded bg-gray-800 border border-gray-700">
-                <option value="sedentary">Sedentary</option>
-                <option value="light">Light</option>
-                <option value="moderate" selected>Moderate</option>
-                <option value="active">Active</option>
-                <option value="very_active">Very Active</option>
-              </select>
-
-              <select id="dietType" class="p-2 rounded bg-gray-800 border border-gray-700">
-                <option value="veg" selected>Vegetarian</option>
-                <option value="nonveg">Non-Veg</option>
-                <option value="vegan">Vegan</option>
-                <option value="eggetarian">Eggetarian</option>
-              </select>
-            </div>
-
-            <div class="grid grid-cols-2 gap-3">
-              <select id="goal" class="p-2 rounded bg-gray-800 border border-gray-700">
-                <option value="balanced" selected>Maintain</option>
-                <option value="weight_loss">Weight Loss</option>
-                <option value="muscle_gain">Muscle Gain</option>
-              </select>
-
-              <button id="calculateBtn" class="bg-amber-400 text-gray-900 font-bold p-2 rounded">Calculate</button>
-            </div>
-
-            <div id="dietResult" class="mt-3 text-sm text-gray-200 space-y-2"></div>
-            <div id="mealSuggestions" class="mt-2 space-y-2"></div>
-
-            <div class="flex gap-2 mt-3">
-              <button id="saveDietBtn" class="px-3 py-2 rounded bg-gray-800 border border-gray-700 text-sm">Save Result</button>
-              <button id="exportDietBtn" class="px-3 py-2 rounded bg-gray-800 border border-gray-700 text-sm">Export JSON</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Sleep card -->
-        <div class="glass rounded-2xl p-5 border border-gray-800 shadow-lg">
-          <h2 class="text-lg font-bold text-sky-300 mb-3">Sleep Tracker</h2>
-          <p class="text-xs text-gray-400 mb-4">Duration, score & caloric impact</p>
-
-          <div class="space-y-3">
-            <div class="grid grid-cols-2 gap-3">
-              <label class="block">
-                <div class="text-xs text-gray-400 mb-1">Bedtime</div>
-                <input id="bedtime" type="time" class="p-2 rounded bg-gray-800 border border-gray-700" value="23:00">
-              </label>
-              <label class="block">
-                <div class="text-xs text-gray-400 mb-1">Wake Time</div>
-                <input id="waketime" type="time" class="p-2 rounded bg-gray-800 border border-gray-700" value="07:00">
-              </label>
-            </div>
-
-            <div>
-              <div class="text-xs text-gray-400 mb-1">Sleep Quality (1-10)</div>
-              <input id="sleepQuality" type="range" min="1" max="10" value="7" class="w-full">
-              <div class="text-xs text-gray-400 mt-1">Score: <span id="qualityValue">7</span>/10</div>
-            </div>
-
-            <div class="flex gap-2">
-              <button id="analyzeSleep" class="bg-sky-500 text-gray-900 font-bold p-2 rounded">Analyze</button>
-              <button id="saveSleepBtn" class="p-2 rounded bg-gray-800 border border-gray-700">Save Log</button>
-            </div>
-
-            <div id="sleepResults" class="mt-3 text-sm text-gray-200 space-y-2"></div>
-
-            <div class="mt-3">
-              <h3 class="text-xs text-gray-400 mb-2">Saved Sleep Logs</h3>
-              <div id="sleepLogs" class="space-y-2 text-xs"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Dream card -->
-        <div class="glass rounded-2xl p-5 border border-gray-800 shadow-lg">
-          <h2 class="text-lg font-bold text-purple-300 mb-3">Dream Journal + Interpreter</h2>
-          <p class="text-xs text-gray-400 mb-4">Write, interpret, and preserve your dreams</p>
-
-          <div class="space-y-3">
-            <textarea id="dreamDescription" rows="4" class="w-full p-3 rounded bg-gray-800 border border-gray-700" placeholder="Describe your dream..."></textarea>
-
-            <div class="grid grid-cols-2 gap-3">
-              <select id="dreamEmotion" class="p-2 rounded bg-gray-800 border border-gray-700">
-                <option value="">Emotion (optional)</option>
-                <option value="happy">Happy</option>
-                <option value="fearful">Fearful</option>
-                <option value="sad">Sad</option>
-                <option value="angry">Angry</option>
-                <option value="confused">Confused</option>
-                <option value="peaceful">Peaceful</option>
-              </select>
-
-              <select id="dreamTheme" class="p-2 rounded bg-gray-800 border border-gray-700">
-                <option value="">Theme (optional)</option>
-                <option value="flying">Flying</option>
-                <option value="falling">Falling</option>
-                <option value="chased">Being chased</option>
-                <option value="water">Water</option>
-                <option value="animals">Animals</option>
-                <option value="family">Family</option>
-                <option value="work">Work</option>
-                <option value="travel">Travel</option>
-              </select>
-            </div>
-
-            <div class="grid grid-cols-2 gap-3">
-              <input id="dreamClarity" type="range" min="1" max="10" value="5" class="w-full">
-              <div class="text-xs text-gray-400">Clarity: <span id="clarityValue">5</span>/10</div>
-            </div>
-
-            <div class="flex gap-2">
-              <button id="interpretDream" class="bg-purple-500 text-gray-900 font-bold p-2 rounded">Interpret</button>
-              <button id="saveDreamBtn" class="p-2 rounded bg-gray-800 border border-gray-700">Save Dream</button>
-            </div>
-
-            <div id="dreamInterpretation" class="mt-3 text-sm text-gray-200 space-y-2"></div>
-
-            <div class="mt-3">
-              <h3 class="text-xs text-gray-400 mb-2">Dream History</h3>
-              <div id="dreamHistory" class="space-y-2 text-xs"></div>
-            </div>
-          </div>
-        </div>
-
-      </section>
-    </main>
-
-    <!-- Bottom navigation (mobile-first) -->
-    <nav class="border-t border-gray-800 bg-gray-900/60 px-4 py-2 fixed bottom-3 left-1/2 transform -translate-x-1/2 w-[min(980px,calc(100%-32px))] rounded-full shadow-lg flex justify-around z-40">
-      <button class="nav-btn text-amber-300 font-semibold" data-section="diet">Diet</button>
-      <button class="nav-btn text-sky-300" data-section="sleep">Sleep</button>
-      <button class="nav-btn text-purple-300" data-section="dream">Dreams</button>
-      <button id="openSettings" class="text-gray-300">Settings</button>
-    </nav>
-  </div>
-
-  <!-- JavaScript -->
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-
-      /* ---------- Dark mode toggle (simple) ---------- */
-      const darkToggle = document.getElementById('darkToggle');
-      const root = document.documentElement;
-      function setTheme(isDark) {
-        if (isDark) {
-          root.classList.remove('light');
-          root.classList.add('dark');
-          document.body.classList.remove('bg-white','text-gray-900');
-          document.body.classList.add('bg-gray-900','text-gray-100');
-        } else {
-          root.classList.remove('dark');
-          root.classList.add('light');
-          document.body.classList.remove('bg-gray-900','text-gray-100');
-          document.body.classList.add('bg-white','text-gray-900');
-        }
-        localStorage.setItem('as_theme_dark', isDark ? '1' : '0');
-      }
-      const storedTheme = localStorage.getItem('as_theme_dark');
-      if (storedTheme === null) setTheme(true);
-      else setTheme(storedTheme === '1');
-      darkToggle.addEventListener('click', () => {
-        const isDark = !(localStorage.getItem('as_theme_dark') === '1');
-        setTheme(isDark);
-      });
-
-      /* ---------- Simple tab navigation (bottom nav) ---------- */
-      const showSection = (id) => {
-        document.getElementById('diet').classList.add('hidden');
-        document.getElementById('sleep').classList.add('hidden');
-        document.getElementById('dream').classList.add('hidden');
-        document.getElementById(id).classList.remove('hidden');
-      };
-      // initial
-      showSection('diet');
-
-      document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          showSection(btn.dataset.section);
+    document.addEventListener("DOMContentLoaded", () => {
+      // Navigation
+      document.querySelectorAll(".nav-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll("main section").forEach(sec => sec.classList.add("hidden"));
+          document.getElementById(btn.dataset.target).classList.remove("hidden");
         });
       });
 
-      /* ---------- Utility: BMR & multipliers ---------- */
-      function calcBMR(sex, weightKg, heightCm, age) {
-        if (sex === 'male') return 10 * weightKg + 6.25 * heightCm - 5 * age + 5;
-        return 10 * weightKg + 6.25 * heightCm - 5 * age - 161;
+      // Diet Calculator
+      document.getElementById("dietForm").addEventListener("submit", e => {
+        e.preventDefault();
+        const age = +document.getElementById("age").value;
+        const weight = +document.getElementById("weight").value;
+        const height = +document.getElementById("height").value;
+        const gender = document.getElementById("gender").value;
+        const activity = +document.getElementById("activity").value;
+        let bmr = gender === "male"
+          ? 10 * weight + 6.25 * height - 5 * age + 5
+          : 10 * weight + 6.25 * height - 5 * age - 161;
+        const calories = Math.round(bmr * activity);
+        document.getElementById("dietResult").innerHTML =
+          `<p>Your daily calorie need: <b>${calories} kcal</b></p>
+           <p>Suggested: Dal, Roti, Rice, Vegetables, Fruits 🍎</p>`;
+      });
+
+      // Sleep Tracker
+      document.getElementById("sleepForm").addEventListener("submit", e => {
+        e.preventDefault();
+        const bed = document.getElementById("bedtime").value;
+        const wake = document.getElementById("wake").value;
+        if (!bed || !wake) return;
+        const bedTime = new Date(`1970-01-01T${bed}:00`);
+        const wakeTime = new Date(`1970-01-01T${wake}:00`);
+        let diff = (wakeTime - bedTime) / 1000 / 3600;
+        if (diff < 0) diff += 24;
+        document.getElementById("sleepResult").innerText =
+          `You slept for ${diff.toFixed(1)} hours. ${diff < 7 ? "😟 Not enough sleep!" : "😊 Good sleep!"}`;
+      });
+
+      // Dream Journal
+      const historyDiv = document.getElementById("dreamHistory");
+      let dreams = JSON.parse(localStorage.getItem("dreams") || "[]");
+      function renderDreams() {
+        historyDiv.innerHTML = dreams.map(d => `<div class="p-2 bg-gray-700 rounded">${d}</div>`).join("");
       }
-      const activityMultipliers = {
-        sedentary: 1.2,
-        light: 1.375,
-        moderate: 1.55,
-        active: 1.725,
-        very_active: 1.9
-      };
+      renderDreams();
 
-      /* ---------- Indian food DB (small) ---------- */
-      const foodDB = [
-        // name, calories, protein(g), carbs(g), fat(g), tags (veg/nonveg/vegan/egg)
-        {name:'Roti (1 medium)', cal:80, p:3, c:12, f:2, tags:['veg','vegan','eggetarian']},
-        {name:'Rice (1 cup cooked)', cal:200, p:4, c:45, f:0.5, tags:['veg','vegan','eggetarian']},
-        {name:'Dal (1 cup)', cal:180, p:9, c:20, f:5, tags:['veg','vegan','eggetarian']},
-        {name:'Paneer Curry (1 serving)', cal:280, p:14, c:8, f:20, tags:['veg']},
-        {name:'Mixed Veg Sabzi (1 cup)', cal:120, p:3, c:14, f:6, tags:['veg','vegan']},
-        {name:'Dosa (1)', cal:150, p:4, c:25, f:3, tags:['veg']},
-        {name:'Idli (1)', cal:60, p:2, c:12, f:0.5, tags:['veg']},
-        {name:'Egg (1 large)', cal:70, p:6, c:0.4, f:5, tags:['eggetarian','nonveg']},
-        {name:'Chicken Curry (1 serving)', cal:350, p:25, c:6, f:22, tags:['nonveg']},
-        {name:'Fish Curry (1 serving)', cal:300, p:22, c:4, f:18, tags:['nonveg']},
-        {name:'Poha (1 plate)', cal:220, p:5, c:36, f:6, tags:['veg','vegan']},
-        {name:'Curd (100g)', cal:60, p:3, c:4, f:3, tags:['veg']},
-        {name:'Nuts (handful)', cal:160, p:5, c:6, f:14, tags:['veg','vegan']},
-        {name:'Salad (1 bowl)', cal:50, p:1, c:10, f:0.5, tags:['veg','vegan']}
-      ];
-
-      /* ---------- Smart meal suggester: greedy fill by meal buckets ---------- */
-      function suggestMeals(targetCalories, dietType) {
-        // Filter DB by diet preference
-        const pf = foodDB.filter(item => {
-          if (dietType === 'veg') return item.tags.includes('veg') || item.tags.includes('eggetarian');
-          if (dietType === 'vegan') return item.tags.includes('vegan');
-          if (dietType === 'eggetarian') return item.tags.includes('eggetarian') || item.tags.includes('veg');
-          if (dietType === 'nonveg') return true; // all allowed
-          return true;
-        });
-
-        // Simple structure: breakfast ~25%, lunch ~35%, dinner ~30%, snack ~10%
-        const buckets = {
-          breakfast: Math.round(targetCalories * 0.25),
-          lunch: Math.round(targetCalories * 0.35),
-          dinner: Math.round(targetCalories * 0.30),
-          snack: Math.round(targetCalories * 0.10)
-        };
-
-        // helper: build meal for a bucket trying to match calories
-        function buildMeal(calGoal) {
-          // sort candidates by closeness to calGoal descending then greedy pick
-          const sorted = pf.slice().sort((a,b) => b.cal - a.cal);
-          const meal = [];
-          let remaining = calGoal;
-          // greedy: pick biggest items until within a tolerance
-          for (let i=0;i<sorted.length && remaining>0;i++){
-            const item = sorted[i];
-            if (item.cal <= remaining + 80) { // allow some overshoot tolerance
-              meal.push(item);
-              remaining -= item.cal;
-            }
-          }
-          // If nothing chosen, pick smallest item
-          if (meal.length === 0 && pf.length) meal.push(pf[pf.length-1]);
-          // Summarize
-          const total = meal.reduce((s,x)=>s+x.cal,0);
-          const protein = meal.reduce((s,x)=>s+x.p,0);
-          const carbs = meal.reduce((s,x)=>s+x.c,0);
-          const fat = meal.reduce((s,x)=>s+x.f,0);
-          return {items: meal, cal: total, p: Math.round(protein), c: Math.round(carbs), f: Math.round(fat)};
-        }
-
-        // Build meals
-        const breakfast = buildMeal(buckets.breakfast);
-        const lunch = buildMeal(buckets.lunch);
-        const dinner = buildMeal(buckets.dinner);
-        const snack = buildMeal(buckets.snack);
-
-        return {breakfast, lunch, dinner, snack};
-      }
-
-      /* ---------- Diet calculation + UI flow ---------- */
-      const calculateBtn = document.getElementById('calculateBtn');
-      const dietResultEl = document.getElementById('dietResult');
-      const mealSuggestionsEl = document.getElementById('mealSuggestions');
-
-      function renderMealBlock(title, meal) {
-        return `
-          <div class="p-3 rounded border border-gray-700 bg-gray-800">
-            <div class="font-semibold text-sm">${title} — ${meal.cal} kcal</div>
-            <div class="text-xs text-gray-300 mt-1">${meal.items.map(it => it.name).join(' • ')}</div>
-            <div class="text-xs text-gray-400 mt-1">P ${meal.p}g • C ${meal.c}g • F ${meal.f}g</div>
-          </div>
-        `;
-      }
-
-      calculateBtn.addEventListener('click', () => {
-        const age = Number(document.getElementById('age').value);
-        const sex = document.getElementById('sex').value;
-        const weight = Number(document.getElementById('weight').value);
-        const height = Number(document.getElementById('height').value);
-        const activity = document.getElementById('activity').value;
-        const dietType = document.getElementById('dietType').value;
-        const goal = document.getElementById('goal').value;
-
-        // validation
-        if (!age || !sex || !weight || !height || !activity) {
-          dietResultEl.innerHTML = '<div class="text-amber-300 font-medium">Please fill all fields above to calculate.</div>';
-          return;
-        }
-
-        const bmr = Math.round(calcBMR(sex, weight, height, age));
-        const multiplier = activityMultipliers[activity] || 1.2;
-        const tdee = Math.round(bmr * multiplier);
-        let targetCalories = tdee;
-        if (goal === 'weight_loss') targetCalories = Math.max(1200, tdee - 500);
-        if (goal === 'muscle_gain') targetCalories = tdee + 300;
-
-        // protein target
-        const proteinPerKg = goal === 'muscle_gain' ? 1.8 : goal === 'weight_loss' ? 1.6 : 1.4;
-        const proteinTarget = Math.round(weight * proteinPerKg);
-
-        dietResultEl.innerHTML = `
-          <div class="text-sm">
-            <div><strong>BMR:</strong> ${bmr} kcal/day</div>
-            <div><strong>TDEE:</strong> ${tdee} kcal/day</div>
-            <div><strong>Target Calories:</strong> ${targetCalories} kcal/day</div>
-            <div><strong>Protein Target:</strong> ${proteinTarget} g/day</div>
-          </div>
-        `;
-
-        // suggest meals
-        const meals = suggestMeals(targetCalories, dietType);
-        mealSuggestionsEl.innerHTML = `
-          ${renderMealBlock('Breakfast', meals.breakfast)}
-          ${renderMealBlock('Lunch', meals.lunch)}
-          ${renderMealBlock('Dinner', meals.dinner)}
-          ${renderMealBlock('Snack', meals.snack)}
-        `;
-
-        // store temporary last result in memory (for quick save)
-        window.lastDietResult = {age, sex, weight, height, activity, dietType, goal, bmr, tdee, targetCalories, proteinTarget, meals, timestamp: new Date().toISOString()};
-
-        // scroll into view on small screens
-        mealSuggestionsEl.scrollIntoView({behavior:'smooth'});
+      document.getElementById("dreamForm").addEventListener("submit", e => {
+        e.preventDefault();
+        const text = document.getElementById("dreamText").value.trim();
+        if (!text) return;
+        let meaning = "✨ A mysterious dream...";
+        if (text.includes("water")) meaning = "Represents emotions and flow of life.";
+        if (text.includes("flying")) meaning = "Symbolizes freedom and ambition.";
+        if (text.includes("snake")) meaning = "Warning or hidden fears.";
+        document.getElementById("dreamResult").innerText = "Interpretation: " + meaning;
+        dreams.push(text + " — " + meaning);
+        localStorage.setItem("dreams", JSON.stringify(dreams));
+        renderDreams();
+        document.getElementById("dreamText").value = "";
       });
-
-      /* Save & export diet result */
-      document.getElementById('saveDietBtn').addEventListener('click', () => {
-        if (!window.lastDietResult) {
-          alert('Calculate first to save the result.');
-          return;
-        }
-        const saved = JSON.parse(localStorage.getItem('as_diet_history') || '[]');
-        saved.unshift(window.lastDietResult);
-        localStorage.setItem('as_diet_history', JSON.stringify(saved));
-        alert('Diet result saved locally.');
-      });
-
-      document.getElementById('exportDietBtn').addEventListener('click', () => {
-        const saved = JSON.parse(localStorage.getItem('as_diet_history') || '[]');
-        const blob = new Blob([JSON.stringify(saved, null, 2)], {type: 'application/json'});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'aaharsheela-diet-history.json';
-        a.click();
-        URL.revokeObjectURL(url);
-      });
-
-      /* ---------- Sleep logic ---------- */
-      const sleepQualityInput = document.getElementById('sleepQuality');
-      const qualityValueSpan = document.getElementById('qualityValue');
-      sleepQualityInput.addEventListener('input', (e) => qualityValueSpan.textContent = e.target.value);
-
-      function calcSleep(bedtime, waketime, quality, feelingAdjust=0) {
-        // parse time strings HH:MM
-        const [bh, bm] = bedtime.split(':').map(Number);
-        const [wh, wm] = waketime.split(':').map(Number);
-        let bedMin = bh*60 + bm;
-        let wakeMin = wh*60 + wm;
-        if (wakeMin <= bedMin) wakeMin += 24*60;
-        const durationHrs = Math.round(((wakeMin - bedMin)/60) * 10) / 10;
-
-        // score base from quality * 10
-        let score = quality * 10;
-        if (durationHrs >= 7 && durationHrs <= 9) score += 20;
-        else if (durationHrs >= 6 && durationHrs <= 10) score += 10;
-        score += feelingAdjust;
-        score = Math.max(0, Math.min(100, score));
-
-        let calorieAdj = 0;
-        if (durationHrs < 6) calorieAdj = 200;
-        else if (durationHrs > 9) calorieAdj = -100;
-        else if (quality < 5) calorieAdj = 150;
-
-        return {durationHrs, score, calorieAdj};
-      }
-
-      document.getElementById('analyzeSleep').addEventListener('click', () => {
-        const bedtime = document.getElementById('bedtime').value;
-        const waketime = document.getElementById('waketime').value;
-        const quality = Number(document.getElementById('sleepQuality').value);
-
-        if (!bedtime || !waketime) {
-          document.getElementById('sleepResults').innerHTML = '<div class="text-amber-300">Please enter both bedtime and wake time.</div>';
-          return;
-        }
-
-        const res = calcSleep(bedtime, waketime, quality);
-        const msg = `
-          <div><strong>Sleep Duration:</strong> ${res.durationHrs} h</div>
-          <div><strong>Sleep Score:</strong> ${res.score}/100</div>
-          <div><strong>Calorie Impact:</strong> ${res.calorieAdj > 0 ? '+' : ''}${res.calorieAdj} kcal</div>
-        `;
-        document.getElementById('sleepResults').innerHTML = msg;
-        window.lastSleepResult = {bedtime, waketime, quality, ...res, timestamp: new Date().toISOString()};
-      });
-
-      /* Save sleep log */
-      document.getElementById('saveSleepBtn').addEventListener('click', () => {
-        if (!window.lastSleepResult) {
-          alert('Analyze sleep first to save.');
-          return;
-        }
-        const logs = JSON.parse(localStorage.getItem('as_sleep_logs') || '[]');
-        logs.unshift(window.lastSleepResult);
-        localStorage.setItem('as_sleep_logs', JSON.stringify(logs));
-        renderSleepLogs();
-        alert('Sleep log saved.');
-      });
-
-      function renderSleepLogs() {
-        const logs = JSON.parse(localStorage.getItem('as_sleep_logs') || '[]');
-        const el = document.getElementById('sleepLogs');
-        el.innerHTML = logs.slice(0,8).map(l => {
-          return `<div class="p-2 bg-gray-800 border border-gray-700 rounded">${new Date(l.timestamp).toLocaleString()} — ${l.durationHrs}h • Score ${l.score}</div>`;
-        }).join('');
-      }
-      renderSleepLogs();
-
-      /* ---------- Dream interpreter (basic rule-based) ---------- */
-      const dreamRules = {
-        keywords: {
-          water: "Emotions, intuition, cleansing, or transition.",
-          flying: "Freedom, ambition, or desire to rise above challenges.",
-          falling: "Loss of control, insecurity, or fear of failure.",
-          chased: "Avoidance of problem or stress you are running from.",
-          animals: "Primal instincts, relationships, or personality aspects.",
-          family: "Connection to relationships, support, or early memories.",
-          death: "Endings, transformation, or big changes (not literal).",
-          travel: "Journey, discovery, or life transition.",
-          work: "Career stress, task load, or performance anxiety."
-        },
-        emotions: {
-          happy: "A reflection of contentment, positive change, or inner satisfaction.",
-          fearful: "Heightened anxiety or expectation of upcoming stressors.",
-          sad: "Need to process loss, disappointment, or unmet needs.",
-          angry: "Suppressed frustration or boundary issues that need addressing.",
-          confused: "Uncertainty about a decision or feeling pulled in multiple directions.",
-          peaceful: "Inner calm, successful stress resolution, or healing."
-        }
-      };
-
-      function interpretDreamText(text, theme, emotion, clarity) {
-        const lower = text.toLowerCase();
-        const hits = [];
-        // keyword matches
-        for (const k in dreamRules.keywords) {
-          if (lower.includes(k)) hits.push({type:'keyword', key:k, meaning:dreamRules.keywords[k]});
-        }
-
-        // build interpretation
-        let intro = 'Interpretation: ';
-        if (hits.length === 0 && !theme && !emotion) {
-          intro += 'No strong universal symbol found — this dream likely draws on personal, daily experiences.';
-        } else {
-          intro += '';
-        }
-
-        const parts = [];
-        if (hits.length) {
-          parts.push('Symbols found: ' + hits.map(h => `${h.key} (${h.meaning})`).join(' • '));
-        }
-        if (theme) {
-          if (dreamRules.keywords[theme]) {
-            parts.push(`Theme (${theme}): ${dreamRules.keywords[theme]}`);
-          } else {
-            parts.push(`Theme (${theme}): Reflective of personal concerns.`);
-          }
-        }
-        if (emotion) {
-          parts.push(`Emotion (${emotion}): ${dreamRules.emotions[emotion] || 'Emotional coloring found.'}`);
-        }
-
-        // clarity effect
-        let clarityNote = '';
-        if (clarity >= 8) clarityNote = 'The dream is very vivid — treat the symbols as more prominent reflections of your waking mind.';
-        else if (clarity >= 5) clarityNote = 'Moderately clear dream — balanced symbolic weight.';
-        else clarityNote = 'Fuzzy dream — reflect on feelings rather than crisp symbols.';
-
-        // simple advice
-        const advice = [];
-        if (lower.includes('water')) advice.push('Consider checking in on current emotional flows — any unresolved feelings?');
-        if (lower.includes('chased')) advice.push('Is there something you are avoiding? Try listing one small step to face it.');
-        if (lower.includes('flying')) advice.push('Leverage current momentum: a good time to take healthy risks.');
-        if (clarity <= 3) advice.push('Keep a daily note of your day before sleep — patterns may reveal roots of fuzzy dreams.');
-
-        return {
-          text: intro + ' ' + parts.join(' | ') + ' | ' + clarityNote,
-          details: parts,
-          advice
-        };
-      }
-
-      /* Interpret button */
-      document.getElementById('interpretDream').addEventListener('click', () => {
-        const text = document.getElementById('dreamDescription').value.trim();
-        const theme = document.getElementById('dreamTheme').value;
-        const emotion = document.getElementById('dreamEmotion').value;
-        const clarity = Number(document.getElementById('dreamClarity').value);
-
-        if (!text) {
-          document.getElementById('dreamInterpretation').innerHTML = '<div class="text-amber-300">Write your dream to get an interpretation.</div>';
-          return;
-        }
-
-        const res = interpretDreamText(text, theme, emotion, clarity);
-        const html = `
-          <div class="p-3 bg-gray-800 border border-gray-700 rounded">
-            <div class="text-sm mb-2"><strong>Summary:</strong> ${res.text}</div>
-            <div class="text-xs text-gray-300 mb-2"><strong>Advice:</strong> ${res.advice.join(' • ') || 'Reflect on emotions & context.'}</div>
-            <div class="text-xs text-gray-400">Generated: ${new Date().toLocaleString()}</div>
-          </div>
-        `;
-        document.getElementById('dreamInterpretation').innerHTML = html;
-        window.lastDreamInterpretation = {text, theme, emotion, clarity, result: res, timestamp: new Date().toISOString()};
-        document.getElementById('dreamInterpretation').scrollIntoView({behavior:'smooth'});
-      });
-
-      /* Save dream (with interpretation if available) */
-      document.getElementById('saveDreamBtn').addEventListener('click', () => {
-        const desc = document.getElementById('dreamDescription').value.trim();
-        if (!desc) {
-          alert('Write something before saving.');
-          return;
-        }
-        // If no immediate interpretation, create one before save
-        if (!window.lastDreamInterpretation || window.lastDreamInterpretation.text !== desc) {
-          // auto-interpret
-          const theme = document.getElementById('dreamTheme').value;
-          const emotion = document.getElementById('dreamEmotion').value;
-          const clarity = Number(document.getElementById('dreamClarity').value);
-          window.lastDreamInterpretation = {text: desc, theme, emotion, clarity, result: interpretDreamText(desc, theme, emotion, clarity), timestamp: new Date().toISOString()};
-        }
-        const store = JSON.parse(localStorage.getItem('as_dreams') || '[]');
-        store.unshift(window.lastDreamInterpretation);
-        localStorage.setItem('as_dreams', JSON.stringify(store));
-        renderDreamHistory();
-        alert('Dream saved.');
-      });
-
-      function renderDreamHistory() {
-        const store = JSON.parse(localStorage.getItem('as_dreams') || '[]');
-        const el = document.getElementById('dreamHistory');
-        if (store.length === 0) { el.innerHTML = '<div class="text-xs text-gray-400">No dreams saved yet.</div>'; return; }
-        el.innerHTML = store.slice(0,10).map(d => {
-          const summary = (d.text.length > 120) ? d.text.slice(0,120) + '…' : d.text;
-          const advice = (d.result && d.result.advice.length) ? ' • Advice: ' + d.result.advice.join(' • ') : '';
-          return `<div class="p-2 bg-gray-800 border border-gray-700 rounded">
-            <div class="text-xs text-gray-300">${new Date(d.timestamp).toLocaleString()}</div>
-            <div class="text-sm mt-1">${summary}</div>
-            <div class="text-xs text-gray-400 mt-1">${(d.result && d.result.details.length) ? 'Symbols: ' + d.result.details.join(' • ') : ''}${advice}</div>
-          </div>`;
-        }).join('');
-      }
-      renderDreamHistory();
-
-      /* ---------- Load last saved diet summary (optional quick view) ---------- */
-      (function loadLastDiet() {
-        const saved = JSON.parse(localStorage.getItem('as_diet_history') || '[]');
-        if (saved.length) {
-          const last = saved[0];
-          dietResultEl.innerHTML = `<div class="text-sm text-gray-300">Last saved: ${new Date(last.timestamp).toLocaleString()} — Target ${last.targetCalories} kcal</div>`;
-        }
-      })();
-
-      /* ---------- Accessibility & small UX niceties ---------- */
-      // Save keyboard-friendly actions
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'd' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); showSection('diet'); }
-        if (e.key === 's' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); showSection('sleep'); }
-        if (e.key === 'j' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); showSection('dream'); }
-      });
-
-      // Ensure clarity value updates label
-      const clarityInput = document.getElementById('dreamClarity');
-      const clarityLabel = document.getElementById('clarityValue');
-      clarityLabel.textContent = clarityInput.value;
-      clarityInput.addEventListener('input', (e) => clarityLabel.textContent = e.target.value);
-
-    }); // DOMContentLoaded
+    });
   </script>
 </body>
 </html>
