@@ -1,145 +1,154 @@
 <!DOCTYPE html>
-<html lang="en" class="dark scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AahaarSheela — Health & Wellness</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col">
-  <!-- Header -->
-  <header class="p-4 text-center bg-gradient-to-r from-green-600 to-teal-600 shadow-lg">
-    <h1 class="text-2xl font-bold">🌿 AahaarSheela</h1>
-    <p class="text-sm">Smart Diet · Sleep Tracker · Dream Journal</p>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
+
+  <header class="p-4 bg-gradient-to-r from-orange-400 to-pink-500 text-white text-center font-bold text-xl">
+    🌿 AahaarSheela — Health & Wellness
   </header>
 
-  <!-- Main Content -->
-  <main class="flex-1 p-4">
-    <!-- Diet Section -->
+  <main class="flex-1 p-4 space-y-6">
     <section id="diet">
-      <div class="bg-gray-800 rounded-2xl shadow-md p-4 mb-6">
-        <h2 class="text-xl font-semibold mb-2">🥗 Smart Diet Calculator</h2>
+      <div class="p-4 rounded-2xl shadow bg-white dark:bg-gray-800">
+        <h2 class="text-lg font-semibold mb-3">🥗 Smart Diet Calculator</h2>
         <form id="dietForm" class="space-y-2">
-          <input type="number" id="age" placeholder="Age" class="w-full p-2 rounded bg-gray-700 text-white" required />
-          <input type="number" id="weight" placeholder="Weight (kg)" class="w-full p-2 rounded bg-gray-700 text-white" required />
-          <input type="number" id="height" placeholder="Height (cm)" class="w-full p-2 rounded bg-gray-700 text-white" required />
-          <select id="gender" class="w-full p-2 rounded bg-gray-700 text-white" required>
-            <option value="">Gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
-          <select id="activity" class="w-full p-2 rounded bg-gray-700 text-white" required>
-            <option value="">Activity Level</option>
+          <input id="age" type="number" placeholder="Age" class="w-full p-2 rounded border" required>
+          <input id="weight" type="number" placeholder="Weight (kg)" class="w-full p-2 rounded border" required>
+          <input id="height" type="number" placeholder="Height (cm)" class="w-full p-2 rounded border" required>
+          <select id="activity" class="w-full p-2 rounded border">
             <option value="1.2">Sedentary</option>
-            <option value="1.55">Moderate</option>
-            <option value="1.9">Active</option>
+            <option value="1.375">Lightly Active</option>
+            <option value="1.55">Moderately Active</option>
+            <option value="1.725">Very Active</option>
           </select>
-          <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded">Calculate</button>
+          <button type="submit" class="w-full bg-orange-500 text-white rounded p-2">Calculate</button>
         </form>
-        <div id="dietResult" class="mt-4 text-sm"></div>
+        <div id="dietResult" class="mt-3 text-sm"></div>
       </div>
     </section>
 
-    <!-- Sleep Section -->
     <section id="sleep" class="hidden">
-      <div class="bg-gray-800 rounded-2xl shadow-md p-4 mb-6">
-        <h2 class="text-xl font-semibold mb-2">😴 Sleep Tracker</h2>
+      <div class="p-4 rounded-2xl shadow bg-white dark:bg-gray-800">
+        <h2 class="text-lg font-semibold mb-3">😴 Sleep Tracker</h2>
         <form id="sleepForm" class="space-y-2">
-          <label>Bedtime:</label>
-          <input type="time" id="bedtime" class="w-full p-2 rounded bg-gray-700 text-white" required />
-          <label>Wake-up Time:</label>
-          <input type="time" id="wake" class="w-full p-2 rounded bg-gray-700 text-white" required />
-          <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded">Analyze</button>
+          <label>Bedtime: <input id="bedtime" type="time" class="w-full p-2 rounded border"></label>
+          <label>Wake Time: <input id="waketime" type="time" class="w-full p-2 rounded border"></label>
+          <button type="submit" class="w-full bg-indigo-500 text-white rounded p-2">Analyze</button>
         </form>
-        <div id="sleepResult" class="mt-4 text-sm"></div>
+        <div id="sleepResult" class="mt-3 text-sm"></div>
       </div>
     </section>
 
-    <!-- Dream Section -->
     <section id="dream" class="hidden">
-      <div class="bg-gray-800 rounded-2xl shadow-md p-4">
-        <h2 class="text-xl font-semibold mb-2">🌙 Dream Journal + Interpreter</h2>
+      <div class="p-4 rounded-2xl shadow bg-white dark:bg-gray-800">
+        <h2 class="text-lg font-semibold mb-3">🌙 Dream Journal</h2>
         <form id="dreamForm" class="space-y-2">
-          <textarea id="dreamText" placeholder="Describe your dream..." class="w-full p-2 rounded bg-gray-700 text-white" required></textarea>
-          <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded">Save & Interpret</button>
+          <textarea id="dreamText" placeholder="Write your dream..." class="w-full p-2 rounded border"></textarea>
+          <button type="submit" class="w-full bg-pink-500 text-white rounded p-2">Save & Interpret</button>
         </form>
-        <div id="dreamResult" class="mt-4 text-sm"></div>
-        <div id="dreamHistory" class="mt-4 text-sm space-y-2"></div>
+        <div id="dreamResult" class="mt-3 text-sm"></div>
+        <h3 class="font-semibold mt-4">Saved Dreams</h3>
+        <ul id="dreamHistory" class="mt-2 text-xs space-y-1"></ul>
       </div>
     </section>
   </main>
 
-  <!-- Bottom Navigation -->
-  <nav class="fixed bottom-0 left-0 right-0 bg-gray-800 text-gray-200 flex justify-around p-2 shadow-inner">
-    <button data-target="diet" class="nav-btn text-center">🥗<br>Diet</button>
-    <button data-target="sleep" class="nav-btn text-center">😴<br>Sleep</button>
-    <button data-target="dream" class="nav-btn text-center">🌙<br>Dream</button>
+  <nav class="fixed bottom-0 w-full bg-white dark:bg-gray-800 border-t flex justify-around py-2">
+    <button data-target="diet" class="nav-btn text-orange-500">🥗 Diet</button>
+    <button data-target="sleep" class="nav-btn">😴 Sleep</button>
+    <button data-target="dream" class="nav-btn">🌙 Dream</button>
+    <button id="darkToggle">🌗</button>
   </nav>
 
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // Navigation
-      document.querySelectorAll(".nav-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-          document.querySelectorAll("main section").forEach(sec => sec.classList.add("hidden"));
-          document.getElementById(btn.dataset.target).classList.remove("hidden");
-        });
-      });
-
-      // Diet Calculator
-      document.getElementById("dietForm").addEventListener("submit", e => {
-        e.preventDefault();
-        const age = +document.getElementById("age").value;
-        const weight = +document.getElementById("weight").value;
-        const height = +document.getElementById("height").value;
-        const gender = document.getElementById("gender").value;
-        const activity = +document.getElementById("activity").value;
-        let bmr = gender === "male"
-          ? 10 * weight + 6.25 * height - 5 * age + 5
-          : 10 * weight + 6.25 * height - 5 * age - 161;
-        const calories = Math.round(bmr * activity);
-        document.getElementById("dietResult").innerHTML =
-          `<p>Your daily calorie need: <b>${calories} kcal</b></p>
-           <p>Suggested: Dal, Roti, Rice, Vegetables, Fruits 🍎</p>`;
-      });
-
-      // Sleep Tracker
-      document.getElementById("sleepForm").addEventListener("submit", e => {
-        e.preventDefault();
-        const bed = document.getElementById("bedtime").value;
-        const wake = document.getElementById("wake").value;
-        if (!bed || !wake) return;
-        const bedTime = new Date(`1970-01-01T${bed}:00`);
-        const wakeTime = new Date(`1970-01-01T${wake}:00`);
-        let diff = (wakeTime - bedTime) / 1000 / 3600;
-        if (diff < 0) diff += 24;
-        document.getElementById("sleepResult").innerText =
-          `You slept for ${diff.toFixed(1)} hours. ${diff < 7 ? "😟 Not enough sleep!" : "😊 Good sleep!"}`;
-      });
-
-      // Dream Journal
-      const historyDiv = document.getElementById("dreamHistory");
-      let dreams = JSON.parse(localStorage.getItem("dreams") || "[]");
-      function renderDreams() {
-        historyDiv.innerHTML = dreams.map(d => `<div class="p-2 bg-gray-700 rounded">${d}</div>`).join("");
-      }
-      renderDreams();
-
-      document.getElementById("dreamForm").addEventListener("submit", e => {
-        e.preventDefault();
-        const text = document.getElementById("dreamText").value.trim();
-        if (!text) return;
-        let meaning = "✨ A mysterious dream...";
-        if (text.includes("water")) meaning = "Represents emotions and flow of life.";
-        if (text.includes("flying")) meaning = "Symbolizes freedom and ambition.";
-        if (text.includes("snake")) meaning = "Warning or hidden fears.";
-        document.getElementById("dreamResult").innerText = "Interpretation: " + meaning;
-        dreams.push(text + " — " + meaning);
-        localStorage.setItem("dreams", JSON.stringify(dreams));
-        renderDreams();
-        document.getElementById("dreamText").value = "";
+  document.addEventListener("DOMContentLoaded", () => {
+    // Tab Navigation
+    const navBtns = document.querySelectorAll(".nav-btn");
+    const sections = document.querySelectorAll("main section");
+    navBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        sections.forEach(sec => sec.classList.add("hidden"));
+        document.getElementById(btn.dataset.target).classList.remove("hidden");
+        navBtns.forEach(b => b.classList.remove("text-orange-500"));
+        btn.classList.add("text-orange-500");
       });
     });
+
+    // Dark Mode
+    const darkToggle = document.getElementById("darkToggle");
+    darkToggle.addEventListener("click", () => {
+      document.documentElement.classList.toggle("dark");
+    });
+
+    // Diet Calculator
+    const dietForm = document.getElementById("dietForm");
+    const dietResult = document.getElementById("dietResult");
+    dietForm.addEventListener("submit", e => {
+      e.preventDefault();
+      const age = +document.getElementById("age").value;
+      const weight = +document.getElementById("weight").value;
+      const height = +document.getElementById("height").value;
+      const activity = +document.getElementById("activity").value;
+      const bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+      const calories = Math.round(bmr * activity);
+      let suggestion = calories < 1800 ? "Add rice & dal khichdi" :
+                       calories < 2200 ? "Balanced: roti, sabzi, curd" :
+                       "High energy: paneer, nuts, ghee roti";
+      dietResult.textContent = `Your daily calorie need: ${calories} kcal. Suggestion: ${suggestion}`;
+    });
+
+    // Sleep Tracker
+    const sleepForm = document.getElementById("sleepForm");
+    const sleepResult = document.getElementById("sleepResult");
+    sleepForm.addEventListener("submit", e => {
+      e.preventDefault();
+      const bed = document.getElementById("bedtime").value;
+      const wake = document.getElementById("waketime").value;
+      if (!bed || !wake) return;
+      const [bh,bm] = bed.split(":").map(Number);
+      const [wh,wm] = wake.split(":").map(Number);
+      let start = new Date(0,0,0,bh,bm);
+      let end = new Date(0,0,0,wh,wm);
+      if (end <= start) end.setDate(end.getDate()+1);
+      const hours = (end-start)/3600000;
+      let msg = hours < 6 ? "Too little sleep! Try earlier bedtime." :
+                hours <= 8 ? "Perfect sleep duration!" :
+                "Oversleeping a bit, adjust schedule.";
+      sleepResult.textContent = `You slept ${hours.toFixed(1)} hrs. ${msg}`;
+    });
+
+    // Dream Journal
+    const dreamForm = document.getElementById("dreamForm");
+    const dreamText = document.getElementById("dreamText");
+    const dreamResult = document.getElementById("dreamResult");
+    const dreamHistory = document.getElementById("dreamHistory");
+    let dreams = JSON.parse(localStorage.getItem("dreams") || "[]");
+
+    function renderDreams() {
+      dreamHistory.innerHTML = dreams.map(d => `<li>${d.date}: ${d.text} — ${d.interpretation}</li>`).join("");
+    }
+    renderDreams();
+
+    dreamForm.addEventListener("submit", e => {
+      e.preventDefault();
+      const text = dreamText.value.trim();
+      if (!text) return;
+      let interpretation = text.includes("water") ? "Emotions flowing" :
+                           text.includes("flying") ? "Freedom desire" :
+                           "Subconscious thoughts";
+      const entry = {date:new Date().toLocaleString(), text, interpretation};
+      dreams.unshift(entry);
+      localStorage.setItem("dreams", JSON.stringify(dreams));
+      dreamResult.textContent = `Interpretation: ${interpretation}`;
+      dreamText.value="";
+      renderDreams();
+    });
+  });
   </script>
 </body>
 </html>
