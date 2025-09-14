@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AahaarSheela — Holistic Health & Wellness</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --primary-accent: #667eea; /* A subtle blue/purple for highlights, like Vercel's primary blue */
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --dark-bg: #000; /* Pure black, similar to Vercel's main background */
+      --darker-bg: #0a0a0a; /* Slightly lighter for elements */
+      --card-bg: rgba(255,255,255,0.02); /* Very subtle transparency for glass effect */
+      --border-color: rgba(255,255,255,0.1);
+      --text-primary: #fff;
+      --text-secondary: #a1a1aa; /* Zinc-400 equivalent */
+      --text-muted: #52525b; /* Zinc-600 equivalent */
+      --success-color: #22c55e; /* Green-500 */
+      --info-color: #3b82f6; /* Blue-500 */
+      --warning-color: #f59e0b; /* Amber-500 */
+    }
+    
+    body {
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      background-color: var(--dark-bg);
+      color: var(--text-primary);
+    }
+
+    .glass {
+      background: var(--card-bg);
+      backdrop-filter: blur(8px); /* Slightly less blur for Vercel feel */
+      border: 1px solid var(--border-color);
+      transition: all 0.2s ease;
+      border-radius: 0.5rem; /* Consistent border radius */
+    }
+    
+    .glass:hover {
+      transform: translateY(-1px); /* More subtle hover */
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* Darker shadow */
+      border-color: rgba(255,255,255,0.2);
+    }
+    
+    .gradient-btn {
+      background: linear-gradient(135deg, #374151 0%, #1f2937 100%); /* Darker gradient for buttons */
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 0.375rem; /* Rounded-md */
+    }
+    
+    .gradient-btn:hover {
+      background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
+      border-color: rgba(255,255,255,0.25);
+    }
+
+    .gradient-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .gradient-btn:hover::before {
+      left: 100%;
+    }
+    
+    .pulse-animation {
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: .5; }
+    }
+    
+    .slide-up {
+      animation: slideUp 0.5s ease-out;
+    }
+    
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    
+    .progress-ring {
+      transform: rotate(-90deg);
+    }
+    
+    .health-metric {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* Subtle top border, like Vercel */
+    .health-metric::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary-accent), transparent);
+    }
+    
+    .dream-cloud {
+      background: radial-gradient(ellipse at center, rgba(147, 51, 234, 0.05) 0%, transparent 70%); /* More subtle */
+      border-radius: 0.5rem; /* Consistent with other cards */
+    }
+    
+    .sleep-wave {
+      background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(59, 130, 246, 0.2) 20%, /* Blue-500 for sleep */
+        rgba(59, 130, 246, 0.4) 50%, 
+        rgba(59, 130, 246, 0.2) 80%, 
+        transparent 100%);
+      height: 1px; /* Thinner wave */
+      animation: wave 3s ease-in-out infinite;
+    }
+    
+    @keyframes wave {
+      0%, 100% { transform: scaleX(1); }
+      50% { transform: scaleX(1.1); } /* More subtle wave effect */
+    }
+
+    /* Vercel-style Tab Buttons */
+    .tab-nav-container {
+      background: var(--darker-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      padding: 0.25rem; /* Smaller padding */
+      display: inline-flex; /* Fit content */
+    }
+
+    .tab-btn {
+      color: var(--text-secondary);
+      background: transparent;
+      padding: 0.5rem 1rem; /* Adjust padding */
+      font-weight: 500;
+      border-radius: 0.375rem; /* Rounded-md */
+      transition: all 0.15s ease-in-out;
+      display: flex; /* For icon and text alignment */
+      align-items: center;
+      gap: 0.5rem; /* Space between icon and text */
+    }
+    .tab-btn.active {
+      color: var(--text-primary);
+      background-color: rgba(255,255,255,0.08); /* Light background for active state */
+      box-shadow: 0 1px 5px rgba(0,0,0,0.2);
+    }
+    .tab-btn:hover:not(.active) {
+      color: var(--text-primary);
+      background-color: rgba(255,255,255,0.03); /* Subtle hover for inactive */
+    }
+    
+    /* Custom slider styles (from previous version, good fit) */
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+      cursor: pointer;
+    }
+    
+    input[type="range"]::-webkit-slider-track {
+      background: var(--text-muted);
+      height: 4px; /* Thinner track */
+      border-radius: 2px;
+    }
+    
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      background: var(--primary-accent); /* Use accent color for thumb */
+      height: 16px; /* Smaller thumb */
+      width: 16px;
+      border-radius: 50%;
+      box-shadow: 0 1px 5px rgba(102, 126, 234, 0.4);
+      margin-top: -6px; /* Align thumb with track */
+    }
+    
+    input[type="range"]::-moz-range-track {
+      background: var(--text-muted);
+      height: 4px;
+      border-radius: 2px;
+    }
+    
+    input[type="range"]::-moz-range-thumb {
+      background: var(--primary-accent);
+      height: 16px;
+      width: 16px;
+      border-radius: 50%;
+      border: none;
+      box-shadow: 0 1px 5px rgba(102, 126, 234, 0.4);
+    }
+
+    /* Vercel-like input fields */
+    input[type="number"],
+    input[type="time"],
+    textarea,
+    select {
+      background: var(--darker-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      transition: all 0.2s ease;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.4);
+      border-radius: 0.375rem; /* Consistent rounded-md */
+      padding: 0.625rem 0.75rem; /* Adjusted padding */
+    }
+    input[type="number"]:focus,
+    input[type="time"]:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--primary-accent);
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.3);
+    }
+
+    /* Small utility classes for color accents */
+    .text-emerald-400-alt { color: var(--success-color); }
+    .text-purple-400-alt { color: var(--primary-accent); }
+    .text-blue-400-alt { color: var(--info-color); }
+    .text-pink-400-alt { color: #ec4899; } /* Pink-500 */
+    .text-amber-400-alt { color: var(--warning-color); }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-gray-950 to-black text-white selection:bg-gray-700 selection:text-white min-h-screen">
+
+  <div id="app" class="min-h-screen flex flex-col relative">
+    
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-gray-700 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-pulse"></div>
+      <div class="absolute top-3/4 right-1/4 w-72 h-72 bg-gray-600 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-pulse" style="animation-delay: 2s;"></div>
+      <div class="absolute bottom-1/4 left-1/3 w-56 h-56 bg-gray-500 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-pulse" style="animation-delay: 4s;"></div>
+    </div>
+
+    <header class="relative z-20 bg-darker-bg/80 backdrop-blur-sm border-b border-border-color">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <div class="w-8 h-8 rounded-full bg-white text-dark-bg flex items-center justify-center font-bold text-sm">AS</div>
+          <h1 class="text-xl font-medium text-text-primary">aahaarsheela</h1>
+          <span class="text-text-secondary text-sm hidden sm:block">/ holistic health</span>
+        </div>
+
+        <div class="flex items-center space-x-4">
+          <span class="inline-flex items-center gap-1.5 py-1 px-3 text-xs font-medium bg-darker-bg text-success-color rounded-full border border-border-color">
+            <span class="w-2 h-2 bg-success-color rounded-full pulse-animation"></span>
+            active
+          </span>
+          <button id="settingsBtn" class="p-2 rounded-md hover:bg-card-bg text-text-secondary hover:text-text-primary transition-colors">
+            <i data-lucide="settings" class="h-5 w-5"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-4 pb-8 flex justify-center">
+      <div class="tab-nav-container rounded-lg flex space-x-0.5">
+        <button id="dietTab" class="tab-btn active">
+          <i data-lucide="soup" class="h-4 w-4"></i> <span>Diet</span>
+        </button>
+        <button id="sleepTab" class="tab-btn">
+          <i data-lucide="bed" class="h-4 w-4"></i> <span>Sleep</span>
+        </button>
+        <button id="dreamTab" class="tab-btn">
+          <i data-lucide="moon" class="h-4 w-4"></i> <span>Dream</span>
+        </button>
+        <button id="insightsTab" class="tab-btn">
+          <i data-lucide="bar-chart-2" class="h-4 w-4"></i> <span>Insights</span>
+        </button>
+      </div>
+    </div>
+
+    <main class="flex-1 relative z-10 max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-20">
+
+      <section id="dietContent" class="tab-content">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          
+          <div class="glass p-6 health-metric">
+            <div class="flex items-center gap-3 mb-5">
+              <div class="w-9 h-9 rounded-full bg-success-color/20 text-success-color flex items-center justify-center text-sm">
+                <i data-lucide="apple" class="h-5 w-5"></i>
+              </div>
+              <h2 class="text-xl font-bold text-success-color">
+                Smart Diet Calculator
+              </h2>
+            </div>
+
+            <div class="space-y-4">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="space-y-2">
+                  <label class="block text-sm font-medium text-text-secondary">Age</label>
+                  <input id="age" type="number" placeholder="25" min="10" max="100"
+                    class="w-full" value="25">
+                </div>
+                <div class="space-y-2">
+                  <label class="block text-sm font-medium text-text-secondary">Sex</label>
+                  <select id="sex" class="w-full">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="space-y-2">
+                  <label class="block text-sm font-medium text-text-secondary">Weight (kg)</label>
+                  <input id="weight" type="number" placeholder="70" min="30" max="200"
+                    class="w-full" value="70">
+                </div>
+                <div class="space-y-2">
+                  <label class="block text-sm font-medium text-text-secondary">Height (cm)</label>
+                  <input id="height" type="number" placeholder="170" min="120" max="220"
+                    class="w-full" value="170">
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="space-y-2">
+                  <label class="block text-sm font-medium text-text-secondary">Activity Level</label>
+                  <select id="activity" class="w-full">
+                    <option value="sedentary">Sedentary</option>
+                    <option value="light">Light Activity</option>
+                    <option value="moderate" selected>Moderate</option>
+                    <option value="active">Active</option>
+                    <option value="very_active">Very Active</option>
+                  </select>
+                </div>
+                <div class="space-y-2">
+                  <label class="block text-sm font-medium text-text-secondary">Diet Type</label>
+                  <select id="dietType" class="w-full">
+                    <option value="veg" selected>Vegetarian</option>
+                    <option value="nonveg">Non-Vegetarian</option>
+                    <option value="vegan">Vegan</option>
+                    <option value="eggetarian">Eggetarian</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-text-secondary">Health Goal</label>
+                <select id="goal" class="w-full">
+                  <option value="balanced" selected>Maintain Weight</option>
+                  <option value="weight_loss">Weight Loss</option>
+                  <option value="muscle_gain">Muscle Gain</option>
+                </select>
+              </div>
+
+              <button id="calculateBtn" class="w-full gradient-btn font-medium py-3 px-6">
+                Calculate My Personalized Plan
+              </button>
+
+              <div class="flex gap-3 mt-4">
+                <button id="saveDietBtn" class="flex-1 py-2.5 px-4 rounded-md bg-darker-bg border border-border-color hover:border-primary-accent text-sm font-medium text-text-secondary transition-all">
+                  <i data-lucide="save" class="h-4 w-4 inline-block mr-1"></i> Save
+                </button>
+                <button id="exportDietBtn" class="flex-1 py-2.5 px-4 rounded-md bg-darker-bg border border-border-color hover:border-primary-accent text-sm font-medium text-text-secondary transition-all">
+                  <i data-lucide="share" class="h-4 w-4 inline-block mr-1"></i> Export
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-6">
+            <div id="dietResult" class="glass p-6 health-metric hidden">
+              <h3 class="text-lg font-bold text-primary-accent mb-4">Your Health Metrics</h3>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-5">
+                <div class="text-center">
+                  <div id="bmrDisplay" class="text-xl font-bold text-blue-400-alt">0</div>
+                  <div class="text-xs text-text-secondary">BMR</div>
+                </div>
+                <div class="text-center">
+                  <div id="tdeeDisplay" class="text-xl font-bold text-success-color">0</div>
+                  <div class="text-xs text-text-secondary">TDEE</div>
+                </div>
+                <div class="text-center">
+                  <div id="targetDisplay" class="text-xl font-bold text-primary-accent">0</div>
+                  <div class="text-xs text-text-secondary">Target</div>
+                </div>
+                <div class="text-center">
+                  <div id="proteinDisplay" class="text-xl font-bold text-amber-400-alt">0g</div>
+                  <div class="text-xs text-text-secondary">Protein</div>
+                </div>
+              </div>
+              <div id="bmiDisplay" class="text-center p-2.5 rounded-md bg-darker-bg border border-border-color text-sm text-text-secondary"></div>
+            </div>
+
+            <div id="mealSuggestions" class="glass p-6 hidden slide-up">
+              <h3 class="text-lg font-bold text-success-color mb-4">Personalized Meal Plan</h3>
+              <div id="mealPlan" class="space-y-3"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="sleepContent" class="tab-content hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          
+          <div class="glass p-6 health-metric">
+            <div class="flex items-center gap-3 mb-5">
+              <div class="w-9 h-9 rounded-full bg-info-color/20 text-info-color flex items-center justify-center text-sm">
+                <i data-lucide="bed" class="h-5 w-5"></i>
+              </div>
+              <h2 class="text-xl font-bold text-info-color">
+                Sleep Tracker
+              </h2>
+            </div>
+
+            <div class="space-y-4">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="space-y-2">
+                  <label class="block text-sm font-medium text-text-secondary">Bedtime</label>
+                  <input id="bedtime" type="time" value="23:00"
+                    class="w-full">
+                </div>
+                <div class="space-y-2">
+                  <label class="block text-sm font-medium text-text-secondary">Wake Time</label>
+                  <input id="waketime" type="time" value="07:00"
+                    class="w-full">
+                </div>
+              </div>
+
+              <div class="space-y-3">
+                <label class="block text-sm font-medium text-text-secondary">Sleep Quality</label>
+                <input id="sleepQuality" type="range" min="1" max="10" value="7" 
+                  class="w-full">
+                <div class="flex justify-between text-xs text-text-secondary">
+                  <span>Poor</span>
+                  <span class="font-medium">Quality: <span id="qualityValue">7</span>/10</span>
+                  <span>Excellent</span>
+                </div>
+              </div>
+
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-text-secondary">How do you feel?</label>
+                <select id="sleepFeeling" class="w-full">
+                  <option value="refreshed">Refreshed & Energetic</option>
+                  <option value="okay" selected>Okay</option>
+                  <option value="tired">Tired</option>
+                  <option value="exhausted">Exhausted</option>
+                </select>
+              </div>
+
+              <div class="flex gap-3">
+                <button id="analyzeSleep" class="flex-1 gradient-btn font-medium py-3 px-6">
+                  Analyze Sleep Impact
+                </button>
+                <button id="saveSleepBtn" class="px-6 py-2.5 rounded-md bg-darker-bg border border-border-color hover:border-info-color text-sm font-medium text-text-secondary transition-all">
+                  <i data-lucide="save" class="h-4 w-4 inline-block mr-1"></i> Save
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-6">
+            <div id="sleepResults" class="glass p-6 hidden slide-up">
+              <h3 class="text-lg font-bold text-info-color mb-4">Sleep Analysis</h3>
+              <div class="sleep-wave mb-4"></div>
+              <div id="sleepMetrics" class="grid grid-cols-3 gap-4 text-center"></div>
+              <div id="sleepRecommendations" class="mt-5 space-y-3 text-text-secondary"></div>
+            </div>
+
+            <div class="glass p-6">
+              <h3 class="text-md font-semibold text-text-primary mb-4">Recent Sleep Logs</h3>
+              <div id="sleepLogs" class="space-y-3 max-h-60 overflow-y-auto"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="dreamContent" class="tab-content hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          
+          <div class="glass p-6 health-metric dream-cloud">
+            <div class="flex items-center gap-3 mb-5">
+              <div class="w-9 h-9 rounded-full bg-primary-accent/20 text-primary-accent flex items-center justify-center text-sm">
+                <i data-lucide="cloud-moon" class="h-5 w-5"></i>
+              </div>
+              <h2 class="text-xl font-bold text-primary-accent">
+                Dream Journal
+              </h2>
+            </div>
+
+            <div class="bg-darker-bg/50 border border-warning-color/30 rounded-md p-4 mb-5">
+              <div class="flex gap-3">
+                <div class="text-warning-color font-bold">
+                  <i data-lucide="alert-circle" class="h-5 w-5"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-warning-color text-sm">For Entertainment Only</h4>
+                  <p class="text-text-secondary text-xs leading-relaxed">
+                    Dream interpretations are for self-reflection and entertainment. They have no scientific basis for prediction or life decisions.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-4">
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-text-secondary">Describe your dream</label>
+                <textarea id="dreamDescription" rows="4" placeholder="Share the details of your dream journey..."
+                  class="w-full resize-none"></textarea>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="space-y-2">
+                  <label class="block text-sm font-medium text-text-secondary">Dream Emotion</label>
+                  <select id="dreamEmotion" class="w-full">
+                    <option value="">Select emotion</option>
+                    <option value="happy">Happy/Joyful</option>
+                    <option value="fearful">Fearful/Anxious</option>
+                    <option value="sad">Sad/Melancholic</option>
+                    <option value="angry">Angry/Frustrated</option>
+                    <option value="confused">Confused/Lost</option>
+                    <option value="excited">Excited/Thrilled</option>
+                    <option value="peaceful">Peaceful/Calm</option>
+                  </select>
+                </div>
+                <div class="space-y-2">
+                  <label class="block text-sm font-medium text-text-secondary">Dream Theme</label>
+                  <select id="dreamTheme" class="w-full">
+                    <option value="">Select theme</option>
+                    <option value="flying">Flying/Freedom</option>
+                    <option value="falling">Falling/Loss of Control</option>
+                    <option value="chased">Being Chased</option>
+                    <option value="water">Water/Ocean</option>
+                    <option value="animals">Animals</option>
+                    <option value="family">Family/Relationships</option>
+                    <option value="work">Work/School</option>
+                    <option value="death">Death/Endings</option>
+                    <option value="nature">Nature/Outdoors</option>
+                    <option value="travel">Travel/Journey</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="space-y-3">
+                <label class="block text-sm font-medium text-text-secondary">Dream Clarity</label>
+                <input id="dreamClarity" type="range" min="1" max="10" value="5"
+                  class="w-full">
+                <div class="flex justify-between text-xs text-text-secondary">
+                  <span>Fuzzy</span>
+                  <span class="font-medium">Clarity: <span id="clarityValue">5</span>/10</span>
+                  <span>Crystal Clear</span>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <button id="interpretDream" class="flex-1 gradient-btn font-medium py-3 px-6">
+                  Generate Interpretation
+                </button>
+                <button id="saveDreamBtn" class="px-6 py-2.5 rounded-md bg-darker-bg border border-border-color hover:border-primary-accent text-sm font-medium text-text-secondary transition-all">
+                  <i data-lucide="save" class="h-4 w-4 inline-block mr-1"></i> Save
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-6">
+            <div id="dreamInterpretation" class="glass p-6 hidden slide-up">
+              <h3 class="text-lg font-bold text-primary-accent mb-4">Dream Analysis</h3>
+              <div id="interpretationContent" class="space-y-3 text-text-secondary"></div>
+            </div>
+
+            <div class="glass p-6">
+              <h3 class="text-md font-semibold text-text-primary mb-4">Dream History</h3>
+              <div id="dreamHistory" class="space-y-3 max-h-80 overflow-y-auto"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="insightsContent" class="tab-content hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          
+          <div class="glass p-6 health-metric">
+            <h3 class="text-lg font-semibold text-success-color mb-4">Health Score</h3>
+            <div class="relative w-24 h-24 mx-auto mb-4">
+              <svg class="progress-ring w-24 h-24">
+                <circle cx="48" cy="48" r="40" stroke="#262626" stroke-width="8" fill="transparent"></circle>
+                <circle id="healthScoreCircle" cx="48" cy="48" r="40" stroke="var(--success-color)" stroke-width="8" 
+                  fill="transparent" stroke-dasharray="251" stroke-dashoffset="125" 
+                  class="transition-all duration-1000 ease-out"></circle>
+              </svg>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span id="healthScoreText" class="text-2xl font-bold text-success-color">
+                  50
+                </span>
+              </div>
+            </div>
+            <p class="text-sm text-center text-text-secondary">Based on your recent logs.</p>
+          </div>
+
+          <div class="glass p-6 health-metric">
+            <h3 class="text-lg font-semibold text-primary-accent mb-4">Dietary Trends</h3>
+            <div class="w-full h-40">
+              <canvas id="dietChart"></canvas>
+            </div>
+          </div>
+
+          <div class="glass p-6 health-metric">
+            <h3 class="text-lg font-semibold text-info-color mb-4">Sleep Consistency</h3>
+            <div class="w-full h-40">
+              <canvas id="sleepChart"></canvas>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Initialize Lucid Icons
+    lucide.createIcons();
+
+    // --- Global State & Utility Functions ---
+    const state = {
+      dietLogs: JSON.parse(localStorage.getItem('as_dietLogs') || '[]'),
+      sleepLogs: JSON.parse(localStorage.getItem('as_sleepLogs') || '[]'),
+      dreamLogs: JSON.parse(localStorage.getItem('as_dreamLogs') || '[]'),
+      charts: {}
+    };
+
+    function saveState() {
+      localStorage.setItem('as_dietLogs', JSON.stringify(state.dietLogs));
+      localStorage.setItem('as_sleepLogs', JSON.stringify(state.sleepLogs));
+      localStorage.setItem('as_dreamLogs', JSON.stringify(state.dreamLogs));
+      updateInsights();
+    }
+
+    const foodDB = [
+      {name:'Roti (1 medium)', cal:80, p:3, c:12, f:2, tags:['veg','vegan','eggetarian']},
+      {name:'Rice (1 cup cooked)', cal:200, p:4, c:45, f:0.5, tags:['veg','vegan','eggetarian']},
+      {name:'Dal (1 cup)', cal:180, p:9, c:20, f:5, tags:['veg','vegan','eggetarian']},
+      {name:'Paneer Curry (1 serving)', cal:280, p:14, c:8, f:20, tags:['veg']},
+      {name:'Mixed Veg Sabzi (1 cup)', cal:120, p:3, c:14, f:6, tags:['veg','vegan']},
+      {name:'Dosa (1)', cal:150, p:4, c:25, f:3, tags:['veg']},
+      {name:'Idli (1)', cal:60, p:2, c:12, f:0.5, tags:['veg']},
+      {name:'Egg (1 large)', cal:70, p:6, c:0.4, f:5, tags:['eggetarian','nonveg']},
+      {name:'Chicken Curry (1 serving)', cal:350, p:25, c:6, f:22, tags:['nonveg']},
+      {name:'Fish Curry (1 serving)', cal:300, p:22, c:4, f:18, tags:['nonveg']},
+      {name:'Poha (1 plate)', cal:220, p:5, c:36, f:6, tags:['veg','vegan']},
+      {name:'Curd (100g)', cal:60, p:3, c:4, f:3, tags:['veg']},
+      {name:'Nuts (handful)', cal:160, p:5, c:6, f:14, tags:['veg','vegan']},
+      {name:'Salad (1 bowl)', cal:50, p:1, c:10, f:0.5, tags:['veg','vegan']}
+    ];
+
+    function calcBMR(sex, weightKg, heightCm, age) {
+      if (sex === 'male') return 10 * weightKg + 6.25 * heightCm - 5 * age + 5;
+      return 10 * weightKg + 6.25 * heightCm - 5 * age - 161;
+    }
+    const activityMultipliers = {
+      sedentary: 1.2,
+      light: 1.375,
+      moderate: 1.55,
+      active: 1.725,
+      very_active: 1.9
+    };
+    
+    // --- UI Logic ---
+    function switchTab(targetId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.getElementById(targetId).classList.remove('hidden');
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      document.querySelector(`[id='${targetId.replace('Content', 'Tab')}']`).classList.add('active');
+      
+      // Re-initialize Lucid Icons for newly visible content (if needed, although createIcons() is often global)
+      lucide.createIcons();
+
+      if (targetId === 'insightsContent') {
+        updateInsights();
+      }
+    }
+
+    document.getElementById('dietTab').addEventListener('click', () => switchTab('dietContent'));
+    document.getElementById('sleepTab').addEventListener('click', () => switchTab('sleepContent'));
+    document.getElementById('dreamTab').addEventListener('click', () => switchTab('dreamContent'));
+    document.getElementById('insightsTab').addEventListener('click', () => switchTab('insightsContent'));
+
+    // --- Diet Calculator Logic ---
+    document.getElementById('calculateBtn').addEventListener('click', () => {
+      const age = +document.getElementById('age').value;
+      const sex = document.getElementById('sex').value;
+      const weight = +document.getElementById('weight').value;
+      const height = +document.getElementById('height').value;
+      const activity = document.getElementById('activity').value;
+      const dietType = document.getElementById('dietType').value;
+      const goal = document.getElementById('goal').value;
+
+      if (!age || !weight || !height) return;
+
+      const bmr = Math.round(calcBMR(sex, weight, height, age));
+      const tdee = Math.round(bmr * activityMultipliers[activity]);
+      let targetCalories = tdee;
+      if (goal === 'weight_loss') targetCalories = Math.max(1200, tdee - 500);
+      if (goal === 'muscle_gain') targetCalories = tdee + 300;
+      const proteinTarget = Math.round(weight * (goal === 'muscle_gain' ? 1.8 : 1.4));
+
+      document.getElementById('bmrDisplay').textContent = bmr;
+      document.getElementById('tdeeDisplay').textContent = tdee;
+      document.getElementById('targetDisplay').textContent = targetCalories;
+      document.getElementById('proteinDisplay').textContent = `${proteinTarget}g`;
+      document.getElementById('bmiDisplay').innerHTML = `BMI: ${calcBMI(weight, height).toFixed(1)} - ${getBMICategory(calcBMI(weight, height))}`;
+      document.getElementById('dietResult').classList.remove('hidden');
+
+      const mealPlan = suggestMeals(targetCalories, dietType);
+      renderMealPlan(mealPlan);
+      document.getElementById('mealSuggestions').classList.remove('hidden');
+    });
+
+    function calcBMI(weight, height) {
+      return weight / (height / 100) ** 2;
+    }
+    
+    function getBMICategory(bmi) {
+      if (bmi < 18.5) return 'Underweight';
+      if (bmi >= 18.5 && bmi <= 24.9) return 'Healthy Weight';
+      if (bmi >= 25 && bmi <= 29.9) return 'Overweight';
+      return 'Obese';
+    }
+
+    function suggestMeals(targetCalories, dietType) {
+      const filteredFoods = foodDB.filter(item => {
+        if (dietType === 'veg') return item.tags.includes('veg');
+        if (dietType === 'nonveg') return item.tags.includes('nonveg') || item.tags.includes('veg');
+        if (dietType === 'vegan') return item.tags.includes('vegan');
+        if (dietType === 'eggetarian') return item.tags.includes('eggetarian') || item.tags.includes('veg');
+        return true;
+      });
+
+      const mealBuckets = {
+        breakfast: Math.round(targetCalories * 0.25),
+        lunch: Math.round(targetCalories * 0.35),
+        dinner: Math.round(targetCalories * 0.30),
+        snack: Math.round(targetCalories * 0.10)
+      };
+
+      function buildMeal(calGoal) {
+        let meal = [];
+        let remaining = calGoal;
+        let p = 0, c = 0, f = 0;
+        const shuffledFoods = filteredFoods.sort(() => 0.5 - Math.random());
+        for (const food of shuffledFoods) {
+          if (remaining > 0 && food.cal <= remaining + 50) {
+            meal.push(food);
+            remaining -= food.cal;
+            p += food.p;
+            c += food.c;
+            f += food.f;
+          }
+        }
+        return { items: meal, cal: calGoal - remaining, p: Math.round(p), c: Math.round(c), f: Math.round(f) };
+      }
+
+      return {
+        breakfast: buildMeal(mealBuckets.breakfast),
+        lunch: buildMeal(mealBuckets.lunch),
+        dinner: buildMeal(mealBuckets.dinner),
+        snack: buildMeal(mealBuckets.snack),
+      };
+    }
+
+    function renderMealPlan(mealPlan) {
+      const mealPlanEl = document.getElementById('mealPlan');
+      mealPlanEl.innerHTML = '';
+      for (const meal in mealPlan) {
+        const mealData = mealPlan[meal];
+        mealPlanEl.innerHTML += `
+          <div class="glass p-4 slide-up">
+            <h4 class="font-medium text-text-primary capitalize">${meal}</h4>
+            <p class="text-sm text-text-secondary mt-1">${mealData.items.map(i => i.name).join(', ')}</p>
+            <div class="text-xs text-text-muted mt-2">
+              <span class="font-bold text-success-color">${mealData.cal} kcal</span> • 
+              P: ${mealData.p}g • C: ${mealData.c}g • F: ${mealData.f}g
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    document.getElementById('saveDietBtn').addEventListener('click', () => {
+      const log = {
+        date: new Date().toISOString(),
+        age: +document.getElementById('age').value,
+        weight: +document.getElementById('weight').value,
+        height: +document.getElementById('height').value,
+        activity: document.getElementById('activity').value,
+        goal: document.getElementById('goal').value,
+        targetCalories: +document.getElementById('targetDisplay').textContent,
+        bmr: +document.getElementById('bmrDisplay').textContent,
+        tdee: +document.getElementById('tdeeDisplay').textContent,
+        proteinTarget: +document.getElementById('proteinDisplay').textContent.replace('g','')
+      };
+      state.dietLogs.unshift(log);
+      saveState();
+      alert('Diet plan saved!');
+    });
+
+    // --- Sleep Tracker Logic ---
+    document.getElementById('sleepQuality').addEventListener('input', (e) => {
+      document.getElementById('qualityValue').textContent = e.target.value;
+    });
+
+    document.getElementById('analyzeSleep').addEventListener('click', () => {
+      const bedtime = document.getElementById('bedtime').value;
+      const waketime = document.getElementById('waketime').value;
+      const quality = +document.getElementById('sleepQuality').value;
+      const feeling = document.getElementById('sleepFeeling').value;
+
+      if (!bedtime || !waketime) return;
+
+      const [bh, bm] = bedtime.split(':').map(Number);
+      const [wh, wm] = waketime.split(':').map(Number);
+      let bedMin = bh * 60 + bm;
+      let wakeMin = wh * 60 + wm;
+      if (wakeMin <= bedMin) wakeMin += 24 * 60;
+      const durationHrs = Math.round(((wakeMin - bedMin) / 60) * 10) / 10;
+      
+      const sleepScore = calcSleepScore(durationHrs, quality);
+      
+      const sleepMetrics = document.getElementById('sleepMetrics');
+      sleepMetrics.innerHTML = `
+        <div class="flex flex-col items-center">
+          <div class="text-xl font-bold text-info-color">${durationHrs}h</div>
+          <div class="text-xs text-text-secondary">Duration</div>
+        </div>
+        <div class="flex flex-col items-center">
+          <div class="text-xl font-bold text-primary-accent">${sleepScore}</div>
+          <div class="text-xs text-text-secondary">Score/100</div>
+        </div>
+        <div class="flex flex-col items-center">
+          <div class="text-xl font-bold text-pink-400-alt">${getCalorieImpact(durationHrs, quality)}</div>
+          <div class="text-xs text-text-secondary">Calorie Impact</div>
+        </div>
+      `;
+      document.getElementById('sleepResults').classList.remove('hidden');
+    });
+
+    function calcSleepScore(duration, quality) {
+      let score = quality * 10;
+      if (duration >= 7 && duration <= 9) score += 20;
+      else if (duration >= 6 && duration <= 10) score += 10;
+      score = Math.max(0, Math.min(100, score));
+      return score;
+    }
+
+    function getCalorieImpact(duration, quality) {
+      if (duration < 6) return '+200';
+      if (duration > 9) return '-100';
+      if (quality < 5) return '+150';
+      return '±0';
+    }
+
+    document.getElementById('saveSleepBtn').addEventListener('click', () => {
+      const bedtime = document.getElementById('bedtime').value;
+      const waketime = document.getElementById('waketime').value;
+      if (!bedtime || !waketime) return alert('Please enter both times.');
+      
+      const [bh, bm] = bedtime.split(':').map(Number);
+      const [wh, wm] = waketime.split(':').map(Number);
+      let bedMin = bh * 60 + bm;
+      let wakeMin = wh * 60 + wm;
+      if (wakeMin <= bedMin) wakeMin += 24 * 60;
+      const durationHrs = Math.round(((wakeMin - bedMin) / 60) * 10) / 10;
+
+      const log = {
+        date: new Date().toISOString(),
+        bedtime: bedtime,
+        waketime: waketime,
+        duration: durationHrs,
+        quality: +document.getElementById('sleepQuality').value,
+        feeling: document.getElementById('sleepFeeling').value
+      };
+      state.sleepLogs.unshift(log);
+      saveState();
+      renderSleepLogs();
+      alert('Sleep log saved!');
+    });
+
+    function renderSleepLogs() {
+      const sleepLogsEl = document.getElementById('sleepLogs');
+      sleepLogsEl.innerHTML = '';
+      if (state.sleepLogs.length === 0) {
+        sleepLogsEl.innerHTML = '<p class="text-sm text-text-secondary">No sleep logs yet.</p>';
+        return;
+      }
+      state.sleepLogs.slice(0, 5).forEach(log => {
+        sleepLogsEl.innerHTML += `
+          <div class="glass p-4 slide-up">
+            <div class="flex justify-between items-center text-xs text-text-secondary">
+              <span>${new Date(log.date).toLocaleDateString()}</span>
+              <span>${log.duration}h • Q:${log.quality}/10</span>
+            </div>
+            <p class="text-sm mt-1 text-text-primary">Feeling: ${log.feeling}</p>
+          </div>
+        `;
+      });
+    }
+
+    // --- Dream Journal Logic ---
+    document.getElementById('dreamClarity').addEventListener('input', (e) => {
+      document.getElementById('clarityValue').textContent = e.target.value;
+    });
+
+    const dreamRules = {
+      keywords: {
+        water: "Emotions, intuition, cleansing, or transition.",
+        flying: "Freedom, ambition, or desire to rise above challenges.",
+        falling: "Loss of control, insecurity, or fear of failure.",
+        chased: "Avoidance of a problem or stress you are running from.",
+        animals: "Primal instincts, relationships, or personality aspects.",
+        family: "Connection to relationships, support, or early memories.",
+        death: "Endings, transformation, or big changes (not literal).",
+        travel: "Journey, discovery, or life transition.",
+        work: "Career stress, task load, or performance anxiety."
+      },
+      emotions: {
+        happy: "A reflection of contentment, positive change, or inner satisfaction.",
+        fearful: "Heightened anxiety or expectation of upcoming stressors.",
+        sad: "Need to process loss, disappointment, or unmet needs.",
+        angry: "Suppressed frustration or boundary issues that need addressing.",
+        confused: "Uncertainty about a decision or feeling pulled in multiple directions.",
+        excited: "Anticipation, new opportunities, or positive life changes.",
+        peaceful: "Inner calm, successful stress resolution, or healing."
+      }
+    };
+
+    function interpretDreamText(text, theme, emotion, clarity) {
+      const lower = text.toLowerCase();
+      const interpretations = [];
+      const keywords = [];
+
+      for (const k in dreamRules.keywords) {
+        if (lower.includes(k)) {
+          keywords.push(k);
+          interpretations.push(dreamRules.keywords[k]);
+        }
+      }
+      if (theme && dreamRules.keywords[theme] && !keywords.includes(theme)) {
+        interpretations.push(`Theme (${theme}): ${dreamRules.keywords[theme]}`);
+      }
+      if (emotion && dreamRules.emotions[emotion]) {
+        interpretations.push(`Emotion (${emotion}): ${dreamRules.emotions[emotion]}`);
+      }
+      
+      let clarityNote = '';
+      if (clarity >= 8) clarityNote = 'This dream is very vivid; it may hold significant meaning for your subconscious.';
+      else if (clarity <= 3) clarityNote = 'A fuzzy dream, likely reflecting a passing thought rather than a deep concern.';
+
+      return {
+        main: interpretations.length ? interpretations.join(' | ') : "No specific symbols found. The interpretation is based on the general feeling of your dream.",
+        clarityNote: clarityNote
+      };
+    }
+
+    document.getElementById('interpretDream').addEventListener('click', () => {
+      const text = document.getElementById('dreamDescription').value;
+      const emotion = document.getElementById('dreamEmotion').value;
+      const theme = document.getElementById('dreamTheme').value;
+      const clarity = +document.getElementById('dreamClarity').value;
+      
+      if (!text) return;
+      
+      const interpretation = interpretDreamText(text, theme, emotion, clarity);
+      const contentEl = document.getElementById('interpretationContent');
+      contentEl.innerHTML = `
+        <div class="p-4 rounded-md bg-darker-bg border border-border-color">
+          <p class="text-text-primary text-sm"><strong>Interpretation:</strong> ${interpretation.main}</p>
+        </div>
+        ${interpretation.clarityNote ? `<p class="mt-2 text-sm text-text-secondary">${interpretation.clarityNote}</p>` : ''}
+      `;
+      document.getElementById('dreamInterpretation').classList.remove('hidden');
+    });
+
+    document.getElementById('saveDreamBtn').addEventListener('click', () => {
+      const text = document.getElementById('dreamDescription').value;
+      const emotion = document.getElementById('dreamEmotion').value;
+      const theme = document.getElementById('dreamTheme').value;
+      const clarity = +document.getElementById('dreamClarity').value;
+      
+      if (!text) return;
+      
+      const interpretation = interpretDreamText(text, theme, emotion, clarity);
+      const log = {
+        date: new Date().toISOString(),
+        text: text,
+        emotion: emotion,
+        theme: theme,
+        clarity: clarity,
+        interpretation: interpretation.main
+      };
+      state.dreamLogs.unshift(log);
+      saveState();
+      renderDreamHistory();
+      alert('Dream saved!');
+    });
+
+    function renderDreamHistory() {
+      const dreamHistoryEl = document.getElementById('dreamHistory');
+      dreamHistoryEl.innerHTML = '';
+      if (state.dreamLogs.length === 0) {
+        dreamHistoryEl.innerHTML = '<p class="text-sm text-text-secondary">No dreams saved yet.</p>';
+        return;
+      }
+      state.dreamLogs.slice(0, 5).forEach(log => {
+        dreamHistoryEl.innerHTML += `
+          <div class="glass p-4 slide-up">
+            <div class="flex justify-between items-center text-xs text-text-secondary">
+              <span>${new Date(log.date).toLocaleDateString()}</span>
+              <span>Clarity: ${log.clarity}/10</span>
+            </div>
+            <p class="text-sm mt-1 text-text-primary italic">"${log.text.substring(0, 80)}..."</p>
+            <p class="text-xs text-text-muted mt-2">${log.interpretation}</p>
+          </div>
+        `;
+      });
+    }
+
+    // --- Insights Logic ---
+    function updateInsights() {
+      // Health Score
+      const totalScore = calculateHealthScore();
+      const healthScoreTextEl = document.getElementById('healthScoreText');
+      const healthScoreCircleEl = document.getElementById('healthScoreCircle');
+      healthScoreTextEl.textContent = totalScore;
+      const circumference = 2 * Math.PI * 40;
+      const offset = circumference - (totalScore / 100) * circumference;
+      healthScoreCircleEl.style.strokeDashoffset = offset;
+      
+      // Charts
+      renderDietChart();
+      renderSleepChart();
+    }
+    
+    function calculateHealthScore() {
+      let score = 0;
+      const latestDiet = state.dietLogs[0];
+      const latestSleep = state.sleepLogs[0];
+      
+      if (latestDiet) {
+        score += 25; // Base score for logging
+        const bmi = calcBMI(latestDiet.weight, latestDiet.height);
+        if (bmi >= 18.5 && bmi <= 24.9) score += 25;
+        if (latestDiet.proteinTarget > 50) score += 10;
+      }
+      
+      if (latestSleep) {
+        score += 25; // Base score for logging
+        const sleepScore = calcSleepScore(latestSleep.duration, latestSleep.quality);
+        score += Math.round(sleepScore * 0.25);
+      }
+      
+      return Math.min(100, score);
+    }
+    
+    function renderDietChart() {
+      if (state.charts.diet) state.charts.diet.destroy();
+      const ctx = document.getElementById('dietChart').getContext('2d');
+      const labels = state.dietLogs.slice(0, 7).map(log => new Date(log.date).toLocaleDateString());
+      const data = state.dietLogs.slice(0, 7).map(log => log.targetCalories);
+      
+      state.charts.diet = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels.reverse(),
+          datasets: [{
+            label: 'Target Calories',
+            data: data.reverse(),
+            backgroundColor: 'rgba(34, 197, 94, 0.5)', /* Success color green */
+            borderColor: 'rgba(34, 197, 94, 1)',
+            borderWidth: 1,
+            borderRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { 
+              grid: { color: 'rgba(255, 255, 255, 0.05)' },
+              ticks: { color: 'var(--text-secondary)' }
+            },
+            y: { 
+              grid: { color: 'rgba(255, 255, 255, 0.05)' }, 
+              beginAtZero: true,
+              ticks: { color: 'var(--text-secondary)' }
+            }
+          }
+        }
+      });
+    }
+    
+    function renderSleepChart() {
+      if (state.charts.sleep) state.charts.sleep.destroy();
+      const ctx = document.getElementById('sleepChart').getContext('2d');
+      const labels = state.sleepLogs.slice(0, 7).map(log => new Date(log.date).toLocaleDateString());
+      const data = state.sleepLogs.slice(0, 7).map(log => log.duration);
+      
+      state.charts.sleep = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels.reverse(),
+          datasets: [{
+            label: 'Sleep Duration',
+            data: data.reverse(),
+            borderColor: 'var(--info-color)', /* Blue color */
+            tension: 0.4,
+            fill: true,
+            backgroundColor: 'rgba(59, 130, 246, 0.1)' /* Light blue fill */
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { 
+              grid: { color: 'rgba(255, 255, 255, 0.05)' },
+              ticks: { color: 'var(--text-secondary)' }
+            },
+            y: { 
+              grid: { color: 'rgba(255, 255, 255, 0.05)' }, 
+              beginAtZero: true,
+              ticks: { color: 'var(--text-secondary)' }
+            }
+          }
+        }
+      });
+    }
+
+    // --- Initial Render ---
+    window.onload = () => {
+      switchTab('dietContent');
+      renderSleepLogs();
+      renderDreamHistory();
+    };
+  </script>
+</body>
+</html>
