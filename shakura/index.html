@@ -3,29 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shakura</title>
+    <title>Shakura - Work Life Balance</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #e0e5ec; /* Light Neumorphic background */
+            --primary-color: #e0e5ec;
             --shadow-color-light: #ffffff;
             --shadow-color-dark: #a3b1c6;
             --text-color: #555;
             --accent-color: #d81b60;
+            --success-color: #4caf50;
+            --info-color: #2196f3;
+            --warning-color: #ff9800;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body, html {
             height: 100%;
-            margin: 0;
             font-family: 'Playfair Display', serif;
-            background-color: var(--primary-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background: linear-gradient(135deg, #e0e5ec 0%, #d8dde7 100%);
             color: var(--text-color);
-            overflow: hidden;
+            overflow-x: hidden;
+        }
+
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            transition: all 0.6s ease;
         }
 
         .hero {
@@ -34,33 +49,61 @@
             align-items: center;
             justify-content: center;
             text-align: center;
+            transition: all 0.6s ease;
         }
         
-        /* Neumorphic Yin Yang Container */
+        /* Neumorphic Container */
         .yin-yang-container {
             position: relative;
-            width: 200px;
-            height: 200px;
+            width: 220px;
+            height: 220px;
             border-radius: 50%;
-            background-color: var(--primary-color);
-            box-shadow: 8px 8px 15px var(--shadow-color-dark),
-                       -8px -8px 15px var(--shadow-color-light);
+            background: var(--primary-color);
+            box-shadow: 
+                12px 12px 24px var(--shadow-color-dark),
+                -12px -12px 24px var(--shadow-color-light),
+                inset 3px 3px 6px var(--shadow-color-dark),
+                inset -3px -3px 6px var(--shadow-color-light);
             display: flex;
             justify-content: center;
             align-items: center;
-            animation: spin 8s linear infinite;
+            animation: containerSpin 12s linear infinite;
+            transition: all 0.6s ease;
+        }
+
+        .container.expanded .yin-yang-container {
+            width: 120px;
+            height: 120px;
+            animation-duration: 20s;
+        }
+
+        .container.expanded .yin-yang {
+            width: 80px;
+            height: 80px;
+        }
+
+        .container.expanded .yin-yang::before {
+            width: 40px;
+            height: 40px;
+            box-shadow: 0 40px 0 0 #000;
+        }
+
+        .container.expanded .yin-yang::after {
+            top: 12px;
+            width: 15px;
+            height: 15px;
+            box-shadow: 0 40px 0 0 #fff;
         }
         
+        /* Proper Yin Yang Symbol */
         .yin-yang {
             position: relative;
-            width: 100px;
-            height: 200px;
-            border-top: 100px solid black;
-            border-left: 100px solid black;
-            border-bottom: 100px solid white;
-            border-right: 100px solid white;
+            width: 160px;
+            height: 160px;
             border-radius: 50%;
-            border-color: transparent transparent black black;
+            background: linear-gradient(90deg, #000 50%, #fff 50%);
+            animation: yinYangSpin 8s linear infinite reverse;
+            transition: all 0.6s ease;
         }
 
         .yin-yang::before {
@@ -69,80 +112,693 @@
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 40px;
-            height: 40px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
-            background-color: black;
+            background: #fff;
+            box-shadow: 0 80px 0 0 #000;
+            transition: all 0.6s ease;
         }
 
         .yin-yang::after {
             content: '';
             position: absolute;
-            bottom: 0;
+            top: 25px;
             left: 50%;
             transform: translateX(-50%);
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
-            background-color: white;
+            background: #000;
+            box-shadow: 0 80px 0 0 #fff;
+            transition: all 0.6s ease;
         }
 
-        .yin-yang .dot-white {
-            position: absolute;
-            top: 60px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: white;
-        }
-        
-        .yin-yang .dot-black {
-            position: absolute;
-            bottom: 60px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: black;
-        }
-
-        /* Hero title and animation */
+        /* Title styling */
         h1 {
             font-family: 'Noto Serif JP', serif;
-            font-size: 4rem;
-            margin-top: 40px;
+            font-size: 4.5rem;
+            font-weight: 400;
+            margin-top: 50px;
             color: var(--text-color);
             opacity: 0;
-            animation: fadeIn 2s ease-out forwards;
+            animation: fadeInUp 2s ease-out forwards;
             animation-delay: 1s;
+            letter-spacing: 0.1em;
+            text-shadow: 
+                2px 2px 4px var(--shadow-color-dark),
+                -1px -1px 2px var(--shadow-color-light);
+            transition: all 0.6s ease;
+        }
+
+        .container.expanded h1 {
+            font-size: 2.5rem;
+            margin-top: 20px;
+        }
+
+        /* Interactive Buttons */
+        .buttons-container {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+            opacity: 0;
+            animation: fadeInUp 2s ease-out forwards;
+            animation-delay: 2s;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .concept-button {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 400;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 50px;
+            background: var(--primary-color);
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.05em;
+            box-shadow: 
+                6px 6px 12px var(--shadow-color-dark),
+                -6px -6px 12px var(--shadow-color-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .concept-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                8px 8px 16px var(--shadow-color-dark),
+                -8px -8px 16px var(--shadow-color-light);
+        }
+
+        .concept-button:active {
+            transform: translateY(0);
+            box-shadow: 
+                inset 4px 4px 8px var(--shadow-color-dark),
+                inset -4px -4px 8px var(--shadow-color-light);
+        }
+
+        .concept-button.balance { --btn-color: var(--success-color); }
+        .concept-button.harmony { --btn-color: var(--info-color); }
+        .concept-button.flow { --btn-color: var(--warning-color); }
+
+        .concept-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--btn-color), transparent);
+            transition: left 0.5s ease;
+            opacity: 0.1;
+        }
+
+        .concept-button:hover::before {
+            left: 100%;
+        }
+
+        /* Content Display Area */
+        .content-display {
+            max-width: 800px;
+            margin-top: 40px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+            text-align: left;
+        }
+
+        .content-display.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .content-card {
+            background: var(--primary-color);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 
+                15px 15px 30px var(--shadow-color-dark),
+                -15px -15px 30px var(--shadow-color-light);
+            margin-bottom: 30px;
+        }
+
+        .content-card h2 {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 2.2rem;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .content-card .quote {
+            font-style: italic;
+            font-size: 1.3rem;
+            color: var(--accent-color);
+            text-align: center;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .tip-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 
+                inset 2px 2px 5px var(--shadow-color-dark),
+                inset -2px -2px 5px var(--shadow-color-light);
+        }
+
+        .tip-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .tip-card p {
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .close-button {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: var(--primary-color);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            box-shadow: 
+                6px 6px 12px var(--shadow-color-dark),
+                -6px -6px 12px var(--shadow-color-light);
+            font-size: 1.5rem;
+            color: var(--text-color);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .close-button.visible {
+            opacity: 1;
+        }
+
+        .close-button:hover {
+            transform: scale(1.1);
+            color: var(--accent-color);
+        }
+
+        /* Floating Shakura Flowers */
+        .shakura-flower {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            animation: floatAndBloom 8s ease-in-out infinite;
+            opacity: 0;
+        }
+
+        .flower {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-origin: center center;
+            animation: rotate 12s linear infinite;
+        }
+
+        /* Cherry blossom petals */
+        .petal {
+            position: absolute;
+            width: 8px;
+            height: 12px;
+            background: radial-gradient(ellipse at center, #ff69b4 0%, #d81b60 50%, #ad1457 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            transform-origin: center bottom;
+            opacity: 0.8;
+        }
+
+        .petal:nth-child(1) {
+            transform: rotate(0deg) translateY(-6px);
+            animation: petalWave 3s ease-in-out infinite;
+        }
+
+        .petal:nth-child(2) {
+            transform: rotate(72deg) translateY(-6px);
+            animation: petalWave 3s ease-in-out infinite 0.6s;
+        }
+
+        .petal:nth-child(3) {
+            transform: rotate(144deg) translateY(-6px);
+            animation: petalWave 3s ease-in-out infinite 1.2s;
+        }
+
+        .petal:nth-child(4) {
+            transform: rotate(216deg) translateY(-6px);
+            animation: petalWave 3s ease-in-out infinite 1.8s;
+        }
+
+        .petal:nth-child(5) {
+            transform: rotate(288deg) translateY(-6px);
+            animation: petalWave 3s ease-in-out infinite 2.4s;
+        }
+
+        /* Flower center */
+        .flower-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #fff 0%, #ffd700 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 4px rgba(255, 215, 0, 0.6);
+        }
+
+        /* Individual flower positioning and timing */
+        .shakura-flower:nth-child(1) {
+            top: 15%;
+            left: 10%;
+            animation-delay: 0s;
+            animation-duration: 12s;
+        }
+
+        .shakura-flower:nth-child(2) {
+            top: 75%;
+            left: 85%;
+            animation-delay: 3s;
+            animation-duration: 10s;
+        }
+
+        .shakura-flower:nth-child(3) {
+            top: 35%;
+            left: 90%;
+            animation-delay: 6s;
+            animation-duration: 14s;
+        }
+
+        .shakura-flower:nth-child(4) {
+            top: 85%;
+            left: 15%;
+            animation-delay: 1.5s;
+            animation-duration: 11s;
+        }
+
+        .shakura-flower:nth-child(5) {
+            top: 25%;
+            left: 85%;
+            animation-delay: 4.5s;
+            animation-duration: 13s;
+        }
+
+        .shakura-flower:nth-child(6) {
+            top: 65%;
+            left: 5%;
+            animation-delay: 7.5s;
+            animation-duration: 9s;
         }
 
         /* Keyframe animations */
-        @keyframes spin {
+        @keyframes containerSpin {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes yinYangSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        @keyframes floatAndBloom {
+            0% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.3) rotate(0deg);
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(10px) scale(0.8) rotate(36deg);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-15px) scale(1.2) rotate(180deg);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(-25px) scale(1) rotate(324deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-35px) scale(0.6) rotate(360deg);
+            }
+        }
+
+        @keyframes petalWave {
+            0%, 100% {
+                transform: rotate(var(--rotation, 0deg)) translateY(-6px) scale(1);
+            }
+            50% {
+                transform: rotate(var(--rotation, 0deg)) translateY(-8px) scale(1.1);
+            }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .yin-yang-container {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .yin-yang {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .yin-yang::before {
+                width: 60px;
+                height: 60px;
+                box-shadow: 0 60px 0 0 #000;
+            }
+            
+            .yin-yang::after {
+                top: 18px;
+                width: 22px;
+                height: 22px;
+                box-shadow: 0 60px 0 0 #fff;
+            }
+            
+            h1 {
+                font-size: 3rem;
+                margin-top: 30px;
+            }
+            
+            .container.expanded h1 {
+                font-size: 2rem;
+            }
+            
+            .buttons-container {
+                flex-direction: column;
+                gap: 15px;
+                align-items: center;
+            }
+            
+            .concept-button {
+                width: 200px;
+            }
+            
+            .content-card {
+                padding: 25px;
+            }
+            
+            .content-card h2 {
+                font-size: 1.8rem;
+            }
+            
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Floating Shakura Flowers -->
+    <div class="shakura-flower">
+        <div class="flower">
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="flower-center"></div>
+        </div>
+    </div>
+    <div class="shakura-flower">
+        <div class="flower">
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="flower-center"></div>
+        </div>
+    </div>
+    <div class="shakura-flower">
+        <div class="flower">
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="flower-center"></div>
+        </div>
+    </div>
+    <div class="shakura-flower">
+        <div class="flower">
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="flower-center"></div>
+        </div>
+    </div>
+    <div class="shakura-flower">
+        <div class="flower">
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="flower-center"></div>
+        </div>
+    </div>
+    <div class="shakura-flower">
+        <div class="flower">
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="flower-center"></div>
+        </div>
+    </div>
 
-    <div class="hero">
-        <div class="yin-yang-container">
-            <div class="yin-yang">
-                <div class="dot-white"></div>
-                <div class="dot-black"></div>
+    <button class="close-button" id="closeButton">×</button>
+
+    <div class="container" id="container">
+        <div class="hero">
+            <div class="yin-yang-container">
+                <div class="yin-yang"></div>
+            </div>
+            <h1>Shakura</h1>
+            <div class="buttons-container">
+                <button class="concept-button balance" data-concept="balance">Balance</button>
+                <button class="concept-button harmony" data-concept="harmony">Harmony</button>
+                <button class="concept-button flow" data-concept="flow">Flow</button>
             </div>
         </div>
-        <h1>Shakura</h1>
+
+        <div class="content-display" id="contentDisplay">
+            <!-- Dynamic content will be inserted here -->
+        </div>
     </div>
-    
+
+    <script>
+        const conceptContent = {
+            balance: {
+                title: "Work-Life Balance",
+                quote: "Life is like riding a bicycle. To keep your balance, you must keep moving. - Albert Einstein",
+                tips: [
+                    {
+                        title: "Set Boundaries",
+                        description: "Create clear distinctions between work and personal time. Turn off work notifications after hours."
+                    },
+                    {
+                        title: "Prioritize Self-Care",
+                        description: "Schedule time for exercise, meditation, and activities that bring you joy and peace."
+                    },
+                    {
+                        title: "Learn to Say No",
+                        description: "Protect your time and energy by declining commitments that don't align with your priorities."
+                    },
+                    {
+                        title: "Time Management",
+                        description: "Use productivity techniques like time-blocking to ensure both work and personal goals are met."
+                    },
+                    {
+                        title: "Regular Breaks",
+                        description: "Take short breaks throughout your workday to maintain focus and prevent burnout."
+                    },
+                    {
+                        title: "Quality Over Quantity",
+                        description: "Focus on meaningful work and relationships rather than trying to do everything at once."
+                    }
+                ]
+            },
+            harmony: {
+                title: "Living in Harmony",
+                quote: "Harmony makes small things grow, lack of it makes great things decay. - Sallust",
+                tips: [
+                    {
+                        title: "Align Your Values",
+                        description: "Ensure your work and personal life reflect your core values and beliefs."
+                    },
+                    {
+                        title: "Communication is Key",
+                        description: "Build open, honest relationships with colleagues, family, and friends."
+                    },
+                    {
+                        title: "Create Rituals",
+                        description: "Establish daily or weekly rituals that help you transition between work and personal modes."
+                    },
+                    {
+                        title: "Mindful Living",
+                        description: "Practice presence and mindfulness in both professional and personal interactions."
+                    },
+                    {
+                        title: "Gratitude Practice",
+                        description: "Regularly acknowledge and appreciate the positive aspects of your work and life."
+                    },
+                    {
+                        title: "Conflict Resolution",
+                        description: "Address conflicts promptly and constructively to maintain peaceful relationships."
+                    }
+                ]
+            },
+            flow: {
+                title: "Finding Your Flow",
+                quote: "The way to get started is to quit talking and begin doing. - Walt Disney",
+                tips: [
+                    {
+                        title: "Identify Your Peak Hours",
+                        description: "Discover when you're most productive and schedule important tasks during these times."
+                    },
+                    {
+                        title: "Eliminate Distractions",
+                        description: "Create an environment that supports deep focus and concentrated work."
+                    },
+                    {
+                        title: "Match Skills to Challenges",
+                        description: "Seek tasks that appropriately challenge your abilities without overwhelming you."
+                    },
+                    {
+                        title: "Set Clear Goals",
+                        description: "Define specific, achievable objectives that give you direction and purpose."
+                    },
+                    {
+                        title: "Embrace Flexibility",
+                        description: "Adapt to changing circumstances while maintaining your core commitments."
+                    },
+                    {
+                        title: "Regular Reflection",
+                        description: "Periodically assess your progress and adjust your approach as needed."
+                    }
+                ]
+            }
+        };
+
+        const buttons = document.querySelectorAll('.concept-button');
+        const contentDisplay = document.getElementById('contentDisplay');
+        const container = document.getElementById('container');
+        const closeButton = document.getElementById('closeButton');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const concept = button.dataset.concept;
+                showContent(concept);
+            });
+        });
+
+        closeButton.addEventListener('click', () => {
+            hideContent();
+        });
+
+        function showContent(concept) {
+            const content = conceptContent[concept];
+            
+            const contentHTML = `
+                <div class="content-card">
+                    <h2>${content.title}</h2>
+                    <div class="quote">"${content.quote}"</div>
+                    <div class="tips-grid">
+                        ${content.tips.map(tip => `
+                            <div class="tip-card">
+                                <h3>${tip.title}</h3>
+                                <p>${tip.description}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            contentDisplay.innerHTML = contentHTML;
+            container.classList.add('expanded');
+            
+            setTimeout(() => {
+                contentDisplay.classList.add('active');
+                closeButton.classList.add('visible');
+            }, 300);
+        }
+
+        function hideContent() {
+            contentDisplay.classList.remove('active');
+            closeButton.classList.remove('visible');
+            
+            setTimeout(() => {
+                container.classList.remove('expanded');
+                contentDisplay.innerHTML = '';
+            }, 600);
+        }
+
+        // Add some interactive particle effects on button hover
+        buttons.forEach(button => {
+            button.addEventListener('mouseenter', () => {
+                button.style.transform = 'translateY(-3px) scale(1.05)';
+            });
+            
+            button.addEventListener('mouseleave', () => {
+                button.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
 </body>
 </html>
