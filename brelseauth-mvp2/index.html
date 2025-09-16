@@ -33,13 +33,13 @@
             min-height: 100vh;
         }
 
-        /* Animated Braille Dots to Dashes */
+        /* Animated Braille Dots to Dashes (Monochromatic & Smaller) */
         .animated-braille-dash {
             position: fixed;
-            width: 18px; /* Slightly larger dot */
-            height: 18px;
+            width: 12px; /* Smaller dot */
+            height: 12px;
             border-radius: 50%; /* Starts as a dot */
-            background: var(--accent-color);
+            background: #bdbdbd; /* Monochromatic color */
             opacity: 0;
             z-index: 1;
             animation: brailleToDash 12s ease-in-out infinite;
@@ -52,7 +52,6 @@
         .animated-braille-dash:nth-child(4) { top: 85%; left: 10%; animation-delay: 1.5s; }
         .animated-braille-dash:nth-child(5) { top: 20%; left: 70%; animation-delay: 4.5s; }
         .animated-braille-dash:nth-child(6) { top: 60%; left: 20%; animation-delay: 7.5s; }
-
 
         /* Header */
         .header {
@@ -89,7 +88,7 @@
             align-items: center;
             justify-content: center;
             color: var(--accent-color);
-            font-size: 2rem;
+            font-size: 3rem; /* Bigger thumb impression */
         }
 
         .main-title {
@@ -466,37 +465,37 @@
             0% { 
                 opacity: 0; 
                 transform: translateY(20px) scale(0.3) rotate(0deg); 
-                border-radius: 50%; /* Start as dot */
-                width: 18px;
-                height: 18px;
+                border-radius: 50%; 
+                width: 12px;
+                height: 12px;
             }
             10% { 
                 opacity: 1; 
                 transform: translateY(10px) scale(0.8) rotate(36deg); 
                 border-radius: 50%;
-                width: 18px;
-                height: 18px;
+                width: 12px;
+                height: 12px;
             }
             50% { 
                 opacity: 1; 
                 transform: translateY(-15px) scale(1.2) rotate(180deg); 
-                border-radius: 5px; /* Transition to dash shape */
-                width: 40px; /* Wider */
-                height: 8px; /* Flatter */
+                border-radius: 5px; 
+                width: 30px; /* Adjusted dash width */
+                height: 6px; /* Adjusted dash height */
             }
             90% { 
                 opacity: 1; 
                 transform: translateY(-25px) scale(1) rotate(324deg); 
                 border-radius: 5px;
-                width: 40px;
-                height: 8px;
+                width: 30px;
+                height: 6px;
             }
             100% { 
                 opacity: 0; 
                 transform: translateY(-35px) scale(0.6) rotate(360deg); 
-                border-radius: 50%; /* End as dot */
-                width: 18px;
-                height: 18px;
+                border-radius: 50%; 
+                width: 12px;
+                height: 12px;
             }
         }
 
@@ -536,6 +535,7 @@
     </style>
 </head>
 <body>
+    
     <div class="animated-braille-dash"></div>
     <div class="animated-braille-dash"></div>
     <div class="animated-braille-dash"></div>
@@ -728,11 +728,10 @@ C: 110000 | -.-."
                 return;
             }
             
-            // Basic format check for demo purposes
             const hasCorrectFormat = code.includes("|") && code.includes(":");
             const lines = code.split('\n').filter(line => line.trim());
             
-            if (hasCorrectFormat && lines.length >= 3) { // Assuming at least 3 characters for a meaningful demo
+            if (hasCorrectFormat && lines.length >= 3) {
                 setTimeout(() => {
                     showStatus('Authentication Successful<br>Tactile signature verified', 'success');
                 }, 500);
@@ -742,7 +741,6 @@ C: 110000 | -.-."
         }
 
         function playMorse() {
-            // Placeholder for actual Morse audio playback logic
             showStatus('Audio feature would play Morse code here', 'info');
         }
 
@@ -751,13 +749,13 @@ C: 110000 | -.-."
             const morse = morseMap[ch] || "?";
             const textarea = document.getElementById("codeInput");
             textarea.value += `${ch.toUpperCase()}: ${braille} | ${morse}\n`;
-            textarea.scrollTop = textarea.scrollHeight; // Scroll to bottom
+            textarea.scrollTop = textarea.scrollHeight;
         }
 
         function clearInput() {
             document.getElementById("codeInput").value = "";
             hideStatus();
-            brailleDots = [0,0,0,0,0,0]; // Reset braille demo dots
+            brailleDots = [0,0,0,0,0,0];
             updateBrailleDisplay();
         }
 
@@ -783,10 +781,8 @@ C: 110000 | -.-."
             const character = brailleReverse[pattern] || '-';
             document.getElementById('brailleCharacter').textContent = character.toUpperCase();
 
-            // Additional logic for generating keypad buttons dynamically
-            // (You might want to ensure this isn't run multiple times if you call updateBrailleDisplay frequently)
             const keypadEl = document.getElementById("keypad");
-            if (keypadEl && keypadEl.children.length === 0) { // Only populate if empty
+            if (keypadEl && keypadEl.children.length === 0) { 
                  populateKeypad();
             }
         }
@@ -802,12 +798,11 @@ C: 110000 | -.-."
             statusEl.classList.remove('show');
         }
         
-        // Populate the keypad with all available characters
         function populateKeypad() {
             const keypadEl = document.getElementById("keypad");
             const allChars = "abcdefghijklmnopqrstuvwxyz0123456789";
             
-            keypadEl.innerHTML = ''; // Clear existing buttons if any
+            keypadEl.innerHTML = ''; 
             allChars.split('').forEach(char => {
                 const btn = document.createElement("button");
                 btn.className = "keypad-btn";
@@ -817,7 +812,6 @@ C: 110000 | -.-."
             });
         }
         
-        // Initialize the page
         document.addEventListener('DOMContentLoaded', () => {
             populateKeypad();
             updateBrailleDisplay();
