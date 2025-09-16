@@ -3,26 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galaksi - UI Challenge</title>
+    <title>Shakura - 茶楽</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <style>
         :root {
-            --primary-purple: #4a476b;
-            --light-purple: #6a6697;
-            --card-purple: #817da3;
-            --text-light: #e5e5f0;
-            --text-dark: #3a3854;
-            --gradient-1: linear-gradient(135deg, #7c76b0, #4f4b81);
-            --gradient-2: linear-gradient(135deg, #6a6697, #5c5986);
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            --primary-bg: #f5f5f5;
+            --card-bg: #ffffff;
+            --accent-green: #556b2f;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.05);
+            --border-radius: 40px;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: var(--primary-purple);
-            color: var(--text-light);
-            line-height: 1.6;
+            background-color: var(--primary-bg);
+            color: var(--text-dark);
             padding: 20px;
             display: flex;
             justify-content: center;
@@ -37,42 +35,37 @@
         }
 
         .card {
-            background: var(--card-purple);
-            border-radius: 40px;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
             padding: 30px;
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow-soft);
             position: relative;
-            overflow: hidden;
         }
         
         .card.card-large-padding {
              padding: 40px;
         }
 
+        /* Top Bar */
         .card-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
-
+        
         .card-header .material-icons {
             font-size: 28px;
             color: var(--text-light);
         }
 
         .search-bar {
-            background-color: var(--light-purple);
+            background-color: var(--primary-bg);
             border-radius: 20px;
             padding: 8px 15px;
             display: flex;
             align-items: center;
-            width: 100%;
-            margin-right: 10px;
-        }
-        
-        .search-bar.galaksi-title {
-            width: auto;
             flex-grow: 1;
+            margin: 0 10px;
         }
 
         .search-bar span {
@@ -80,44 +73,47 @@
             font-size: 16px;
             color: var(--text-light);
         }
-
+        
         .logo {
             width: 40px;
             height: 40px;
-            background-color: var(--light-purple);
+            background-color: var(--primary-bg);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
             font-size: 1.2rem;
+            color: var(--text-dark);
         }
 
+        /* Hero Section */
         .main-challenge {
-            padding: 40px 30px;
-            background: var(--gradient-1);
+            background: linear-gradient(135deg, #c5e1a5, #8bc34a);
             position: relative;
+            padding: 40px;
         }
         
         .main-challenge h1 {
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             font-weight: 600;
             margin: 0;
             line-height: 1.2;
+            color: var(--text-dark);
         }
         
         .main-challenge .small-text {
             font-size: 0.9rem;
             opacity: 0.8;
             margin-top: 5px;
+            color: var(--text-dark);
         }
         
-        .main-challenge .astronaut {
+        .main-challenge .hero-image {
             position: absolute;
-            top: 50%;
-            right: 20px;
-            transform: translateY(-50%) rotate(5deg);
-            width: 120px;
+            bottom: 0;
+            right: -20px;
+            width: 150px;
             height: auto;
             z-index: 1;
         }
@@ -127,7 +123,7 @@
             gap: 15px;
             margin-top: 30px;
         }
-
+        
         .main-challenge .button {
             padding: 12px 25px;
             border-radius: 25px;
@@ -137,36 +133,35 @@
         }
         
         .main-challenge .login {
-            background-color: var(--card-purple);
-            color: var(--text-light);
-        }
-        
-        .main-challenge .signup {
-            background-color: #f0f0f8;
+            background-color: var(--card-bg);
             color: var(--text-dark);
         }
         
+        .main-challenge .signup {
+            background-color: var(--accent-green);
+            color: var(--card-bg);
+        }
+        
+        /* Section Nav */
         .section-nav {
             display: flex;
             justify-content: space-around;
             padding: 20px 0;
-            background: var(--card-purple);
-            border-radius: 40px;
-            box-shadow: var(--shadow);
         }
-
+        
         .section-nav .nav-item {
-            background-color: var(--light-purple);
+            background-color: var(--primary-bg);
             width: 50px;
             height: 50px;
             border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: var(--shadow-soft);
         }
         
         .section-nav .nav-item.active {
-            background-color: #f0f0f8;
+            background-color: var(--accent-green);
         }
         
         .section-nav .nav-item .material-icons {
@@ -175,12 +170,13 @@
         }
         
         .section-nav .nav-item.active .material-icons {
-             color: var(--text-dark);
+             color: var(--card-bg);
         }
 
+        /* Content Card */
         .content-card {
-            background-color: var(--card-purple);
-            border-radius: 40px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
             padding: 30px;
         }
         
@@ -188,26 +184,29 @@
             font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 20px;
-            color: var(--text-light);
+            color: var(--text-dark);
         }
         
         .content-card p {
             font-size: 0.9rem;
-            opacity: 0.9;
+            line-height: 1.6;
+            color: var(--text-light);
         }
         
-        .content-card .astronaut {
+        .content-card .image {
             width: 100px;
             height: auto;
             float: right;
             margin: -20px -20px 0 20px;
+            border-radius: 20px;
         }
-
+        
+        /* Split Card */
         .split-card {
-            background: var(--gradient-2);
+            background: linear-gradient(135deg, #e1f1d1, #a8c187);
             padding: 40px;
-            border-radius: 40px;
-            box-shadow: var(--shadow);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-soft);
             display: flex;
             flex-direction: column;
             gap: 20px;
@@ -216,10 +215,11 @@
         .split-card h3 {
              font-weight: 500;
              margin-bottom: 10px;
+             color: var(--text-dark);
         }
 
         .split-card .column {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.4);
             border-radius: 20px;
             padding: 25px;
             display: flex;
@@ -230,16 +230,17 @@
             font-size: 0.9rem;
             line-height: 1.5;
             font-weight: 300;
-            opacity: 0.9;
+            color: var(--text-dark);
             margin-right: 15px;
         }
         
         .split-card .column .material-icons {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.5);
             padding: 8px;
             border-radius: 50%;
             font-size: 24px;
             transform: rotate(-45deg);
+            color: var(--accent-green);
         }
         
         .scroll-down {
@@ -247,6 +248,7 @@
             padding: 20px 0;
             font-size: 1rem;
             font-weight: 500;
+            color: var(--text-light);
             opacity: 0.7;
         }
         
@@ -255,9 +257,10 @@
             transform: rotate(90deg);
         }
 
+        /* Gallery Card */
         .gallery-card {
-            background: var(--card-purple);
-            border-radius: 40px;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
             padding: 30px;
         }
         
@@ -273,7 +276,7 @@
             border-radius: 20px;
             overflow: hidden;
             width: 100%;
-            padding-top: 100%; /* Creates a square aspect ratio */
+            padding-top: 100%;
         }
         
         .gallery-item img {
@@ -289,7 +292,7 @@
             position: absolute;
             bottom: 10px;
             right: 10px;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(5px);
             border-radius: 50%;
             width: 30px;
@@ -302,7 +305,7 @@
         .gallery-item .play-icon .material-icons {
             font-size: 20px;
             transform: rotate(180deg);
-            color: white;
+            color: var(--card-bg);
         }
         
         .gallery-item.full-width {
@@ -315,21 +318,20 @@
             left: 50%;
             transform: translate(-50%, -50%);
             font-size: 40px;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(0, 0, 0, 0.2);
         }
         
         .created-by {
             text-align: center;
             font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.6);
+            color: var(--text-light);
             margin-top: 30px;
         }
         
         .created-by span {
             font-weight: 500;
-            color: var(--text-light);
+            color: var(--text-dark);
         }
-
     </style>
 </head>
 <body>
@@ -337,25 +339,24 @@
         <div class="card card-header">
             <span class="material-icons">arrow_back_ios_new</span>
             <div class="search-bar">
-                <span>Galaksi itu apa sih?</span>
+                <span>Shakura Tea House</span>
             </div>
-            <div class="logo">K</div>
+            <div class="logo">S</div>
         </div>
 
         <div class="card main-challenge">
-            <div class="search-bar galaksi-title">
-                <span>CHALLENGE UI - WEB DESIGN</span>
+            <div class="search-bar" style="width: auto; flex-grow: 1;">
+                <span>Tea & Mindful Living</span>
             </div>
             <h1>
-                TENTANG <br>
-                Galaksi
+                SHAKURA
             </h1>
-            <span class="small-text">ASHAR AKMIL DESIGN</span>
-            <img src="https://i.ibb.co/6P0S90L/astronaut-1.png" alt="Astronaut" class="astronaut">
+            <span class="small-text">茶楽 - Tea Joy</span>
+            <img src="https://i.ibb.co/3k5fH4R/matcha-tea.png" alt="Matcha Tea" class="hero-image">
             
             <div class="call-to-action">
-                <a href="#" class="button login">LOGIN</a>
-                <a href="#" class="button signup">BUAT AKUN</a>
+                <a href="#" class="button login">VIEW MENU</a>
+                <a href="#" class="button signup">ORDER NOW</a>
             </div>
         </div>
 
@@ -364,10 +365,10 @@
                 <span class="material-icons">home</span>
             </div>
             <div class="nav-item">
-                <span class="material-icons">apps</span>
+                <span class="material-icons">menu_book</span>
             </div>
             <div class="nav-item active">
-                <span class="material-icons">dashboard</span>
+                <span class="material-icons">local_cafe</span>
             </div>
             <div class="nav-item">
                 <span class="material-icons">person</span>
@@ -375,82 +376,82 @@
         </div>
         
         <div class="card content-card">
-            <h2>GALAKSI ADALAH ...</h2>
-            <img src="https://i.ibb.co/n6v984z/astronaut-2.png" alt="Astronaut" class="astronaut">
+            <h2>OUR PHILOSOPHY</h2>
+            <img src="https://i.ibb.co/T03pW3J/tea-pot.png" alt="Tea Pot" class="image">
             <p>
-                Kumpulan besar bintang, gas, dan debu yang terikat oleh gravitasi. Galaksi bisa berbentuk spiral, elips, atau tak beraturan. Contoh terkenal adalah Galaksi Bima Sakti.
+                Shakura embodies the Japanese aesthetic of wabi-sabi – finding beauty in simplicity and imperfection. We believe that the perfect cup of boba tea is not about complexity, but about the harmony of few, carefully chosen elements.
             </p>
         </div>
 
         <div class="split-card">
-            <h3>PENJELASAN SINGKAT TENTANG GALAKSI</h3>
+            <h3>TEA SELECTION</h3>
             <div class="column">
                 <p>
-                    Galaksi biasanya dikelompokkan dalam gugus atau supergugus, yang merupakan struktur terbesar yang dikenal di alam semesta. Gugus-gugus ini diikat melalui gaya gravitasi, yang dapat menyebabkan pergerakan atau perubahan galaksi.
+                    Brown Sugar Harmony: Deep, caramelized brown sugar paired with premium milk tea. A meditation on sweetness and balance.
                 </p>
                 <span class="material-icons">arrow_forward</span>
             </div>
             <div class="column">
                 <p>
-                    Galaksi biasanya dikelompokkan dalam gugus atau supergugus, yang merupakan struktur terbesar yang dikenal di alam semesta. Gugus-gugus ini diikat melalui gaya gravitasi, yang dapat menyebabkan pergerakan atau perubahan galaksi.
+                    Sakura Matcha: Ceremonial grade matcha infused with delicate cherry blossom essence. Spring in a cup.
                 </p>
                 <span class="material-icons">arrow_forward</span>
             </div>
             <div class="column">
                 <p>
-                    Lanjutin yuk...
+                    Golden Mango Zen: Tropical mango tea with crystalline pearls. Sunshine captured in mindful simplicity.
                 </p>
                 <span class="material-icons">arrow_forward</span>
             </div>
             <div class="column">
                 <p>
-                    Sampe sini aja.
+                    Moonlight Lychee: Ethereal lychee tea with rose petals and crystal pearls. Poetry in liquid form.
                 </p>
                 <span class="material-icons">arrow_forward</span>
             </div>
-            <img src="https://i.ibb.co/C0D9c7T/rocket.png" alt="Rocket" style="width:100px; height:auto; align-self: center; margin-top: 10px;">
+            <img src="https://i.ibb.co/Mhf6G9K/boba.png" alt="Boba" style="width:100px; height:auto; align-self: center; margin-top: 10px;">
         </div>
 
         <div class="scroll-down">
             <span class="material-icons">code</span>
-            GULIR
+            SCROLL DOWN
         </div>
 
         <div class="card gallery-card">
             <div class="gallery-grid">
                 <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1518384218320-94e4f16955a5?q=80&w=400" alt="Black Hole">
+                    <img src="https://images.unsplash.com/photo-1542826643-98442a033f21?q=80&w=400" alt="Brown Sugar Boba">
                     <div class="play-icon">
                         <span class="material-icons">play_arrow</span>
                     </div>
                 </div>
                 <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1509503378526-7788448f2c07?q=80&w=400" alt="Meteor">
+                    <img src="https://images.unsplash.com/photo-1576092176466-9e2d31a5902d?q=80&w=400" alt="Matcha Boba">
                     <div class="play-icon">
                         <span class="material-icons">play_arrow</span>
                     </div>
                 </div>
                 <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1629856515516-0955364817a0?q=80&w=400" alt="Moon Surface">
+                    <img src="https://images.unsplash.com/photo-1629707198777-62e92c6383a8?q=80&w=400" alt="Mango Boba">
                     <div class="play-icon">
                         <span class="material-icons">play_arrow</span>
                     </div>
                 </div>
                 <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1533220493630-9ac6f007b8b7?q=80&w=400" alt="Starry Sky">
+                    <img src="https://images.unsplash.com/photo-1525385133512-2f3bdd039054?q=80&w=400" alt="Fruit Tea">
                     <div class="play-icon">
                         <span class="material-icons">play_arrow</span>
                     </div>
                 </div>
                 <div class="gallery-item full-width">
-                    <img src="https://images.unsplash.com/photo-1621370211333-d85c2c77f0a9?q=80&w=800" alt="Galaxy">
+                    <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?q=80&w=800" alt="Chocolate Tea">
                     <div class="play-icon plus-icon">
                         <span class="material-icons">add</span>
                     </div>
                 </div>
             </div>
             <div class="created-by">
-                CREATED BY <span>MUHAMMAD FAJRI</span>
+                DESIGNED BY <span>SHAKURA TEAM</span>
             </div>
         </div>
 
@@ -460,7 +461,7 @@
             <span class="material-icons">chat_bubble_outline</span>
             <span class="material-icons">share</span>
             <span class="material-icons">more_horiz</span>
-            <div class="button signup" style="margin-left: 10px; padding: 10px 20px;">Save</div>
+            <div class="button signup" style="margin-left: 10px; padding: 10px 20px;">Contact</div>
         </div>
     </div>
 </body>
