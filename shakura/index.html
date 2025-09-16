@@ -3,484 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shakura - 茶楽</title>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>Yin Yang Transformation</title>
     <style>
-        :root {
-            --color-primary: #f5f5f5;
-            --color-secondary: #ffffff;
-            --color-dark: #2c2c2c;
-            --color-accent: #d4af37;
-            --color-petal-pink: #f8c8d2;
-            --color-petal-pink-2: #f2a7b3;
-            --color-petal-light: #fbe6ea;
-            --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Crimson Text', serif;
-            color: var(--color-dark);
-            background: var(--color-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-            font-size: 16px;
-        }
-        
-        /* --- General Layout --- */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        .section {
-            padding: 100px 0;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .section-header h2 {
-            font-family: 'Noto Sans JP', sans-serif;
-            font-weight: 300;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            letter-spacing: 2px;
-        }
-        
-        .section-header p {
-            font-size: 1.1rem;
-            color: var(--color-dark);
-            opacity: 0.7;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .divider {
-            width: 80px;
-            height: 1px;
-            background: var(--color-accent);
-            margin: 40px auto;
-        }
-
-        /* --- Header & Navigation --- */
-        header {
-            position: fixed;
-            width: 100%;
-            padding: 20px 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            box-shadow: var(--shadow);
-            transition: all 0.3s ease;
-        }
-
-        nav {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+            overflow: hidden;
         }
 
-        .logo {
-            font-family: 'Crimson Text', serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--color-dark);
-            letter-spacing: 2px;
-            text-decoration: none;
-        }
-
-        .logo-jp {
-            font-family: 'Noto Sans JP', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 300;
-            color: var(--color-dark);
-            opacity: 0.6;
-            margin-left: 10px;
-        }
-
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 2.5rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--color-dark);
-            font-size: 1rem;
-            font-weight: 400;
+        .yin-yang-container {
             position: relative;
-            transition: color 0.3s ease;
-        }
-        
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--color-accent);
-            transition: width 0.3s ease;
+            width: 300px;
+            height: 300px;
+            animation: rotate 10s linear infinite;
         }
 
-        .nav-links a:hover::after {
+        .yin-yang-circle {
             width: 100%;
-        }
-
-        /* --- Hero Section & Animation --- */
-        .hero {
-            padding: 180px 0 120px;
-            background: var(--color-secondary);
-            text-align: center;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid black;
+            box-sizing: border-box;
             position: relative;
             overflow: hidden;
         }
 
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            letter-spacing: 5px;
-        }
-
-        .hero h1 span {
-            font-family: 'Noto Sans JP', sans-serif;
-            font-size: 0.8em;
-            font-weight: 300;
-            opacity: 0.6;
-            display: block;
-            letter-spacing: normal;
-        }
-        
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto 40px;
-            line-height: 1.8;
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 15px 40px;
-            background: var(--color-dark);
-            color: var(--color-primary);
-            text-decoration: none;
-            font-size: 1rem;
-            letter-spacing: 1px;
-            transition: background-color 0.3s ease;
-        }
-
-        .cta-button:hover {
-            background-color: var(--color-accent);
-        }
-
-        /* Sakura Petal Animation */
-        .petals {
+        .yin-yang-circle::before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
+            width: 50%;
             height: 100%;
-            pointer-events: none;
+            background-color: black;
+            border-top-left-radius: 150px;
+            border-bottom-left-radius: 150px;
+        }
+
+        .yin-yang-circle::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background-color: white;
+            border-top-right-radius: 150px;
+            border-bottom-right-radius: 150px;
+        }
+
+        .half-circle {
+            position: absolute;
+            top: 50%;
+            width: 50%;
+            height: 50%;
+            border-radius: 50%;
             z-index: 1;
         }
 
-        .petal {
+        .half-circle.black {
+            left: 0;
+            background-color: white;
+        }
+
+        .half-circle.white {
+            right: 0;
+            background-color: black;
+        }
+
+        .dot {
             position: absolute;
-            background: var(--color-petal-pink);
-            width: 10px;
-            height: 10px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
-            transform-origin: 50% 50%;
-            opacity: 0;
-            animation: blossom-fall linear infinite;
+            z-index: 2;
+            transition: transform 1s ease-in-out;
         }
-        
-        /* A little variation */
-        .petal:nth-child(2n) { background: var(--color-petal-pink-2); }
-        .petal:nth-child(3n) { background: var(--color-petal-light); }
 
-        @keyframes blossom-fall {
-            0% {
-                transform: translateY(-100px) rotate(0deg);
-                opacity: 0;
+        .dot.white-on-black {
+            background-color: white;
+            top: 25%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .dot.black-on-white {
+            background-color: black;
+            bottom: 25%;
+            left: 50%;
+            transform: translate(-50%, 50%);
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
             }
-            10% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(calc(100vh + 100px)) rotate(720deg);
-                opacity: 0;
-            }
-        }
-        
-        /* --- About Section --- */
-        .about-content {
-            display: flex;
-            align-items: center;
-            gap: 50px;
-        }
-
-        .about-text {
-            flex: 1;
-        }
-
-        .about-text h3 {
-            font-family: 'Noto Sans JP', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 400;
-            margin-bottom: 20px;
-        }
-        
-        .about-text p {
-            font-size: 1rem;
-            color: var(--color-dark);
-            opacity: 0.8;
-        }
-
-        .about-image {
-            flex: 1;
-            max-width: 50%;
-            text-align: center;
-        }
-        
-        .about-image img {
-            width: 100%;
-            height: auto;
-            border-radius: 5px;
-            box-shadow: var(--shadow);
-        }
-        
-        /* --- Menu Section --- */
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-        }
-        
-        .menu-item {
-            background: var(--color-secondary);
-            padding: 30px;
-            border-radius: 5px;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
-            text-align: center;
-        }
-        
-        .menu-item:hover {
-            transform: translateY(-5px);
-        }
-
-        .menu-item img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-        
-        .menu-item h3 {
-            font-family: 'Noto Sans JP', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 400;
-            margin-bottom: 10px;
-        }
-        
-        .menu-item p {
-            font-size: 0.9rem;
-            color: var(--color-dark);
-            opacity: 0.7;
-            margin-bottom: 15px;
-        }
-
-        .menu-item-price {
-            font-family: 'Noto Sans JP', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 500;
-            color: var(--color-accent);
-        }
-        
-        /* --- Footer --- */
-        footer {
-            background: var(--color-dark);
-            color: var(--color-primary);
-            padding: 50px 0;
-            text-align: center;
-        }
-        
-        .footer-logo {
-            font-family: 'Crimson Text', serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-        }
-
-        .footer p {
-            font-size: 0.9rem;
-            margin-top: 10px;
-            opacity: 0.7;
-        }
-
-        /* --- Responsive Design --- */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero h1 span {
-                font-size: 0.6em;
-            }
-
-            .about-content {
-                flex-direction: column;
-            }
-
-            .about-image {
-                max-width: 100%;
-                margin-top: 30px;
+            to {
+                transform: rotate(360deg);
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <nav class="container">
-            <a href="#" class="logo">
-                SHAKURA
-                <span class="logo-jp">茶楽</span>
-            </a>
-            <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#menu">Menu</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main>
-        <section class="hero">
-            <div class="petals"></div>
-            <div class="container">
-                <h1>
-                    SHAKURA
-                    <span>茶楽 - Tea Joy</span>
-                </h1>
-                <p>
-                    Where ancient tea traditions meet modern craft. Each cup embodies the Japanese philosophy of mindful simplicity.
-                </p>
-                <a href="#menu" class="cta-button">DISCOVER TEA</a>
-            </div>
-        </section>
-
-        <section id="about" class="section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Our Philosophy</h2>
-                    <p>In the spirit of Japanese craftsmanship, we approach each beverage as a meditation in flavor.</p>
-                </div>
-                <div class="about-content">
-                    <div class="about-text">
-                        <h3>The Art of Tea</h3>
-                        <p>
-                            Shakura embodies the Japanese aesthetic of wabi-sabi – finding beauty in simplicity and imperfection. We believe that the perfect cup of boba tea is not about complexity, but about the harmony of few, carefully chosen elements. In our quiet space, time slows down. Each drink is prepared with the same mindfulness as a traditional tea ceremony, honoring both the ancient art of tea and the joyful spirit of modern boba culture.
-                        </p>
-                    </div>
-                    <div class="about-image">
-                        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=600" alt="Japanese Tea House">
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <div class="divider"></div>
-
-        <section id="menu" class="section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Our Menu</h2>
-                    <p>Each blend is carefully curated to honor the essence of tea while embracing the playful spirit of boba culture.</p>
-                </div>
-                <div class="menu-grid">
-                    <div class="menu-item">
-                        <img src="https://images.unsplash.com/photo-1542826643-98442a033f21?q=80&w=400" alt="Brown Sugar Boba">
-                        <h3>Brown Sugar Harmony</h3>
-                        <p>Deep, caramelized brown sugar paired with premium milk tea. A meditation on sweetness and balance.</p>
-                        <span class="menu-item-price">$5.99</span>
-                    </div>
-                    <div class="menu-item">
-                        <img src="https://images.unsplash.com/photo-1576092176466-9e2d31a5902d?q=80&w=400" alt="Sakura Matcha">
-                        <h3>Sakura Matcha</h3>
-                        <p>Ceremonial grade matcha infused with delicate cherry blossom essence. Spring in a cup.</p>
-                        <span class="menu-item-price">$6.49</span>
-                    </div>
-                    <div class="menu-item">
-                        <img src="https://images.unsplash.com/photo-1629707198777-62e92c6383a8?q=80&w=400" alt="Golden Mango Zen">
-                        <h3>Golden Mango Zen</h3>
-                        <p>Tropical mango tea with crystalline pearls. Sunshine captured in mindful simplicity.</p>
-                        <span class="menu-item-price">$6.29</span>
-                    </div>
-                    <div class="menu-item">
-                        <img src="https://images.unsplash.com/photo-1525385133512-2f3bdd039054?q=80&w=400" alt="Moonlight Lychee">
-                        <h3>Moonlight Lychee</h3>
-                        <p>Ethereal lychee tea with rose petals and crystal pearls. Poetry in liquid form.</p>
-                        <span class="menu-item-price">$6.79</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer id="contact">
-        <div class="container">
-            <div class="footer-logo">SHAKURA</div>
-            <p>&copy; 2025 Shakura Tea House. All rights reserved.</p>
+    <div class="yin-yang-container">
+        <div class="yin-yang-circle">
+            <div class="half-circle black"></div>
+            <div class="half-circle white"></div>
         </div>
-    </footer>
-    
+        <div class="dot white-on-black"></div>
+        <div class="dot black-on-white"></div>
+    </div>
     <script>
-        // Smooth scrolling for navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
+        const yinYangContainer = document.querySelector('.yin-yang-container');
+        const whiteDot = document.querySelector('.white-on-black');
+        const blackDot = document.querySelector('.black-on-white');
+
+        // Initial state for dots
+        let whiteDotIsUp = true;
+
+        yinYangContainer.addEventListener('animationiteration', () => {
+            if (whiteDotIsUp) {
+                // Swap the dots
+                whiteDot.style.transform = 'translate(-50%, 50%)';
+                blackDot.style.transform = 'translate(-50%, -50%)';
+            } else {
+                // Return to original state
+                whiteDot.style.transform = 'translate(-50%, -50%)';
+                blackDot.style.transform = 'translate(-50%, 50%)';
+            }
+            whiteDotIsUp = !whiteDotIsUp;
         });
-
-        // Generate sakura petals
-        const petalsContainer = document.querySelector('.petals');
-        const numPetals = 20;
-
-        for (let i = 0; i < numPetals; i++) {
-            const petal = document.createElement('div');
-            petal.classList.add('petal');
-            
-            // Randomize starting position and animation duration
-            const left = Math.random() * 100 + 'vw';
-            const duration = (Math.random() * 5) + 10 + 's';
-            const delay = Math.random() * 10 + 's';
-            
-            petal.style.left = left;
-            petal.style.animationDuration = duration;
-            petal.style.animationDelay = delay;
-
-            petalsContainer.appendChild(petal);
-        }
     </script>
 </body>
 </html>
