@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yin Yang Transformation</title>
+    <title>Koi Yin Yang</title>
     <style>
         body {
             display: flex;
@@ -15,90 +15,107 @@
             overflow: hidden;
         }
 
-        .yin-yang-container {
+        .koi-container {
             position: relative;
             width: 300px;
             height: 300px;
-            animation: rotate 10s linear infinite;
+            animation: container-rotate 10s linear infinite;
         }
 
-        .yin-yang-circle {
+        .koi {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background-color: transparent;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        /* Black Koi */
+        .koi.black {
+            top: 0;
+            left: 0;
+            animation: black-koi-move 10s linear infinite;
+        }
+
+        /* White Koi */
+        .koi.white {
+            top: 150px;
+            left: 150px;
+            animation: white-koi-move 10s linear infinite;
+        }
+
+        .koi-body {
+            position: absolute;
             width: 100%;
             height: 100%;
             border-radius: 50%;
             border: 2px solid black;
             box-sizing: border-box;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .yin-yang-circle::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 50%;
-            height: 100%;
             background-color: black;
-            border-top-left-radius: 150px;
-            border-bottom-left-radius: 150px;
+            transform: scaleX(-1); /* Flip horizontally to face the other way */
         }
 
-        .yin-yang-circle::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 50%;
-            height: 100%;
+        .koi.white .koi-body {
             background-color: white;
-            border-top-right-radius: 150px;
-            border-bottom-right-radius: 150px;
+            transform: scaleX(1); /* Flip back to original */
         }
 
-        .half-circle {
+        .koi-head {
             position: absolute;
-            top: 50%;
             width: 50%;
             height: 50%;
             border-radius: 50%;
-            z-index: 1;
-        }
-
-        .half-circle.black {
-            left: 0;
-            background-color: white;
-        }
-
-        .half-circle.white {
-            right: 0;
-            background-color: black;
-        }
-
-        .dot {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            z-index: 2;
-            transition: transform 1s ease-in-out;
-        }
-
-        .dot.white-on-black {
-            background-color: white;
             top: 25%;
             left: 50%;
-            transform: translate(-50%, -50%);
         }
 
-        .dot.black-on-white {
+        .koi.black .koi-head {
+            background-color: white;
+        }
+
+        .koi.white .koi-head {
             background-color: black;
-            bottom: 25%;
-            left: 50%;
-            transform: translate(-50%, 50%);
         }
 
-        @keyframes rotate {
+        .koi-tail {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            top: 50%;
+            left: 0;
+            border-radius: 50%;
+            background-color: black;
+        }
+
+        .koi.white .koi-tail {
+            background-color: white;
+        }
+        
+        /* The "dots" for the eyes */
+        .koi-eye {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            z-index: 2;
+            animation: eye-transform 10s linear infinite;
+        }
+
+        .koi.black .koi-eye {
+            background-color: white;
+            top: 25px;
+            left: 70px;
+        }
+
+        .koi.white .koi-eye {
+            background-color: black;
+            bottom: 25px;
+            left: 70px;
+        }
+
+        /* --- Animation Keyframes --- */
+        @keyframes container-rotate {
             from {
                 transform: rotate(0deg);
             }
@@ -106,37 +123,46 @@
                 transform: rotate(360deg);
             }
         }
+
+        @keyframes black-koi-move {
+            0% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(150px, 150px);
+            }
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
+        @keyframes white-koi-move {
+            0% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(-150px, -150px);
+            }
+            100% {
+                transform: translate(0, 0);
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="yin-yang-container">
-        <div class="yin-yang-circle">
-            <div class="half-circle black"></div>
-            <div class="half-circle white"></div>
+    <div class="koi-container">
+        <div class="koi black">
+            <div class="koi-body"></div>
+            <div class="koi-head"></div>
+            <div class="koi-tail"></div>
+            <div class="koi-eye"></div>
         </div>
-        <div class="dot white-on-black"></div>
-        <div class="dot black-on-white"></div>
+        <div class="koi white">
+            <div class="koi-body"></div>
+            <div class="koi-head"></div>
+            <div class="koi-tail"></div>
+            <div class="koi-eye"></div>
+        </div>
     </div>
-    <script>
-        const yinYangContainer = document.querySelector('.yin-yang-container');
-        const whiteDot = document.querySelector('.white-on-black');
-        const blackDot = document.querySelector('.black-on-white');
-
-        // Initial state for dots
-        let whiteDotIsUp = true;
-
-        yinYangContainer.addEventListener('animationiteration', () => {
-            if (whiteDotIsUp) {
-                // Swap the dots
-                whiteDot.style.transform = 'translate(-50%, 50%)';
-                blackDot.style.transform = 'translate(-50%, -50%)';
-            } else {
-                // Return to original state
-                whiteDot.style.transform = 'translate(-50%, -50%)';
-                blackDot.style.transform = 'translate(-50%, 50%)';
-            }
-            whiteDotIsUp = !whiteDotIsUp;
-        });
-    </script>
 </body>
 </html>
