@@ -4,470 +4,483 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shakura - 茶楽</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-bg: #f5f5f5;
-            --card-bg: #ffffff;
-            --accent-green: #556b2f;
-            --text-dark: #333333;
-            --text-light: #666666;
-            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.05);
-            --border-radius: 40px;
+            --color-primary: #f5f5f5;
+            --color-secondary: #ffffff;
+            --color-dark: #2c2c2c;
+            --color-accent: #d4af37;
+            --color-petal-pink: #f8c8d2;
+            --color-petal-pink-2: #f2a7b3;
+            --color-petal-light: #fbe6ea;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--primary-bg);
-            color: var(--text-dark);
+            font-family: 'Crimson Text', serif;
+            color: var(--color-dark);
+            background: var(--color-primary);
             line-height: 1.6;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 420px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 30px;
-            box-shadow: var(--shadow-soft);
-            position: relative;
-        }
-        
-        .card.card-large-padding {
-            padding: 40px;
-        }
-
-        /* --- Global Styles --- */
-
-        .material-icons {
-            font-size: 28px;
-            color: var(--text-light);
-            cursor: pointer;
-        }
-
-        a.button {
-            display: block;
-            padding: 12px 25px;
-            border-radius: 25px;
-            font-weight: 500;
-            text-decoration: none;
-            text-align: center;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        a.button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        /* --- Header/Nav --- */
-        .card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .search-bar {
-            background-color: var(--primary-bg);
-            border-radius: 20px;
-            padding: 8px 15px;
-            display: flex;
-            align-items: center;
-            flex-grow: 1;
-            margin: 0 10px;
-        }
-        
-        .search-bar span {
-            font-weight: 500;
+            overflow-x: hidden;
             font-size: 16px;
-            color: var(--text-light);
         }
         
-        .logo {
-            width: 40px;
-            height: 40px;
-            background-color: var(--primary-bg);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-            color: var(--text-dark);
+        /* --- General Layout --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .section {
+            padding: 100px 0;
         }
 
-        .section-nav {
-            display: flex;
-            justify-content: space-around;
-            padding: 20px 0;
-            background-color: var(--card-bg);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-soft);
-        }
-        
-        .nav-item {
-            width: 50px;
-            height: 50px;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.2s;
-        }
-        
-        .nav-item:hover {
-            background-color: var(--primary-bg);
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
         }
 
-        .nav-item.active {
-            background-color: var(--accent-green);
-        }
-        
-        .nav-item.active .material-icons {
-            color: var(--card-bg);
-        }
-
-        /* --- Hero Section --- */
-        .hero-card {
-            background: linear-gradient(135deg, #c5e1a5, #8bc34a);
-            position: relative;
-            padding: 40px;
-            overflow: hidden;
-        }
-        
-        .hero-card h1 {
+        .section-header h2 {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-weight: 300;
             font-size: 2.5rem;
-            font-weight: 600;
-            margin: 0;
-            line-height: 1.2;
-            color: var(--text-dark);
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
         }
         
-        .hero-card .small-text {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-top: 5px;
-            color: var(--text-dark);
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--color-dark);
+            opacity: 0.7;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .divider {
+            width: 80px;
+            height: 1px;
+            background: var(--color-accent);
+            margin: 40px auto;
+        }
+
+        /* --- Header & Navigation --- */
+        header {
+            position: fixed;
+            width: 100%;
+            padding: 20px 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--color-dark);
+            letter-spacing: 2px;
+            text-decoration: none;
+        }
+
+        .logo-jp {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: var(--color-dark);
+            opacity: 0.6;
+            margin-left: 10px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--color-dark);
+            font-size: 1rem;
+            font-weight: 400;
+            position: relative;
+            transition: color 0.3s ease;
         }
         
-        .hero-card .hero-image {
+        .nav-links a::after {
+            content: '';
             position: absolute;
             bottom: -5px;
-            right: -20px;
-            width: 150px;
-            height: auto;
-            z-index: 1;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--color-accent);
+            transition: width 0.3s ease;
         }
 
-        .hero-card .call-to-action {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-        }
-        
-        .hero-card .login {
-            background-color: var(--card-bg);
-            color: var(--text-dark);
-        }
-        
-        .hero-card .signup {
-            background-color: var(--accent-green);
-            color: var(--card-bg);
-        }
-        
-        /* --- Content Cards --- */
-        .content-card h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: var(--text-dark);
-        }
-        
-        .content-card p {
-            font-size: 0.9rem;
-            line-height: 1.6;
-            color: var(--text-light);
-        }
-        
-        .content-card .image {
-            width: 100px;
-            height: auto;
-            float: right;
-            margin: -20px -20px 0 20px;
-            border-radius: 20px;
-        }
-        
-        .split-card {
-            background: linear-gradient(135deg, #e1f1d1, #a8c187);
-            padding: 40px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-soft);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        
-        .split-card h3 {
-            font-weight: 500;
-            margin-bottom: 10px;
-            color: var(--text-dark);
-        }
-
-        .split-card .column {
-            background: rgba(255, 255, 255, 0.4);
-            border-radius: 20px;
-            padding: 25px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .split-card .column p {
-            font-size: 0.9rem;
-            line-height: 1.5;
-            font-weight: 300;
-            color: var(--text-dark);
-            margin-right: 15px;
-        }
-        
-        .split-card .column .material-icons {
-            background: rgba(255, 255, 255, 0.5);
-            padding: 8px;
-            border-radius: 50%;
-            font-size: 24px;
-            transform: rotate(-45deg);
-            color: var(--accent-green);
-        }
-        
-        .split-card .bottom-image {
-            width: 100px;
-            height: auto;
-            align-self: center;
-            margin-top: 10px;
-        }
-        
-        .scroll-down {
-            text-align: center;
-            padding: 20px 0;
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--text-light);
-            opacity: 0.7;
-        }
-        
-        .scroll-down .material-icons {
-            font-size: 28px;
-            transform: rotate(90deg);
-        }
-
-        /* --- Gallery Section --- */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .gallery-item {
-            position: relative;
-            border-radius: 20px;
-            overflow: hidden;
+        .nav-links a:hover::after {
             width: 100%;
-            padding-top: 100%;
+        }
+
+        /* --- Hero Section & Animation --- */
+        .hero {
+            padding: 180px 0 120px;
+            background: var(--color-secondary);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: 5px;
+        }
+
+        .hero h1 span {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 0.8em;
+            font-weight: 300;
+            opacity: 0.6;
+            display: block;
+            letter-spacing: normal;
         }
         
-        .gallery-item img {
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--color-dark);
+            color: var(--color-primary);
+            text-decoration: none;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: var(--color-accent);
+        }
+
+        /* Sakura Petal Animation */
+        .petals {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-        
-        .gallery-item:hover img {
-            transform: scale(1.05);
-        }
-        
-        .gallery-item.full-width {
-            grid-column: 1 / span 2;
-        }
-        
-        .gallery-item .overlay-icon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 50px;
-            height: 50px;
-            background: rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(5px);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
+            pointer-events: none;
+            z-index: 1;
         }
 
-        .gallery-item .overlay-icon .material-icons {
-            font-size: 30px;
-            color: #fff;
+        .petal {
+            position: absolute;
+            background: var(--color-petal-pink);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            transform-origin: 50% 50%;
+            opacity: 0;
+            animation: blossom-fall linear infinite;
         }
         
-        .created-by {
+        /* A little variation */
+        .petal:nth-child(2n) { background: var(--color-petal-pink-2); }
+        .petal:nth-child(3n) { background: var(--color-petal-light); }
+
+        @keyframes blossom-fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(calc(100vh + 100px)) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        
+        /* --- About Section --- */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h3 {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+        
+        .about-text p {
+            font-size: 1rem;
+            color: var(--color-dark);
+            opacity: 0.8;
+        }
+
+        .about-image {
+            flex: 1;
+            max-width: 50%;
             text-align: center;
-            font-size: 0.8rem;
-            color: var(--text-light);
-            margin-top: 30px;
         }
         
-        .created-by span {
+        .about-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: var(--shadow);
+        }
+        
+        /* --- Menu Section --- */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        .menu-item {
+            background: var(--color-secondary);
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .menu-item h3 {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 10px;
+        }
+        
+        .menu-item p {
+            font-size: 0.9rem;
+            color: var(--color-dark);
+            opacity: 0.7;
+            margin-bottom: 15px;
+        }
+
+        .menu-item-price {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 1.2rem;
             font-weight: 500;
-            color: var(--text-dark);
+            color: var(--color-accent);
+        }
+        
+        /* --- Footer --- */
+        footer {
+            background: var(--color-dark);
+            color: var(--color-primary);
+            padding: 50px 0;
+            text-align: center;
+        }
+        
+        .footer-logo {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .footer p {
+            font-size: 0.9rem;
+            margin-top: 10px;
+            opacity: 0.7;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero h1 span {
+                font-size: 0.6em;
+            }
+
+            .about-content {
+                flex-direction: column;
+            }
+
+            .about-image {
+                max-width: 100%;
+                margin-top: 30px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="card card-header" id="top">
-            <span class="material-icons">arrow_back_ios_new</span>
-            <div class="search-bar">
-                <span>Shakura Tea House</span>
-            </div>
-            <div class="logo">S</div>
-        </div>
-
-        <div class="card hero-card">
-            <div class="search-bar" style="width: auto; flex-grow: 1;">
-                <span>Tea & Mindful Living</span>
-            </div>
-            <h1>
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">
                 SHAKURA
-            </h1>
-            <span class="small-text">茶楽 - Tea Joy</span>
-            <img src="https://images.unsplash.com/photo-1628174780529-61b40d39e264?q=80&w=300" alt="Matcha Tea" class="hero-image">
-            
-            <div class="call-to-action">
-                <a href="#menu" class="button login">VIEW MENU</a>
-                <a href="#contact" class="button signup">ORDER NOW</a>
-            </div>
-        </div>
+                <span class="logo-jp">茶楽</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-        <div class="section-nav">
-            <a href="#top" class="nav-item">
-                <span class="material-icons">home</span>
-            </a>
-            <a href="#philosophy" class="nav-item">
-                <span class="material-icons">menu_book</span>
-            </a>
-            <a href="#menu" class="nav-item active">
-                <span class="material-icons">local_cafe</span>
-            </a>
-            <a href="#contact" class="nav-item">
-                <span class="material-icons">person</span>
-            </a>
-        </div>
+    <main>
+        <section class="hero">
+            <div class="petals"></div>
+            <div class="container">
+                <h1>
+                    SHAKURA
+                    <span>茶楽 - Tea Joy</span>
+                </h1>
+                <p>
+                    Where ancient tea traditions meet modern craft. Each cup embodies the Japanese philosophy of mindful simplicity.
+                </p>
+                <a href="#menu" class="cta-button">DISCOVER TEA</a>
+            </div>
+        </section>
+
+        <section id="about" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Our Philosophy</h2>
+                    <p>In the spirit of Japanese craftsmanship, we approach each beverage as a meditation in flavor.</p>
+                </div>
+                <div class="about-content">
+                    <div class="about-text">
+                        <h3>The Art of Tea</h3>
+                        <p>
+                            Shakura embodies the Japanese aesthetic of wabi-sabi – finding beauty in simplicity and imperfection. We believe that the perfect cup of boba tea is not about complexity, but about the harmony of few, carefully chosen elements. In our quiet space, time slows down. Each drink is prepared with the same mindfulness as a traditional tea ceremony, honoring both the ancient art of tea and the joyful spirit of modern boba culture.
+                        </p>
+                    </div>
+                    <div class="about-image">
+                        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=600" alt="Japanese Tea House">
+                    </div>
+                </div>
+            </div>
+        </section>
         
-        <div class="card content-card" id="philosophy">
-            <h2>OUR PHILOSOPHY</h2>
-            <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=200" alt="Tea Pot" class="image">
-            <p>
-                Shakura embodies the Japanese aesthetic of wabi-sabi – finding beauty in simplicity and imperfection. We believe that the perfect cup of boba tea is not about complexity, but about the harmony of few, carefully chosen elements.
-            </p>
-        </div>
+        <div class="divider"></div>
 
-        <div class="split-card" id="menu">
-            <h3>TEA SELECTION</h3>
-            <div class="column">
-                <p>
-                    **Brown Sugar Harmony:** Deep, caramelized brown sugar paired with premium milk tea. A meditation on sweetness and balance.
-                </p>
-                <span class="material-icons">arrow_forward</span>
+        <section id="menu" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Our Menu</h2>
+                    <p>Each blend is carefully curated to honor the essence of tea while embracing the playful spirit of boba culture.</p>
+                </div>
+                <div class="menu-grid">
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1542826643-98442a033f21?q=80&w=400" alt="Brown Sugar Boba">
+                        <h3>Brown Sugar Harmony</h3>
+                        <p>Deep, caramelized brown sugar paired with premium milk tea. A meditation on sweetness and balance.</p>
+                        <span class="menu-item-price">$5.99</span>
+                    </div>
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1576092176466-9e2d31a5902d?q=80&w=400" alt="Sakura Matcha">
+                        <h3>Sakura Matcha</h3>
+                        <p>Ceremonial grade matcha infused with delicate cherry blossom essence. Spring in a cup.</p>
+                        <span class="menu-item-price">$6.49</span>
+                    </div>
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1629707198777-62e92c6383a8?q=80&w=400" alt="Golden Mango Zen">
+                        <h3>Golden Mango Zen</h3>
+                        <p>Tropical mango tea with crystalline pearls. Sunshine captured in mindful simplicity.</p>
+                        <span class="menu-item-price">$6.29</span>
+                    </div>
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1525385133512-2f3bdd039054?q=80&w=400" alt="Moonlight Lychee">
+                        <h3>Moonlight Lychee</h3>
+                        <p>Ethereal lychee tea with rose petals and crystal pearls. Poetry in liquid form.</p>
+                        <span class="menu-item-price">$6.79</span>
+                    </div>
+                </div>
             </div>
-            <div class="column">
-                <p>
-                    **Sakura Matcha:** Ceremonial grade matcha infused with delicate cherry blossom essence. Spring in a cup.
-                </p>
-                <span class="material-icons">arrow_forward</span>
-            </div>
-            <div class="column">
-                <p>
-                    **Golden Mango Zen:** Tropical mango tea with crystalline pearls. Sunshine captured in mindful simplicity.
-                </p>
-                <span class="material-icons">arrow_forward</span>
-            </div>
-            <div class="column">
-                <p>
-                    **Moonlight Lychee:** Ethereal lychee tea with rose petals and crystal pearls. Poetry in liquid form.
-                </p>
-                <span class="material-icons">arrow_forward</span>
-            </div>
-            <img src="https://images.unsplash.com/photo-1601614051052-6c30f4068305?q=80&w=200" alt="Boba" class="bottom-image">
-        </div>
+        </section>
+    </main>
 
-        <div class="scroll-down">
-            <span class="material-icons">code</span>
-            SCROLL DOWN
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-logo">SHAKURA</div>
+            <p>&copy; 2025 Shakura Tea House. All rights reserved.</p>
         </div>
+    </footer>
+    
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
 
-        <div class="card gallery-card">
-            <div class="gallery-grid">
-                <a href="#contact" class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1542826643-98442a033f21?q=80&w=400" alt="Brown Sugar Boba">
-                    <div class="overlay-icon">
-                        <span class="material-icons">play_arrow</span>
-                    </div>
-                </a>
-                <a href="#contact" class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1576092176466-9e2d31a5902d?q=80&w=400" alt="Matcha Boba">
-                    <div class="overlay-icon">
-                        <span class="material-icons">play_arrow</span>
-                    </div>
-                </a>
-                <a href="#contact" class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1629707198777-62e92c6383a8?q=80&w=400" alt="Mango Boba">
-                    <div class="overlay-icon">
-                        <span class="material-icons">play_arrow</span>
-                    </div>
-                </a>
-                <a href="#contact" class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1525385133512-2f3bdd039054?q=80&w=400" alt="Fruit Tea">
-                    <div class="overlay-icon">
-                        <span class="material-icons">play_arrow</span>
-                    </div>
-                </a>
-                <a href="#contact" class="gallery-item full-width">
-                    <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?q=80&w=800" alt="Chocolate Tea">
-                    <div class="overlay-icon">
-                        <span class="material-icons">add</span>
-                    </div>
-                </a>
-            </div>
-            <div class="created-by">
-                DESIGNED BY <span>SHAKURA TEAM</span>
-            </div>
-        </div>
+        // Generate sakura petals
+        const petalsContainer = document.querySelector('.petals');
+        const numPetals = 20;
 
-        <div class="card card-header" id="contact">
-            <div class="search-bar"></div>
-            <span class="material-icons">favorite</span>
-            <span class="material-icons">chat_bubble_outline</span>
-            <span class="material-icons">share</span>
-            <span class="material-icons">more_horiz</span>
-            <a href="#" class="button signup" style="margin-left: 10px;">Contact</a>
-        </div>
-    </div>
+        for (let i = 0; i < numPetals; i++) {
+            const petal = document.createElement('div');
+            petal.classList.add('petal');
+            
+            // Randomize starting position and animation duration
+            const left = Math.random() * 100 + 'vw';
+            const duration = (Math.random() * 5) + 10 + 's';
+            const delay = Math.random() * 10 + 's';
+            
+            petal.style.left = left;
+            petal.style.animationDuration = duration;
+            petal.style.animationDelay = delay;
+
+            petalsContainer.appendChild(petal);
+        }
+    </script>
 </body>
 </html>
