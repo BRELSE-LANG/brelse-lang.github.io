@@ -10,11 +10,14 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #e0e5ec;
-            --shadow-color-light: #ffffff;
-            --shadow-color-dark: #a3b1c6;
-            --text-color: #555;
-            --accent-color: #d81b60;
+            --primary-bg: #1a1a1d;
+            --secondary-bg: #2c2c34;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-color-light: #f0f0f0;
+            --text-color-dark: #ccc;
+            --accent-color-red: #e74c3c;
+            --accent-gradient: linear-gradient(135deg, #FF6F61, #F44336);
             --success-color: #4caf50;
             --info-color: #2196f3;
             --error-color: #f44336;
@@ -28,32 +31,13 @@
 
         body, html {
             font-family: 'Playfair Display', serif;
-            background: linear-gradient(135deg, #e0e5ec 0%, #d8dde7 100%);
-            color: var(--text-color);
+            background: var(--primary-bg);
+            color: var(--text-color-light);
             min-height: 100vh;
+            background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><filter id="a" x="0" y="0" width="1" height="1"><feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="3" stitchTiles="stitch" result="b"/><feColorMatrix in="b" type="saturate" values="0" result="c"/><feBlend in="SourceGraphic" in2="c" mode="lighten"/></filter></svg>');
+            background-size: 100% 100%;
         }
 
-        /* Animated Braille Dots to Dashes (Monochromatic & Smaller) */
-        .animated-braille-dash {
-            position: fixed;
-            width: 12px; /* Smaller dot */
-            height: 12px;
-            border-radius: 50%; /* Starts as a dot */
-            background: #bdbdbd; /* Monochromatic color */
-            opacity: 0;
-            z-index: 1;
-            animation: brailleToDash 12s ease-in-out infinite;
-        }
-
-        /* Specific positions and delays for the animated elements */
-        .animated-braille-dash:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
-        .animated-braille-dash:nth-child(2) { top: 70%; left: 90%; animation-delay: 3s; }
-        .animated-braille-dash:nth-child(3) { top: 30%; left: 95%; animation-delay: 6s; }
-        .animated-braille-dash:nth-child(4) { top: 85%; left: 10%; animation-delay: 1.5s; }
-        .animated-braille-dash:nth-child(5) { top: 20%; left: 70%; animation-delay: 4.5s; }
-        .animated-braille-dash:nth-child(6) { top: 60%; left: 20%; animation-delay: 7.5s; }
-
-        /* Header */
         .header {
             text-align: center;
             padding: 60px 20px;
@@ -66,45 +50,55 @@
             height: 120px;
             margin: 0 auto 30px;
             border-radius: 50%;
-            background: var(--primary-color);
-            box-shadow: 
-                12px 12px 24px var(--shadow-color-dark),
-                -12px -12px 24px var(--shadow-color-light);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(15px);
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: logoFloat 6s ease-in-out infinite;
         }
-
+        
         .logo-inner {
-            width: 80px;
-            height: 80px;
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
-            background: var(--primary-color);
-            box-shadow: 
-                inset 6px 6px 12px var(--shadow-color-dark),
-                inset -6px -6px 12px var(--shadow-color-light);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--accent-color);
-            font-size: 3rem; /* Bigger thumb impression */
+            position: relative;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+            animation: radialGlow 3s infinite alternate ease-in-out;
+            transition: all 0.3s ease;
+        }
+        
+        .logo-inner .material-icons {
+            font-size: 3rem;
+            color: white;
+            z-index: 10;
         }
 
         .main-title {
             font-family: 'Noto Serif JP', serif;
             font-size: 3.5rem;
             font-weight: 400;
-            color: var(--text-color);
             margin-bottom: 10px;
             opacity: 0;
             animation: fadeInUp 2s ease-out forwards;
             animation-delay: 0.5s;
         }
+        
+        .title-brelse {
+            color: var(--accent-color-red);
+        }
+        
+        .title-auth {
+            color: var(--text-color-light);
+        }
 
         .subtitle {
             font-size: 1.2rem;
-            color: var(--accent-color);
+            color: var(--accent-color-red);
             opacity: 0;
             animation: fadeInUp 2s ease-out forwards;
             animation-delay: 1s;
@@ -112,14 +106,13 @@
 
         .description {
             font-size: 1rem;
-            color: #777;
+            color: var(--text-color-dark);
             margin-top: 10px;
             opacity: 0;
             animation: fadeInUp 2s ease-out forwards;
             animation-delay: 1.5s;
         }
 
-        /* Main Container */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -135,46 +128,47 @@
             margin-top: 40px;
         }
 
-        /* Neumorphic Cards */
-        .neuro-card {
-            background: var(--primary-color);
+        .glass-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
             border-radius: 20px;
             padding: 30px;
-            box-shadow: 
-                15px 15px 30px var(--shadow-color-dark),
-                -15px -15px 30px var(--shadow-color-light);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             transition: all 0.3s ease;
             opacity: 0;
             transform: translateY(30px);
             animation: slideInUp 0.8s ease-out forwards;
         }
+        
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
 
-        .neuro-card:nth-child(1) { animation-delay: 0.2s; }
-        .neuro-card:nth-child(2) { animation-delay: 0.4s; }
-        .neuro-card:nth-child(3) { animation-delay: 0.6s; }
-        .neuro-card:nth-child(4) { animation-delay: 0.8s; }
+        .glass-card:nth-child(1) { animation-delay: 0.2s; }
+        .glass-card:nth-child(2) { animation-delay: 0.4s; }
+        .glass-card:nth-child(3) { animation-delay: 0.6s; }
+        .glass-card:nth-child(4) { animation-delay: 0.8s; }
 
         .card-title {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--text-color);
+            color: var(--text-color-light);
             margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        /* Neumorphic Inputs */
-        .neuro-input {
+        .glass-input {
             width: 100%;
             padding: 15px 20px;
-            border: none;
+            border: 1px solid var(--glass-border);
             border-radius: 15px;
-            background: var(--primary-color);
-            box-shadow: 
-                inset 8px 8px 16px var(--shadow-color-dark),
-                inset -8px -8px 16px var(--shadow-color-light);
-            color: var(--text-color);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+            color: var(--text-color-light);
             font-family: 'Courier New', monospace;
             font-size: 0.9rem;
             transition: all 0.3s ease;
@@ -182,66 +176,66 @@
             min-height: 120px;
         }
 
-        .neuro-input:focus {
+        .glass-input:focus {
             outline: none;
-            box-shadow: 
-                inset 8px 8px 16px var(--shadow-color-dark),
-                inset -8px -8px 16px var(--shadow-color-light),
-                0 0 0 3px rgba(216, 27, 96, 0.1);
+            border-color: var(--accent-color-red);
+            background: rgba(255, 255, 255, 0.1);
         }
 
-        .neuro-input::placeholder {
-            color: #999;
+        .glass-input::placeholder {
+            color: var(--text-color-dark);
         }
 
-        /* Neumorphic Buttons */
-        .neuro-btn {
+        .glass-btn {
             padding: 12px 25px;
-            border: none;
+            border: 1px solid var(--glass-border);
             border-radius: 15px;
-            background: var(--primary-color);
-            color: var(--text-color);
+            background: var(--glass-bg);
+            color: var(--text-color-light);
             font-family: 'Playfair Display', serif;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 
-                8px 8px 16px var(--shadow-color-dark),
-                -8px -8px 16px var(--shadow-color-light);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
             min-height: 50px;
         }
-
-        .neuro-btn:hover {
+        
+        .glass-btn:hover {
             transform: translateY(-2px);
+            border-color: var(--accent-color-red);
         }
-
-        .neuro-btn:active {
+        
+        .glass-btn:active {
             transform: translateY(0);
-            box-shadow: 
-                inset 6px 6px 12px var(--shadow-color-dark),
-                inset -6px -6px 12px var(--shadow-color-light);
+            box-shadow: none;
         }
 
-        .neuro-btn.primary {
-            background: var(--accent-color);
+        .glass-btn.primary {
+            background: var(--accent-gradient);
+            border-color: transparent;
             color: white;
+            box-shadow: 0 0 20px rgba(231, 76, 60, 0.5);
         }
 
-        .neuro-btn.success {
+        .glass-btn.success {
             background: var(--success-color);
+            border-color: transparent;
             color: white;
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
         }
 
-        .neuro-btn.info {
+        .glass-btn.info {
             background: var(--info-color);
+            border-color: transparent;
             color: white;
+            box-shadow: 0 0 20px rgba(33, 150, 243, 0.5);
         }
 
-        /* Button Grid */
         .btn-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -249,7 +243,6 @@
             margin-bottom: 15px;
         }
 
-        /* Braille Display */
         .braille-container {
             text-align: center;
             margin-bottom: 25px;
@@ -263,50 +256,42 @@
             height: 90px;
             padding: 15px;
             margin: 0 auto 20px;
-            background: var(--primary-color);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
             border-radius: 15px;
-            box-shadow: 
-                inset 8px 8px 16px var(--shadow-color-dark),
-                inset -8px -8px 16px var(--shadow-color-light);
+            backdrop-filter: blur(5px);
         }
 
         .braille-dot {
             width: 16px;
             height: 16px;
             border-radius: 50%;
-            background: var(--primary-color);
-            box-shadow: 
-                4px 4px 8px var(--shadow-color-dark),
-                -4px -4px 8px var(--shadow-color-light);
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
-        .braille-dot:hover {
-            transform: scale(1.1);
-        }
+        .braille-dot:hover { transform: scale(1.1); }
 
         .braille-dot.active {
-            background: var(--accent-color);
-            box-shadow: 
-                inset 4px 4px 8px rgba(216, 27, 96, 0.3),
-                4px 4px 8px var(--shadow-color-dark);
+            background: var(--accent-color-red);
             transform: scale(1.2);
+            box-shadow: 0 0 8px var(--accent-color-red);
         }
 
         .braille-info {
             font-size: 0.9rem;
-            color: #777;
+            color: var(--text-color-dark);
             margin-bottom: 10px;
         }
 
         .braille-character {
             font-size: 2rem;
             font-weight: bold;
-            color: var(--accent-color);
+            color: var(--accent-color-red);
         }
 
-        /* Keypad */
         .keypad {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
@@ -315,32 +300,28 @@
 
         .keypad-btn {
             aspect-ratio: 1;
-            border: none;
+            border: 1px solid var(--glass-border);
             border-radius: 12px;
-            background: var(--primary-color);
-            color: var(--text-color);
+            background: var(--glass-bg);
+            color: var(--text-color-light);
             font-weight: 600;
             font-size: 0.9rem;
             cursor: pointer;
             transition: all 0.2s ease;
-            box-shadow: 
-                4px 4px 8px var(--shadow-color-dark),
-                -4px -4px 8px var(--shadow-color-light);
+            backdrop-filter: blur(5px);
         }
 
         .keypad-btn:hover {
             transform: scale(1.05);
-            color: var(--accent-color);
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--accent-color-red);
         }
 
         .keypad-btn:active {
             transform: scale(0.95);
-            box-shadow: 
-                inset 3px 3px 6px var(--shadow-color-dark),
-                inset -3px -3px 6px var(--shadow-color-light);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
         }
 
-        /* Status Messages */
         .status-message {
             margin-top: 20px;
             padding: 15px;
@@ -375,7 +356,6 @@
             border: 2px solid rgba(33, 150, 243, 0.2);
         }
 
-        /* Features List */
         .feature-item {
             display: flex;
             align-items: flex-start;
@@ -386,7 +366,7 @@
         .feature-icon {
             width: 8px;
             height: 8px;
-            background: var(--accent-color);
+            background: var(--accent-color-red);
             border-radius: 50%;
             margin-top: 8px;
             flex-shrink: 0;
@@ -395,14 +375,14 @@
         .feature-text {
             font-size: 0.95rem;
             line-height: 1.5;
+            color: var(--text-color-dark);
         }
 
         .feature-title {
             font-weight: 600;
-            color: var(--text-color);
+            color: var(--text-color-light);
         }
 
-        /* Loading Spinner */
         .loading-spinner {
             width: 20px;
             height: 20px;
@@ -412,184 +392,106 @@
             animation: spin 1s linear infinite;
         }
 
-        /* Footer */
         .footer {
             margin-top: 60px;
             padding: 40px 20px;
             text-align: center;
-            background: rgba(0, 0, 0, 0.05);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .footer-logo {
             font-family: 'Noto Serif JP', serif;
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--text-color);
+            color: var(--text-color-light);
             margin-bottom: 10px;
         }
 
         .footer-tagline {
-            color: #777;
+            color: var(--text-color-dark);
             font-size: 0.9rem;
         }
 
-        /* Animations */
-        @keyframes logoFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+        @keyframes radialGlow {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.1); opacity: 1; }
         }
 
         @keyframes fadeInUp {
-            from { 
-                opacity: 0; 
-                transform: translateY(30px); 
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes brailleToDash {
-            0% { 
-                opacity: 0; 
-                transform: translateY(20px) scale(0.3) rotate(0deg); 
-                border-radius: 50%; 
-                width: 12px;
-                height: 12px;
-            }
-            10% { 
-                opacity: 1; 
-                transform: translateY(10px) scale(0.8) rotate(36deg); 
-                border-radius: 50%;
-                width: 12px;
-                height: 12px;
-            }
-            50% { 
-                opacity: 1; 
-                transform: translateY(-15px) scale(1.2) rotate(180deg); 
-                border-radius: 5px; 
-                width: 30px; /* Adjusted dash width */
-                height: 6px; /* Adjusted dash height */
-            }
-            90% { 
-                opacity: 1; 
-                transform: translateY(-25px) scale(1) rotate(324deg); 
-                border-radius: 5px;
-                width: 30px;
-                height: 6px;
-            }
-            100% { 
-                opacity: 0; 
-                transform: translateY(-35px) scale(0.6) rotate(360deg); 
-                border-radius: 50%; 
-                width: 12px;
-                height: 12px;
-            }
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes spin {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
-
-        /* Responsive Design */
+        
         @media (max-width: 768px) {
-            .main-title {
-                font-size: 2.5rem;
-            }
-            
-            .grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-            
-            .btn-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .keypad {
-                grid-template-columns: repeat(4, 1fr);
-            }
-            
-            .neuro-card {
-                padding: 20px;
-            }
+            .main-title { font-size: 2.5rem; }
+            .grid { grid-template-columns: 1fr; gap: 30px; }
+            .btn-grid { grid-template-columns: 1fr; }
+            .keypad { grid-template-columns: repeat(4, 1fr); }
+            .glass-card { padding: 20px; }
         }
     </style>
 </head>
 <body>
-    
-    <div class="animated-braille-dash"></div>
-    <div class="animated-braille-dash"></div>
-    <div class="animated-braille-dash"></div>
-    <div class="animated-braille-dash"></div>
-    <div class="animated-braille-dash"></div>
-    <div class="animated-braille-dash"></div>
-
     <div class="header">
         <div class="logo-container">
             <div class="logo-inner"><span class="material-icons">fingerprint</span></div>
         </div>
-        <h1 class="main-title">BrelseAuth</h1>
+        <h1 class="main-title">
+            <span class="title-brelse">Brelse</span>
+            <span class="title-auth">Auth</span>
+        </h1>
         <p class="subtitle">Secure Tactile Authentication</p>
         <p class="description">Experience authentication through touch and sound</p>
     </div>
 
     <div class="container">
         <div class="grid">
-            <div class="neuro-card">
+            <div class="glass-card">
                 <h2 class="card-title">
                     <span class="material-icons">vpn_key</span> Authentication Portal
                 </h2>
                 
                 <div style="margin-bottom: 20px;">
-                    <label style="display: block; font-weight: 600; margin-bottom: 10px; color: var(--text-color);">
+                    <label style="display: block; font-weight: 600; margin-bottom: 10px; color: var(--text-color-light);">
                         Authentication Code (Braille + Morse)
                     </label>
                     <textarea 
                         id="codeInput" 
-                        class="neuro-input"
-                        placeholder="e.g. A: 100000 | .-
-B: 101000 | -...
-C: 110000 | -.-."
+                        class="glass-input"
+                        placeholder="e.g. A: 100000 | .-&#10;B: 101000 | -...&#10;C: 110000 | -.-."
                     ></textarea>
                 </div>
 
                 <div class="btn-grid">
-                    <button id="generateBtn" class="neuro-btn primary" onclick="generateOTP()">
+                    <button id="generateBtn" class="glass-btn primary" onclick="generateOTP()">
                         <span id="generateText"><span class="material-icons">refresh</span> Generate OTP</span>
                         <div id="generateSpinner" class="loading-spinner" style="display: none;"></div>
                     </button>
-                    <button class="neuro-btn success" onclick="verifyOTP()">
+                    <button class="glass-btn success" onclick="verifyOTP()">
                         <span class="material-icons">check_circle</span> Verify Code
                     </button>
                 </div>
 
-                <button class="neuro-btn info" style="width: 100%;" onclick="playMorse()">
+                <button class="glass-btn info" style="width: 100%;" onclick="playMorse()">
                     <span class="material-icons">volume_up</span> Play Morse Audio
                 </button>
 
                 <div id="status" class="status-message"></div>
             </div>
 
-            <div class="neuro-card">
+            <div class="glass-card">
                 <h3 class="card-title">
                     <span class="material-icons">waving_hand</span> Interactive Braille Demo
                 </h3>
@@ -610,19 +512,19 @@ C: 110000 | -.-."
                 </div>
             </div>
 
-            <div class="neuro-card">
+            <div class="glass-card">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <h3 class="card-title">
                         <span class="material-icons">keyboard</span> Quick Input Keypad
                     </h3>
-                    <button class="neuro-btn" onclick="clearInput()">
+                    <button class="glass-btn" onclick="clearInput()">
                         <span class="material-icons">delete_forever</span> Clear
                     </button>
                 </div>
                 <div id="keypad" class="keypad"></div>
             </div>
 
-            <div class="neuro-card">
+            <div class="glass-card">
                 <h3 class="card-title">
                     <span class="material-icons">security</span> Security Features
                 </h3>
@@ -657,7 +559,13 @@ C: 110000 | -.-."
     </div>
 
     <div class="footer">
-        <div class="footer-logo">BrelseLang × BrelseAuth</div>
+        <div class="footer-logo">
+            <span class="title-brelse">Brelse</span>
+            <span class="title-auth">Lang</span>
+            <span class="title-auth">×</span>
+            <span class="title-brelse">Brelse</span>
+            <span class="title-auth">Auth</span>
+        </div>
         <div class="footer-tagline">From dots to data — Secure tactile authentication</div>
     </div>
 
@@ -684,7 +592,6 @@ C: 110000 | -.-."
 
         const brailleReverse = Object.fromEntries(Object.entries(brailleMap).map(([k,v]) => [v,k]));
         
-        let currentOTP = '';
         let brailleDots = [0,0,0,0,0,0];
 
         async function generateOTP() {
@@ -704,7 +611,6 @@ C: 110000 | -.-."
                 otp += pool[Math.floor(Math.random() * pool.length)];
             }
             
-            currentOTP = otp;
             let result = "";
             for (let ch of otp) {
                 const braille = brailleMap[ch] || "------";
@@ -740,8 +646,69 @@ C: 110000 | -.-."
             }
         }
 
-        function playMorse() {
-            showStatus('Audio feature would play Morse code here', 'info');
+        async function playMorse() {
+            const code = document.getElementById("codeInput").value.toLowerCase();
+            
+            if (!code) {
+                showStatus('No code to play', 'error');
+                return;
+            }
+            
+            showStatus('Playing Morse audio...', 'info');
+            
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                let t = ctx.currentTime + 0.1;
+                const unit = 0.15;
+                const freq = 600;
+
+                const lines = code.split('\n');
+                for (let line of lines) {
+                    const match = line.match(/^([a-z0-9]):/);
+                    if (match) {
+                        const ch = match[1];
+                        const signal = morseMap[ch] || "";
+                        
+                        for (let s of signal) {
+                            if (s === ".") {
+                                beep(ctx, t, unit, freq);
+                                t += unit;
+                            } else if (s === "-") {
+                                beep(ctx, t, unit * 3, freq);
+                                t += unit * 3;
+                            }
+                            t += unit * 0.5;
+                        }
+                        t += unit * 2;
+                    }
+                }
+                
+                setTimeout(() => {
+                    showStatus('Morse audio complete', 'success');
+                }, t * 1000);
+                
+            } catch (error) {
+                console.error('Audio context error:', error);
+                showStatus('Audio not available in this browser', 'error');
+            }
+        }
+
+        function beep(ctx, startTime, duration, frequency) {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            
+            osc.frequency.value = frequency;
+            osc.type = 'sine';
+            
+            gain.gain.setValueAtTime(0, startTime);
+            gain.gain.linearRampToValueAtTime(0.3, startTime + 0.01);
+            gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+            
+            osc.start(startTime);
+            osc.stop(startTime + duration);
         }
 
         function appendChar(ch) {
@@ -780,42 +747,41 @@ C: 110000 | -.-."
             
             const character = brailleReverse[pattern] || '-';
             document.getElementById('brailleCharacter').textContent = character.toUpperCase();
-
-            const keypadEl = document.getElementById("keypad");
-            if (keypadEl && keypadEl.children.length === 0) { 
-                 populateKeypad();
-            }
         }
 
         function showStatus(message, type) {
             const statusEl = document.getElementById("status");
             statusEl.className = `status-message status-${type} show`;
-            statusEl.innerHTML = message;
+            statusEl.innerHTML = message.replace('\n', '<br>');
+            
+            if (type === 'success' || type === 'info') {
+                setTimeout(hideStatus, 5000);
+            }
         }
 
         function hideStatus() {
             const statusEl = document.getElementById("status");
             statusEl.classList.remove('show');
         }
-        
-        function populateKeypad() {
-            const keypadEl = document.getElementById("keypad");
-            const allChars = "abcdefghijklmnopqrstuvwxyz0123456789";
+
+        function init() {
+            const keypad = document.getElementById("keypad");
+            const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
             
-            keypadEl.innerHTML = ''; 
-            allChars.split('').forEach(char => {
+            chars.split("").forEach(ch => {
                 const btn = document.createElement("button");
+                btn.textContent = ch.toUpperCase();
                 btn.className = "keypad-btn";
-                btn.textContent = char.toUpperCase();
-                btn.onclick = () => appendChar(char);
-                keypadEl.appendChild(btn);
+                btn.onclick = () => appendChar(ch);
+                keypad.appendChild(btn);
             });
-        }
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            populateKeypad();
+
             updateBrailleDisplay();
-        });
+            
+            setTimeout(generateOTP, 2000);
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
