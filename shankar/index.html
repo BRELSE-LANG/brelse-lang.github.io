@@ -1,1 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHANKAR KUMAR - PORTFOLIO</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-text">LOADING...</div>
+    </div>
+
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div>
+                    <h1 class="name-title">SHANKAR<br>KUMAR</h1>
+                    <p class="tagline">CREATIVE DEVELOPER & DESIGNER</p>
+                </div>
+                <div class="header-actions">
+                    <button class="brutalist-btn primary" id="downloadCvBtn" aria-label="Download CV">DOWNLOAD CV</button>
+                    <button class="brutalist-btn secondary" id="contactBtn" aria-label="Contact me">CONTACT ME</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <aside class="sidebar">
+            <div class="section-title">SKILLS</div>
+            <ul class="skill-list">
+                <li class="skill-item" data-skill="JavaScript">JavaScript</li>
+                <li class="skill-item" data-skill="React.js">React.js</li>
+                <li class="skill-item" data-skill="Node.js">Node.js</li>
+                <li class="skill-item" data-skill="Python">Python</li>
+                <li class="skill-item" data-skill="UI/UX Design">UI/UX Design</li>
+                <li class="skill-item" data-skill="Figma">Figma</li>
+                <li class="skill-item" data-skill="Adobe Suite">Adobe Suite</li>
+                <li class="skill-item" data-skill="Git">Git</li>
+            </ul>
+
+            <div class="section-title">CONTACT</div>
+            <div class="contact-info">
+                <div class="contact-item">shankar.kumar@email.com</div>
+                <div class="contact-item">+91 98765 43210</div>
+                <div class="contact-item">Mumbai, India</div>
+                <div class="contact-item">linkedin.com/in/shankarkumar</div>
+            </div>
+        </aside>
+
+        <div class="content-area">
+            <section class="content-section" data-section="ABOUT">
+                <h2>ABOUT ME</h2>
+                <p>I am a passionate creative developer and designer with over 5 years of experience in building digital experiences that challenge conventional design patterns. My work spans across web development, user interface design, and creative coding, always pushing the boundaries of what's possible in digital design.</p>
+                <br>
+                <p>I believe in the power of brutalist design principles - raw, honest, and functional aesthetics that prioritize substance over superficial beauty. My approach combines technical expertise with creative vision to deliver solutions that are both impactful and memorable.</p>
+            </section>
+
+            <section class="content-section" data-section="PROJECTS">
+                <h2>FEATURED PROJECTS</h2>
+                <div class="project-grid">
+                    <div class="project-card" data-project="project1">
+                        <h3 class="project-title">BRUTALIST E-COMMERCE</h3>
+                        <p class="project-description">A bold approach to online shopping with unconventional layouts and intense visual hierarchy.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">MongoDB</span>
+                        </div>
+                    </div>
+                    <div class="project-card" data-project="project2">
+                        <h3 class="project-title">EXPERIMENTAL PORTFOLIO</h3>
+                        <p class="project-description">An interactive showcase pushing the limits of CSS and JavaScript animations.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Three.js</span>
+                            <span class="tech-tag">GSAP</span>
+                            <span class="tech-tag">WebGL</span>
+                        </div>
+                    </div>
+                    <div class="project-card" data-project="project3">
+                        <h3 class="project-title">DATA VISUALIZATION TOOL</h3>
+                        <p class="project-description">Raw data representation with emphasis on clarity and functionality over decoration.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">D3.js</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Flask</span>
+                        </div>
+                    </div>
+                    <div class="project-card" data-project="project4">
+                        <h3 class="project-title">MOBILE FIRST APP</h3>
+                        <p class="project-description">Brutalist principles applied to mobile interface design with stark contrasts.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">React Native</span>
+                            <span class="tech-tag">Firebase</span>
+                            <span class="tech-tag">Redux</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section" data-section="EXPERIENCE">
+                <h2>WORK EXPERIENCE</h2>
+                
+                <div class="experience-item">
+                    <h3 class="job-title">Senior Frontend Developer</h3>
+                    <div class="company-name">TECH INNOVATIONS PVT LTD</div>
+                    <div class="job-duration">2022 - PRESENT</div>
+                    <p>Leading frontend architecture decisions and implementing cutting-edge user interfaces. Specializing in React ecosystem and performance optimization for large-scale applications.</p>
+                </div>
+
+                <div class="experience-item">
+                    <h3 class="job-title">UI/UX Designer</h3>
+                    <div class="company-name">CREATIVE DIGITAL AGENCY</div>
+                    <div class="job-duration">2020 - 2022</div>
+                    <p>Designed user experiences for Fortune 500 companies with focus on unconventional design approaches and user psychology research.</p>
+                </div>
+
+                <div class="experience-item">
+                    <h3 class="job-title">Full Stack Developer</h3>
+                    <div class="company-name">STARTUP VENTURES</div>
+                    <div class="job-duration">2019 - 2020</div>
+                    <p>Built end-to-end web applications from concept to deployment. Worked with diverse tech stacks and contributed to product strategy decisions.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer" id="contactSection">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>GET IN TOUCH</h3>
+                    <p>Ready to create something extraordinary? Let's build the future of digital experiences together.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>SOCIAL LINKS</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link" data-social="linkedin">LINKEDIN</a>
+                        <a href="#" class="social-link" data-social="github">GITHUB</a>
+                        <a href="#" class="social-link" data-social="twitter">TWITTER</a>
+                        <a href="#" class="social-link" data-social="dribbble">DRIBBBLE</a>
+                    </div>
+                </div>
+            </div>
+            <p>&copy; 2024 SHANKAR KUMAR. ALL RIGHTS RESERVED. BUILT WITH BRUTALIST PRINCIPLES.</p>
+        </div>
+    </footer>
+
+    <div class="easter-egg" id="easterEggBtn">?</div>
+
+    <script src="script.js"></script>
+</body>
+</html>
 
