@@ -6,6 +6,37 @@
   <title>Shankar Kumar — Product Designer & Founder of BrelseLang</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <style>
+    /* Grid background with glowing animated points in brand blue */
+    .grid-bg {
+      background-color: #f8fafc; /* light base */
+      background-image: radial-gradient(circle, rgba(37, 99, 235, 0.2) 1px, transparent 1px);
+      background-size: 40px 40px; /* grid spacing */
+      position: relative;
+      overflow: hidden;
+    }
+
+    .grid-bg::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 200%;
+      background-image: radial-gradient(circle, rgba(37, 99, 235, 0.25) 2px, transparent 2px);
+      background-size: 40px 40px;
+      filter: blur(6px);
+      opacity: 0.5;
+      animation: pulseGlow 6s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    @keyframes pulseGlow {
+      from { opacity: 0.3; transform: scale(1); }
+      to { opacity: 0.7; transform: scale(1.05); }
+    }
+  </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
 
@@ -33,11 +64,11 @@
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 to-blue-100 pt-20">
-    <div class="text-center px-6">
-      <h2 class="text-4xl md:text-6xl font-extrabold mb-4">Product Designer</h2>
-      <p class="text-lg md:text-xl mb-6">Founder of BrelseLang · Menswear Designer</p>
+  <!-- Hero Section with Animated Grid -->
+  <section class="grid-bg min-h-screen flex items-center justify-center pt-20 relative">
+    <div class="text-center px-6 relative z-10">
+      <h2 class="text-4xl md:text-6xl font-extrabold mb-4 text-gray-900">Product Designer</h2>
+      <p class="text-lg md:text-xl mb-6 text-gray-700">Founder of BrelseLang</p>
       <a href="#contact" class="px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700">
         Let’s Connect
       </a>
@@ -112,8 +143,8 @@
     <div class="container mx-auto px-6 text-center">
       <h3 class="text-3xl font-bold mb-6">Get in Touch</h3>
       <p class="mb-8 text-gray-700">Let’s collaborate or just say hello.</p>
-      <a href="mailto:placeholder@email.com" class="px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700">
-        <span class="material-icons align-middle mr-2">email</span>Email Me
+      <a href="mailto:placeholder@email.com" class="px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 inline-flex items-center">
+        <span class="material-icons mr-2">email</span>Email Me
       </a>
     </div>
   </section>
