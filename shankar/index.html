@@ -1,475 +1,136 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Shankar Kumar — Product Designer & Founder of BrelseLang</title>
-  <meta name="description" content="Shankar Kumar — Product Designer, Menswear Specialist, and Founder of BrelseLang."/>
-  <!-- Open Graph (replace URLs with your assets) -->
-  <meta property="og:title" content="Shankar Kumar — Product Designer & Founder of BrelseLang">
-  <meta property="og:description" content="Menswear Designer & Deep-Tech Innovator. Founder of BrelseLang.">
-  <meta property="og:image" content="https://yourdomain.com/preview-image.jpg">
-  <meta property="og:type" content="website">
-  <link rel="icon" href="favicon.ico" />
-  <!-- Tailwind CDN (for quick prototyping) -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <style>
-    /* tiny helpers */
-    :root{--accent:#6f2ef6;--accent-2:#00c3b3}
-    /* clamp typography to avoid overlap */
-    :root{
-      --h1: clamp(1.25rem, 2.8vw, 2.25rem);
-      --h2: clamp(1rem, 2.1vw, 1.25rem);
-      --p: clamp(.9rem, 1.6vw, 1rem);
-    }
-    /* ensure modal backdrop covers safe-area */
-    .modal-backdrop { z-index: 60; }
-    /* focus outline for keyboard navigation */
-    .focus-outline:focus { outline: 3px solid rgba(99,102,241,0.25); outline-offset: 3px; }
-  </style>
 </head>
-<body class="antialiased bg-gray-50 text-gray-900">
+<body class="bg-gray-50 text-gray-900">
 
-  <!-- Page container -->
-  <div class="min-h-screen flex items-start justify-center p-4">
-    <main class="w-full max-w-6xl bg-white rounded-2xl shadow-xl overflow-hidden">
+  <!-- Navbar -->
+  <header class="fixed w-full bg-white shadow z-50">
+    <div class="container mx-auto flex items-center justify-between px-6 py-4">
+      <h1 class="text-xl font-bold">Shankar Kumar</h1>
+      <nav class="space-x-6 hidden md:flex">
+        <a href="#about" class="hover:text-blue-600">About</a>
+        <a href="#projects" class="hover:text-blue-600">Projects</a>
+        <a href="#experience" class="hover:text-blue-600">Experience</a>
+        <a href="#contact" class="hover:text-blue-600">Contact</a>
+      </nav>
+      <!-- Mobile menu button -->
+      <button id="menu-btn" class="md:hidden">
+        <span class="material-icons">menu</span>
+      </button>
+    </div>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden bg-white px-6 pb-4 md:hidden">
+      <a href="#about" class="block py-2 hover:text-blue-600">About</a>
+      <a href="#projects" class="block py-2 hover:text-blue-600">Projects</a>
+      <a href="#experience" class="block py-2 hover:text-blue-600">Experience</a>
+      <a href="#contact" class="block py-2 hover:text-blue-600">Contact</a>
+    </div>
+  </header>
 
-      <!-- Header / hero -->
-      <header class="bg-white/60 backdrop-blur-sm border-b border-gray-100 px-6 py-5">
-        <div class="flex items-center justify-between gap-4">
-          <div class="flex items-center gap-4">
-            <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-indigo-600 to-teal-400 flex items-center justify-center text-white font-semibold text-lg">SK</div>
-            <div class="leading-tight">
-              <div class="font-semibold text-lg" style="font-size:var(--h1)">Shankar Kumar</div>
-              <div class="text-sm text-gray-500">Product Designer &amp; Founder of BrelseLang</div>
-            </div>
-          </div>
+  <!-- Hero Section -->
+  <section class="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 to-blue-100 pt-20">
+    <div class="text-center px-6">
+      <h2 class="text-4xl md:text-6xl font-extrabold mb-4">Product Designer</h2>
+      <p class="text-lg md:text-xl mb-6">Founder of BrelseLang · Menswear Designer</p>
+      <a href="#contact" class="px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700">
+        Let’s Connect
+      </a>
+    </div>
+  </section>
 
-          <div class="flex items-center gap-3">
-            <button id="themeToggle" class="focus-outline inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-200 hover:bg-gray-50" aria-label="Toggle theme">
-              <span class="material-icons text-gray-600">invert_colors</span>
-            </button>
+  <!-- About -->
+  <section id="about" class="py-20 container mx-auto px-6">
+    <h3 class="text-3xl font-bold mb-6">About Me</h3>
+    <p class="text-lg leading-relaxed text-gray-700">
+      Placeholder bio — A passionate product designer with background in fashion and founder of BrelseLang. 
+      Experienced in building cross-disciplinary solutions combining design, technology, and creativity. 
+    </p>
+  </section>
 
-            <a href="#contact" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg shadow-sm">
-              <span class="material-icons">mail</span>
-              Contact
-            </a>
+  <!-- Projects -->
+  <section id="projects" class="py-20 bg-gray-100">
+    <div class="container mx-auto px-6">
+      <h3 class="text-3xl font-bold mb-10">Projects</h3>
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Project Card -->
+        <div class="bg-white rounded-xl shadow hover:shadow-lg transition">
+          <img src="https://via.placeholder.com/400x250" alt="Project" class="rounded-t-xl">
+          <div class="p-4">
+            <h4 class="text-xl font-semibold mb-2">Project One</h4>
+            <p class="text-gray-600">Brief description of the project.</p>
           </div>
         </div>
-      </header>
-
-      <!-- main content: two-column top card + tabs & body -->
-      <div class="md:grid md:grid-cols-12 md:gap-0">
-
-        <!-- Left large hero card (col-span 7) -->
-        <section class="md:col-span-7 p-6 border-r border-gray-100">
-          <div class="flex flex-col md:flex-row gap-6">
-            <!-- left text card -->
-            <div class="flex-1 bg-gray-50 border border-gray-100 rounded-xl p-6">
-              <div class="text-gray-500 text-sm mb-2">Hello,</div>
-              <h1 class="font-extrabold" style="font-size:var(--h1);line-height:1">I’m <span class="text-indigo-600">Shankar Kumar</span></h1>
-              <div class="mt-3 text-gray-600" style="font-size:var(--p)">
-                Product Designer &amp; Founder of <strong>BrelseLang</strong>. I design delightful digital products and develop tactile authentication & accessibility tech combining Braille and Morse principles.
-              </div>
-
-              <div class="mt-5 flex flex-wrap gap-3">
-                <a href="https://github.com/brelse-lang" target="_blank" rel="noopener" class="focus-outline inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-200 hover:shadow-sm" aria-label="GitHub">
-                  <span class="material-icons">code</span> GitHub
-                </a>
-                <a href="https://linkedin.com/in/shankarkumar" target="_blank" rel="noopener" class="focus-outline inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-200 hover:shadow-sm" aria-label="LinkedIn">
-                  <span class="material-icons">linkedin</span> LinkedIn
-                </a>
-                <a href="mailto:shankar@gmail.com" class="focus-outline inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700" aria-label="Email">
-                  <span class="material-icons">email</span> Email
-                </a>
-              </div>
-
-              <!-- tags -->
-              <div class="mt-6">
-                <div class="text-xs text-gray-400 mb-2">Tags</div>
-                <div id="tagList" class="flex flex-wrap gap-2">
-                  <button class="tag-btn px-3 py-1 text-sm rounded-full border border-gray-200 bg-white text-gray-700" data-tag="uiux">#UI/UX</button>
-                  <button class="tag-btn px-3 py-1 text-sm rounded-full border border-gray-200 bg-white text-gray-700" data-tag="menswear">#Menswear</button>
-                  <button class="tag-btn px-3 py-1 text-sm rounded-full border border-gray-200 bg-white text-gray-700" data-tag="brelse">#BrelseLang</button>
-                  <button class="tag-btn px-3 py-1 text-sm rounded-full border border-gray-200 bg-white text-gray-700" data-tag="cyber">#Cybersecurity</button>
-                  <button class="tag-btn px-3 py-1 text-sm rounded-full border border-gray-200 bg-white text-gray-700" data-tag="research">#Research</button>
-                </div>
-              </div>
-            </div>
-
-            <!-- right portrait / project thumbnail -->
-            <div class="w-full md:w-52 flex-shrink-0">
-              <div class="rounded-xl overflow-hidden border border-gray-100 shadow-sm bg-gradient-to-tr from-indigo-600 to-indigo-400 text-white p-4 h-full flex flex-col justify-between">
-                <div class="text-sm opacity-90">Featured</div>
-                <div class="mt-4">
-                  <div class="font-semibold text-lg">BrelseAuth</div>
-                  <div class="text-xs mt-2 opacity-90">Tactile authentication using Braille+Morse</div>
-                </div>
-                <div class="mt-4">
-                  <img src="https://via.placeholder.com/240x140.png?text=BrelseAuth" alt="BrelseAuth" class="w-full rounded-md border border-white/20">
-                </div>
-                <div class="mt-4 flex gap-2">
-                  <button id="openFeatured" class="flex-1 bg-white/20 hover:bg-white/30 rounded-md py-2 text-sm focus-outline">Preview</button>
-                  <a href="#" class="flex-1 bg-white text-indigo-700 rounded-md py-2 text-sm text-center">Case study</a>
-                </div>
-              </div>
-            </div>
+        <!-- Project Card -->
+        <div class="bg-white rounded-xl shadow hover:shadow-lg transition">
+          <img src="https://via.placeholder.com/400x250" alt="Project" class="rounded-t-xl">
+          <div class="p-4">
+            <h4 class="text-xl font-semibold mb-2">Project Two</h4>
+            <p class="text-gray-600">Brief description of the project.</p>
           </div>
-        </section>
-
-        <!-- Right column: tabs + content (col-span 5) -->
-        <aside class="md:col-span-5 p-4 md:p-6">
-          <!-- Tabs -->
-          <div class="sticky top-6 z-20 bg-white px-1 -mx-1">
-            <nav id="mainTabs" class="flex gap-2 justify-between">
-              <button class="tab-btn flex-1 py-2 rounded-lg text-sm font-medium bg-indigo-50 text-indigo-700" data-target="about" aria-pressed="true">About</button>
-              <button class="tab-btn flex-1 py-2 rounded-lg text-sm font-medium bg-white text-gray-600" data-target="resume" aria-pressed="false">Resume</button>
-              <button class="tab-btn flex-1 py-2 rounded-lg text-sm font-medium bg-white text-gray-600" data-target="work" aria-pressed="false">Work</button>
-            </nav>
-          </div>
-
-          <!-- Sections (stacked for responsive flow) -->
-          <div id="about" class="tab-panel mt-4">
-            <section class="rounded-xl border border-gray-100 bg-white p-4">
-              <h2 class="flex items-center gap-2 text-lg font-semibold" style="font-size:var(--h2)"><span class="material-icons text-indigo-600">person</span> Introduction</h2>
-              <p class="mt-3 text-gray-600" style="font-size:var(--p)">
-                I combine product design, menswear craft and deep tech research. I build meaningful products — from fashion systems to BrelseLang: a tactile code for secure authentication and accessibility.
-              </p>
-            </section>
-
-            <section class="rounded-xl border border-gray-100 bg-white p-4 mt-4">
-              <h3 class="flex items-center gap-2 text-sm font-semibold text-gray-700"><span class="material-icons text-gray-500">contact_mail</span> Get In Touch</h3>
-              <div class="mt-3 grid grid-cols-3 gap-3">
-                <a href="mailto:shankar@gmail.com" class="focus-outline rounded-lg border border-gray-100 p-3 text-center flex flex-col items-center gap-2">
-                  <span class="material-icons text-xl">email</span>
-                  <span class="text-xs text-gray-700">Email</span>
-                </a>
-                <a href="https://linkedin.com/in/shankarkumar" target="_blank" rel="noopener" class="focus-outline rounded-lg border border-gray-100 p-3 text-center flex flex-col items-center gap-2">
-                  <span class="material-icons text-xl">linkedin</span>
-                  <span class="text-xs text-gray-700">LinkedIn</span>
-                </a>
-                <a href="https://behance.net" target="_blank" rel="noopener" class="focus-outline rounded-lg border border-gray-100 p-3 text-center flex flex-col items-center gap-2">
-                  <span class="material-icons text-xl">palette</span>
-                  <span class="text-xs text-gray-700">Behance</span>
-                </a>
-              </div>
-            </section>
-          </div>
-
-          <div id="resume" class="tab-panel hidden mt-4">
-            <!-- Resume grid like screenshot: three column feel on wide screens -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <!-- Experience -->
-              <div class="rounded-xl border border-gray-100 bg-white p-4">
-                <div class="flex items-center justify-between">
-                  <h3 class="text-sm font-semibold flex items-center gap-2"><span class="material-icons text-indigo-500">work</span> Experience</h3>
-                  <button class="collapse-btn text-sm text-gray-500" aria-expanded="true">▾</button>
-                </div>
-                <div class="mt-3 space-y-3">
-                  <!-- cards -->
-                  <article class="p-3 rounded-lg border border-gray-100 hover:shadow-sm">
-                    <div class="flex items-start justify-between gap-3">
-                      <div>
-                        <h4 class="font-semibold text-sm">Founder — BrelseLang</h4>
-                        <div class="text-xs text-gray-500">2022 — Present</div>
-                      </div>
-                      <div class="text-xs text-gray-400">Auth & Research</div>
-                    </div>
-                    <p class="text-xs text-gray-600 mt-2">Developing tactile authentication (Braille + Morse hybrid) for secure, accessible input methods.</p>
-                  </article>
-
-                  <article class="p-3 rounded-lg border border-gray-100 hover:shadow-sm">
-                    <div class="flex items-start justify-between gap-3">
-                      <div>
-                        <h4 class="font-semibold text-sm">Product Designer — TechFlow</h4>
-                        <div class="text-xs text-gray-500">2023 — Present</div>
-                      </div>
-                      <div class="text-xs text-gray-400">B2B SaaS</div>
-                    </div>
-                    <p class="text-xs text-gray-600 mt-2">Led design systems and UX for fintech & B2B products.</p>
-                  </article>
-                </div>
-              </div>
-
-              <!-- Expertise -->
-              <div class="rounded-xl border border-gray-100 bg-white p-4">
-                <div class="flex items-center justify-between">
-                  <h3 class="text-sm font-semibold flex items-center gap-2"><span class="material-icons text-indigo-500">emoji_objects</span> Expertise</h3>
-                  <button class="collapse-btn text-sm text-gray-500" aria-expanded="true">▾</button>
-                </div>
-                <div class="mt-3 text-xs text-gray-600 space-y-2">
-                  <div>• Design Systems, UI/UX, Prototyping</div>
-                  <div>• Menswear & Product Design</div>
-                  <div>• Research: Authentication, Accessibility</div>
-                </div>
-              </div>
-
-              <!-- Hardskill -->
-              <div class="rounded-xl border border-gray-100 bg-white p-4">
-                <h3 class="text-sm font-semibold flex items-center gap-2"><span class="material-icons text-indigo-500">precision_manufacturing</span> Hardskill</h3>
-                <div class="mt-3 grid grid-cols-2 gap-2 text-xs text-gray-600">
-                  <div class="p-3 rounded-lg border border-gray-100">Figma</div>
-                  <div class="p-3 rounded-lg border border-gray-100">HTML & CSS</div>
-                  <div class="p-3 rounded-lg border border-gray-100">Prototyping</div>
-                  <div class="p-3 rounded-lg border border-gray-100">Design Systems</div>
-                </div>
-              </div>
-
-              <!-- Softskill -->
-              <div class="rounded-xl border border-gray-100 bg-white p-4">
-                <h3 class="text-sm font-semibold flex items-center gap-2"><span class="material-icons text-indigo-500">favorite</span> Softskill</h3>
-                <div class="mt-3 flex flex-wrap gap-2">
-                  <span class="text-xs px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full">Creativity</span>
-                  <span class="text-xs px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full">Communication</span>
-                  <span class="text-xs px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full">Leadership</span>
-                </div>
-              </div>
-
-              <!-- Education -->
-              <div class="rounded-xl border border-gray-100 bg-white p-4 md:col-span-2">
-                <h3 class="text-sm font-semibold flex items-center gap-2"><span class="material-icons text-indigo-500">school</span> Education</h3>
-                <div class="mt-3 grid gap-3">
-                  <div class="p-3 rounded-lg border border-gray-100">
-                    <div class="flex items-center justify-between">
-                      <div>
-                        <div class="font-semibold text-sm">Google UX Design Certificate</div>
-                        <div class="text-xs text-gray-500">2022</div>
-                      </div>
-                    </div>
-                    <p class="text-xs text-gray-600 mt-2">Bootcamp: research, prototyping & testing</p>
-                  </div>
-
-                  <div class="p-3 rounded-lg border border-gray-100">
-                    <div class="flex items-center justify-between">
-                      <div>
-                        <div class="font-semibold text-sm">Bachelor of Computer Science</div>
-                        <div class="text-xs text-gray-500">Mumbai University — 2017–2021</div>
-                      </div>
-                    </div>
-                    <p class="text-xs text-gray-600 mt-2">Electives in HCI & software development</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div id="work" class="tab-panel hidden mt-4">
-            <section class="rounded-xl border border-gray-100 bg-white p-4">
-              <div class="flex items-center justify-between">
-                <h3 class="text-sm font-semibold flex items-center gap-2"><span class="material-icons text-indigo-500">grid_view</span> Work</h3>
-                <div class="flex items-center gap-2 text-xs text-gray-500">
-                  <span>Filter:</span>
-                </div>
-              </div>
-
-              <!-- project filter chips -->
-              <div class="mt-3 flex flex-wrap gap-2" id="workTags">
-                <button class="work-tag px-3 py-1 rounded-full border text-xs text-gray-700" data-filter="all">All</button>
-                <button class="work-tag px-3 py-1 rounded-full border text-xs text-gray-700" data-filter="menswear">Menswear</button>
-                <button class="work-tag px-3 py-1 rounded-full border text-xs text-gray-700" data-filter="product">Product</button>
-                <button class="work-tag px-3 py-1 rounded-full border text-xs text-gray-700" data-filter="research">Research</button>
-              </div>
-
-              <!-- projects grid -->
-              <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4" id="projectsGrid">
-                <!-- project card template -->
-                <article class="project-card rounded-lg border border-gray-100 overflow-hidden">
-                  <img src="https://via.placeholder.com/600x360.png?text=Project+1" alt="Project 1" class="w-full h-40 object-cover">
-                  <div class="p-3">
-                    <div class="flex items-start justify-between gap-3">
-                      <div>
-                        <h4 class="font-semibold text-sm">BrelseAuth — Tactile Auth</h4>
-                        <div class="text-xs text-gray-500">Research • 2024</div>
-                      </div>
-                      <div class="text-xs text-gray-400">Research</div>
-                    </div>
-                    <p class="text-xs text-gray-600 mt-2">Prototype for secure tactile authentication using a hybrid Braille-Morse approach.</p>
-                    <div class="mt-3 flex gap-2">
-                      <button class="preview-btn flex-1 text-sm py-2 rounded-md border border-indigo-100" data-title="BrelseAuth" aria-label="Preview project">Preview</button>
-                      <a href="#" class="flex-1 text-sm py-2 rounded-md text-center bg-indigo-600 text-white hover:bg-indigo-700">Case Study</a>
-                    </div>
-                  </div>
-                </article>
-
-                <article class="project-card rounded-lg border border-gray-100 overflow-hidden">
-                  <img src="https://via.placeholder.com/600x360.png?text=Project+2" alt="Project 2" class="w-full h-40 object-cover">
-                  <div class="p-3">
-                    <div class="flex items-start justify-between gap-3">
-                      <div>
-                        <h4 class="font-semibold text-sm">Menswear Capsule</h4>
-                        <div class="text-xs text-gray-500">Design • 2023</div>
-                      </div>
-                      <div class="text-xs text-gray-400">Menswear</div>
-                    </div>
-                    <p class="text-xs text-gray-600 mt-2">Seasonal capsule built for modern silhouettes and sustainable fabrics.</p>
-                    <div class="mt-3 flex gap-2">
-                      <button class="preview-btn flex-1 text-sm py-2 rounded-md border border-indigo-100" data-title="Menswear Capsule" aria-label="Preview project">Preview</button>
-                      <a href="#" class="flex-1 text-sm py-2 rounded-md text-center bg-indigo-600 text-white hover:bg-indigo-700">Case Study</a>
-                    </div>
-                  </div>
-                </article>
-              </div>
-            </section>
-          </div>
-        </aside>
-
-      </div>
-
-      <!-- bottom spacer -->
-      <div class="p-6 border-t border-gray-100 text-center bg-white">
-        <div class="max-w-3xl mx-auto">
-          <div class="text-xs text-gray-500">© 2025 Shankar Kumar — Product Designer & Founder of BrelseLang</div>
         </div>
-      </div>
-
-    </main>
-  </div>
-
-  <!-- Modal (project preview) -->
-  <div id="modal" class="fixed inset-0 hidden items-center justify-center modal-backdrop bg-black/50 p-4">
-    <div role="dialog" aria-modal="true" class="bg-white rounded-xl max-w-2xl w-full overflow-hidden shadow-2xl">
-      <div class="flex items-center justify-between p-4 border-b">
-        <div class="font-semibold" id="modalTitle">Preview</div>
-        <button id="closeModal" class="p-2 rounded-md focus-outline" aria-label="Close preview">✕</button>
-      </div>
-      <div class="p-4" id="modalBody">
-        <img src="https://via.placeholder.com/1200x630.png?text=Preview" alt="preview" class="w-full h-64 object-cover rounded-md">
-        <p class="mt-3 text-sm text-gray-600">Project details will be shown here. Replace with your case study snippets and images.</p>
+        <!-- Project Card -->
+        <div class="bg-white rounded-xl shadow hover:shadow-lg transition">
+          <img src="https://via.placeholder.com/400x250" alt="Project" class="rounded-t-xl">
+          <div class="p-4">
+            <h4 class="text-xl font-semibold mb-2">Project Three</h4>
+            <p class="text-gray-600">Brief description of the project.</p>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- JS: interactions -->
+  <!-- Experience -->
+  <section id="experience" class="py-20 container mx-auto px-6">
+    <h3 class="text-3xl font-bold mb-10">Experience</h3>
+    <ul class="space-y-6">
+      <li class="flex items-start space-x-4">
+        <span class="material-icons text-blue-600">work</span>
+        <div>
+          <h4 class="text-xl font-semibold">Menswear Designer</h4>
+          <p class="text-gray-600">7+ years in the fashion industry.</p>
+        </div>
+      </li>
+      <li class="flex items-start space-x-4">
+        <span class="material-icons text-blue-600">lightbulb</span>
+        <div>
+          <h4 class="text-xl font-semibold">Founder — BrelseLang</h4>
+          <p class="text-gray-600">Created a hybrid language merging Braille and Morse for accessibility & cybersecurity.</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="py-20 bg-gray-100">
+    <div class="container mx-auto px-6 text-center">
+      <h3 class="text-3xl font-bold mb-6">Get in Touch</h3>
+      <p class="mb-8 text-gray-700">Let’s collaborate or just say hello.</p>
+      <a href="mailto:placeholder@email.com" class="px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700">
+        <span class="material-icons align-middle mr-2">email</span>Email Me
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-white py-6 border-t text-center">
+    <p class="text-gray-600">&copy; 2025 Shankar Kumar. All rights reserved.</p>
+  </footer>
+
+  <!-- Script for mobile menu -->
   <script>
-    // Basic tab switching
-    document.querySelectorAll('.tab-btn').forEach(btn=>{
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.tab-btn').forEach(b=> {
-          b.classList.remove('bg-indigo-50','text-indigo-700');
-          b.classList.add('bg-white','text-gray-600');
-          b.setAttribute('aria-pressed','false');
-        });
-        btn.classList.add('bg-indigo-50','text-indigo-700');
-        btn.classList.remove('bg-white','text-gray-600');
-        btn.setAttribute('aria-pressed','true');
-
-        const target = btn.dataset.target;
-        document.querySelectorAll('.tab-panel').forEach(panel=>{
-          panel.classList.add('hidden');
-        });
-        const el = document.getElementById(target);
-        if (el) el.classList.remove('hidden');
-        // scroll to top of the panel area on small screens
-        el?.scrollIntoView({behavior:'smooth', block:'start'});
-      });
+    const menuBtn = document.getElementById("menu-btn");
+    const mobileMenu = document.getElementById("mobile-menu");
+    menuBtn.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
     });
-
-    // Collapse buttons in resume
-    document.querySelectorAll('.collapse-btn').forEach(cb=>{
-      cb.addEventListener('click', () => {
-        const section = cb.closest('div');
-        // find next sibling content (for this layout we just toggle visibility on the group)
-        // For simplicity, toggle all .collapse content in parent
-        // Here we simply toggle the sibling list (the nextElementSibling)
-        // But to keep layout consistent, we'll toggle the parent's children except header
-        // Simpler implementation: shrink the parent by toggling opacity
-        if (cb.getAttribute('aria-expanded') === 'true') {
-          cb.setAttribute('aria-expanded','false');
-          cb.textContent = '▸';
-          // collapse: reduce height by hiding second child(s)
-          const parent = cb.closest('div').nextElementSibling;
-          if (parent) parent.classList.add('hidden');
-        } else {
-          cb.setAttribute('aria-expanded','true');
-          cb.textContent = '▾';
-          const parent = cb.closest('div').nextElementSibling;
-          if (parent) parent.classList.remove('hidden');
-        }
-      });
-    });
-
-    // Preview modal open
-    document.querySelectorAll('.preview-btn, #openFeatured').forEach(btn=>{
-      btn.addEventListener('click', (e)=>{
-        const title = btn.dataset.title || 'Preview';
-        document.getElementById('modalTitle').innerText = title;
-        document.getElementById('modal').classList.remove('hidden');
-        // set focus for accessibility
-        document.getElementById('modal').querySelector('[role="dialog"]').focus();
-      });
-    });
-    document.getElementById('closeModal').addEventListener('click', ()=>{
-      document.getElementById('modal').classList.add('hidden');
-    });
-    // close modal on backdrop click
-    document.getElementById('modal').addEventListener('click', (e)=>{
-      if (e.target === e.currentTarget) document.getElementById('modal').classList.add('hidden');
-    });
-    // Escape to close
-    document.addEventListener('keydown', (e)=>{ if (e.key === 'Escape') document.getElementById('modal').classList.add('hidden'); });
-
-    // Work tag filtering (simple)
-    const workTags = document.querySelectorAll('.work-tag');
-    const projectCards = document.querySelectorAll('#projectsGrid .project-card');
-    workTags.forEach(t=>{
-      t.addEventListener('click', ()=>{
-        // toggle active visual
-        workTags.forEach(x=> x.classList.remove('bg-indigo-600','text-white'));
-        t.classList.add('bg-indigo-600','text-white');
-        const filter = t.dataset.filter;
-        // simple demo: filter by keyword in text (replace with data attribute in production)
-        projectCards.forEach(card=>{
-          const category = card.querySelector('div > div > div:last-child')?.innerText || '';
-          if (filter === 'all') card.style.display = '';
-          else if (category.toLowerCase().includes(filter)) card.style.display = '';
-          else card.style.display = 'none';
-        });
-      });
-    });
-
-    // Tag chips toggle (left hero)
-    document.querySelectorAll('.tag-btn').forEach(btn=>{
-      btn.addEventListener('click', ()=> btn.classList.toggle('bg-indigo-50'));
-    });
-
-    // Theme toggle (very small demo)
-    const themeBtn = document.getElementById('themeToggle');
-    themeBtn?.addEventListener('click', () => {
-      document.documentElement.classList.toggle('dark');
-      if (document.documentElement.classList.contains('dark')) {
-        document.body.classList.add('bg-gray-900','text-gray-100');
-      } else {
-        document.body.classList.remove('bg-gray-900','text-gray-100');
-      }
-    });
-
-    // Ensure images don't cause overlap on small screens (simple protective measure)
-    window.addEventListener('load', () => {
-      document.querySelectorAll('img').forEach(img => {
-        img.addEventListener('error', ()=> img.src = 'data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="360"><rect width="100%" height="100%" fill="%23e5e7eb"/><text x="50%" y="50%" font-size="18" dominant-baseline="middle" text-anchor="middle" fill="%23999">no image</text></svg>');
-      });
-    });
-
-    // Active tab on scroll (basic)
-    const tabPanels = document.querySelectorAll('.tab-panel');
-    const tabButtons = document.querySelectorAll('.tab-btn');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          const id = e.target.id;
-          tabButtons.forEach(b => {
-            b.classList.remove('bg-indigo-50','text-indigo-700');
-            b.classList.add('bg-white','text-gray-600');
-            if (b.dataset.target === id) {
-              b.classList.add('bg-indigo-50','text-indigo-700');
-            }
-          });
-        }
-      });
-    }, {threshold:0.4});
-    tabPanels.forEach(panel => observer.observe(panel));
   </script>
+
 </body>
 </html>
