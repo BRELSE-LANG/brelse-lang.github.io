@@ -1,542 +1,475 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Shankar Kumar - Product Design Portfolio</title>
-    <meta name="description" content="Product Design Portfolio of Shankar Kumar — UI/UX, Product Strategy, Mobile & Web Design." />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        :root{
-            --bg: #f5f5f5;
-            --card: #fff;
-            --muted: #666;
-            --accent: #4285f4;
-            --glass: rgba(255,255,255,0.3);
-            --max-width: 900px;
-            --mobile-width: 420px;
-        }
-
-        /* Reset */
-        *{box-sizing:border-box;margin:0;padding:0}
-        html,body{height:100%}
-        body{
-            font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-            background:var(--bg);
-            color:#222;
-            line-height:1.45;
-            -webkit-font-smoothing:antialiased;
-            -moz-osx-font-smoothing:grayscale;
-        }
-
-        /* Layout container (responsive) */
-        .page {
-            min-height:100vh;
-            display:flex;
-            align-items:flex-start;
-            justify-content:center;
-            padding:20px;
-        }
-
-        .mobile-container {
-            width:100%;
-            max-width:var(--max-width);
-            background:var(--card);
-            border-radius:12px;
-            overflow:hidden;
-            box-shadow:0 8px 40px rgba(15,23,42,0.08);
-            position:relative;
-        }
-
-        /* Header */
-        .header {
-            display:flex;
-            align-items:center;
-            justify-content:space-between;
-            padding:14px 18px;
-            border-bottom:1px solid #eee;
-            background:linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.9));
-            backdrop-filter: blur(4px);
-        }
-
-        .profile-info{display:flex;align-items:center;gap:10px}
-        .profile-pic{
-            width:36px;height:36px;border-radius:50%;
-            background:linear-gradient(135deg,#4285f4,#34a853);
-            flex-shrink:0;
-        }
-        .profile-name{font-weight:700;font-size:15px;color:#111}
-        .header-title{font-weight:600;font-size:14px;color:#333;opacity:0.9}
-        .search-icon{
-            width:34px;height:34px;border-radius:8px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;cursor:pointer;
-        }
-
-        /* Banner */
-        .portfolio-banner{
-            position:relative;height:220px;background:linear-gradient(135deg,#4285f4 0%, #1a73e8 100%);
-            overflow:hidden;
-        }
-        .portfolio-banner::before{
-            content:'';position:absolute;inset:0;
-            background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.09)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>') center/cover repeat;
-            opacity:0.45;
-        }
-
-        /* Glass spheres */
-        .spheres-container{position:absolute;inset:0;pointer-events:none;z-index:1}
-        .glass-sphere{
-            position:absolute;border-radius:50%;backdrop-filter: blur(6px);
-            border:1px solid rgba(255,255,255,0.25);
-            box-shadow: inset 0 0 18px rgba(255,255,255,0.18), 0 8px 30px rgba(26,115,232,0.18);
-        }
-        .glass-sphere::before,.glass-sphere::after{content:'';position:absolute;border-radius:50%}
-        .glass-sphere::before{
-            top:14%;left:18%;width:26%;height:26%;
-            background: radial-gradient(circle, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.28) 60%, transparent 100%); filter: blur(1px);
-        }
-        .glass-sphere::after{
-            bottom:8%;right:12%;width:16%;height:16%;
-            background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, transparent 100%); filter: blur(2px);
-        }
-
-        .sphere-large{width:90px;height:90px;left:15%;top:30%;transform-origin:150px 100px;animation:orbitLarge 10s linear infinite}
-        .sphere-small{width:64px;height:64px;left:35%;top:10%;transform-origin:120px 100px;animation:orbitSmall 8s linear infinite reverse}
-
-        @keyframes orbitLarge{0%{transform:rotate(0deg) translateX(110px) rotate(0deg)}100%{transform:rotate(360deg) translateX(110px) rotate(-360deg)}}
-        @keyframes orbitSmall{0%{transform:rotate(0deg) translateX(80px) rotate(0deg)}100%{transform:rotate(360deg) translateX(80px) rotate(-360deg)}}
-
-        .sphere-glow{position:absolute;width:120%;height:120%;top:-10%;left:-10%;border-radius:50%;background:radial-gradient(circle, rgba(66,133,244,0.18) 0%, rgba(66,133,244,0.08) 30%, transparent 70%);animation:pulseGlow 3s ease-in-out infinite alternate}
-        @keyframes pulseGlow{0%{transform:scale(1);opacity:0.55}100%{transform:scale(1.2);opacity:0.85}}
-
-        .arrow-icon{position:absolute;top:18px;left:18px;width:44px;height:44px;background:rgba(0,0,0,0.1);clip-path:polygon(0% 20%,60% 20%,60% 0%,100% 50%,60% 100%,60% 80%,0% 80%);transform:rotate(-135deg);z-index:2;border-radius:8px}
-        .portfolio-text{position:absolute;right:22px;top:50%;transform:translateY(-50%);color:#fff;text-align:right;z-index:2}
-        .portfolio-large{font-size:44px;font-weight:900;line-height:0.9;letter-spacing:-2px;transform:rotate(-4deg);text-shadow:2px 2px 10px rgba(0,0,0,0.28)}
-        .portfolio-year{position:absolute;left:18px;bottom:18px;color:#fff;font-size:20px;font-weight:700;z-index:2;text-shadow:2px 2px 8px rgba(0,0,0,0.25)}
-
-        /* Tags */
-        .tags-section{padding:16px;background:transparent}
-        .tags-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
-        .tag{padding:6px 10px;background:var(--card);border:1px solid #e6e6e6;border-radius:999px;font-size:12px;color:var(--muted);cursor:pointer;transition:all .22s ease}
-        .tag:hover{background:var(--accent);color:#fff;border-color:var(--accent);transform:translateY(-3px)}
-        .see-more{font-size:13px;color:var(--muted);text-align:right;margin-top:6px;cursor:pointer}
-
-        /* Navigation Tabs */
-        .nav-tabs{display:flex;border-top:1px solid #f1f1f1;border-bottom:1px solid #eee;background:#fff}
-        .nav-tab{flex:1;text-align:center;padding:14px 10px;font-size:14px;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;transition:all .18s ease}
-        .nav-tab:hover{color:var(--accent);background:rgba(66,133,244,0.03)}
-        .nav-tab.active{color:#111;border-bottom-color:var(--accent);background:rgba(66,133,244,0.04);font-weight:600}
-
-        /* Sections */
-        section{padding:18px;background:var(--card);border-bottom:1px solid #f1f1f1}
-        .intro-section{display:flex;gap:16px;align-items:flex-start}
-        .intro-image{width:120px;height:160px;border-radius:10px;background:linear-gradient(135deg,#333,#666);position:relative;flex-shrink:0;overflow:hidden}
-        .intro-image::after{content:'Hello,';position:absolute;top:16px;left:14px;color:rgba(255,255,255,0.9);font-size:12px;font-weight:400}
-        .intro-image::before{content:'My name is Shankar';position:absolute;bottom:54px;left:14px;right:14px;color:white;font-size:18px;font-weight:700;line-height:1.08}
-        .intro-card{flex:1;background:#f8f9fa;border-radius:12px;padding:14px;position:relative;box-shadow:inset 0 1px 0 rgba(255,255,255,0.6)}
-        .intro-card h3{font-size:16px;font-weight:700;color:#111;margin-bottom:8px}
-        .intro-card p{font-size:13px;color:var(--muted)}
-
-        /* Contact grid */
-        .contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-        .contact-card{aspect-ratio:1;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;text-decoration:none;position:relative;overflow:hidden;transition:transform .18s ease, box-shadow .18s ease}
-        .contact-card.email{background:#333}
-        .contact-card.linkedin{background:#0077b5}
-        .contact-card.behance{background:#1769ff}
-        .contact-card:hover{transform:translateY(-6px);box-shadow:0 10px 30px rgba(0,0,0,0.12)}
-
-        /* Experience / Skills / Education */
-        .section-title{display:flex;align-items:center;justify-content:space-between;font-size:17px;font-weight:700;color:#111;margin-bottom:12px}
-        .dropdown-arrow{width:34px;height:34px;border-radius:8px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;cursor:pointer}
-        .dropdown-arrow span{font-size:12px;color:var(--muted)}
-        .section-content{overflow:hidden;max-height:2000px;transition:max-height .45s ease}
-        .section-content.collapsed{max-height:0;padding:0}
-        .experience-grid{display:grid;gap:12px}
-        .experience-card{background:#f8f9fa;border-radius:10px;padding:14px;position:relative;border:1px solid #eee;cursor:pointer;transition:transform .18s ease, box-shadow .18s ease}
-        .experience-card:hover{transform:translateY(-6px);box-shadow:0 12px 36px rgba(15,23,42,0.06);border-color:var(--accent)}
-        .experience-year{position:absolute;top:12px;right:12px;background:var(--accent);color:#fff;padding:6px 8px;border-radius:6px;font-weight:700;font-size:12px}
-        .experience-card h4{font-size:14px;font-weight:700;color:#111;padding-right:60px}
-        .experience-card .company{font-size:13px;color:var(--muted);margin-bottom:8px}
-        .experience-card p{font-size:13px;color:var(--muted)}
-
-        .skills-section{background:transparent;padding:18px}
-        .skills-content{background:#fff;border-radius:10px;padding:14px;border:1px solid #f0f0f0}
-        .skills-list{font-size:13px;color:var(--muted)}
-
-        .education-cards{display:grid;gap:12px}
-        .education-card{background:#222;color:#fff;border-radius:10px;padding:14px;position:relative;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease}
-        .education-card:hover{transform:translateY(-6px);box-shadow:0 14px 40px rgba(0,0,0,0.3)}
-
-        /* Bottom nav (responsive) */
-        .bottom-nav{
-            position:fixed;left:50%;transform:translateX(-50%);
-            bottom:env(safe-area-inset-bottom,16px);
-            width:min(420px,92%);
-            height:62px;background:#fff;border-top:1px solid #eee;border-radius:12px;display:flex;align-items:center;justify-content:space-around;gap:20px;z-index:60;box-shadow:0 8px 30px rgba(15,23,42,0.06)
-        }
-        .nav-item{width:48px;height:48px;border-radius:999px;background:#f2f2f2;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .18s ease}
-        .nav-item:hover{transform:scale(1.08)}
-        .nav-item.home{background:#111;color:#fff}
-
-        /* Modal (placeholder) */
-        .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:90;align-items:center;justify-content:center;padding:18px}
-        .modal.open{display:flex}
-        .modal-content{width:100%;max-width:420px;background:#fff;padding:18px;border-radius:12px;box-shadow:0 18px 60px rgba(0,0,0,0.24)}
-
-        /* Utilities */
-        .container{max-width:var(--mobile-width);margin:0 auto}
-        .spacer{height:16px}
-
-        /* Responsive adjustments */
-        @media(min-width:780px){
-            .mobile-container{border-radius:16px}
-            .portfolio-banner{height:260px}
-            .portfolio-large{font-size:56px}
-            .intro-section{padding:22px}
-            section{padding:22px}
-            .contact-grid{grid-template-columns:repeat(6,1fr)}
-            .contact-card{aspect-ratio:3/1;padding:10px}
-            .bottom-nav{display:none} /* hide persistent bottom nav on larger screens */
-        }
-
-        @media(max-width:420px){
-            .portfolio-large{font-size:36px}
-            .profile-name{font-size:14px}
-            .portfolio-year{font-size:18px}
-            .intro-image{width:96px;height:140px}
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Shankar Kumar — Product Designer & Founder of BrelseLang</title>
+  <meta name="description" content="Shankar Kumar — Product Designer, Menswear Specialist, and Founder of BrelseLang."/>
+  <!-- Open Graph (replace URLs with your assets) -->
+  <meta property="og:title" content="Shankar Kumar — Product Designer & Founder of BrelseLang">
+  <meta property="og:description" content="Menswear Designer & Deep-Tech Innovator. Founder of BrelseLang.">
+  <meta property="og:image" content="https://yourdomain.com/preview-image.jpg">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="favicon.ico" />
+  <!-- Tailwind CDN (for quick prototyping) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    /* tiny helpers */
+    :root{--accent:#6f2ef6;--accent-2:#00c3b3}
+    /* clamp typography to avoid overlap */
+    :root{
+      --h1: clamp(1.25rem, 2.8vw, 2.25rem);
+      --h2: clamp(1rem, 2.1vw, 1.25rem);
+      --p: clamp(.9rem, 1.6vw, 1rem);
+    }
+    /* ensure modal backdrop covers safe-area */
+    .modal-backdrop { z-index: 60; }
+    /* focus outline for keyboard navigation */
+    .focus-outline:focus { outline: 3px solid rgba(99,102,241,0.25); outline-offset: 3px; }
+  </style>
 </head>
-<body>
-    <div class="page">
-        <div class="mobile-container" id="pageRoot" role="main">
-            <!-- Header -->
-            <header class="header" role="banner">
-                <div class="profile-info" aria-hidden="false">
-                    <div class="profile-pic" aria-hidden="true"></div>
-                    <div>
-                        <div class="profile-name">Shankar Kumar</div>
-                        <div style="font-size:12px;color:var(--muted)">Product Designer — Mumbai</div>
-                    </div>
-                </div>
-                <div class="header-title" aria-hidden="true">Product Design Portfolio</div>
-                <button class="search-icon" aria-label="Search portfolio" title="Search">🔍</button>
-            </header>
+<body class="antialiased bg-gray-50 text-gray-900">
 
-            <!-- Portfolio Banner -->
-            <div class="portfolio-banner" aria-hidden="false">
-                <div class="spheres-container" aria-hidden="true">
-                    <div class="glass-sphere sphere-large"><div class="sphere-glow"></div></div>
-                    <div class="glass-sphere sphere-small"><div class="sphere-glow"></div></div>
+  <!-- Page container -->
+  <div class="min-h-screen flex items-start justify-center p-4">
+    <main class="w-full max-w-6xl bg-white rounded-2xl shadow-xl overflow-hidden">
+
+      <!-- Header / hero -->
+      <header class="bg-white/60 backdrop-blur-sm border-b border-gray-100 px-6 py-5">
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-indigo-600 to-teal-400 flex items-center justify-center text-white font-semibold text-lg">SK</div>
+            <div class="leading-tight">
+              <div class="font-semibold text-lg" style="font-size:var(--h1)">Shankar Kumar</div>
+              <div class="text-sm text-gray-500">Product Designer &amp; Founder of BrelseLang</div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <button id="themeToggle" class="focus-outline inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-200 hover:bg-gray-50" aria-label="Toggle theme">
+              <span class="material-icons text-gray-600">invert_colors</span>
+            </button>
+
+            <a href="#contact" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg shadow-sm">
+              <span class="material-icons">mail</span>
+              Contact
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <!-- main content: two-column top card + tabs & body -->
+      <div class="md:grid md:grid-cols-12 md:gap-0">
+
+        <!-- Left large hero card (col-span 7) -->
+        <section class="md:col-span-7 p-6 border-r border-gray-100">
+          <div class="flex flex-col md:flex-row gap-6">
+            <!-- left text card -->
+            <div class="flex-1 bg-gray-50 border border-gray-100 rounded-xl p-6">
+              <div class="text-gray-500 text-sm mb-2">Hello,</div>
+              <h1 class="font-extrabold" style="font-size:var(--h1);line-height:1">I’m <span class="text-indigo-600">Shankar Kumar</span></h1>
+              <div class="mt-3 text-gray-600" style="font-size:var(--p)">
+                Product Designer &amp; Founder of <strong>BrelseLang</strong>. I design delightful digital products and develop tactile authentication & accessibility tech combining Braille and Morse principles.
+              </div>
+
+              <div class="mt-5 flex flex-wrap gap-3">
+                <a href="https://github.com/brelse-lang" target="_blank" rel="noopener" class="focus-outline inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-200 hover:shadow-sm" aria-label="GitHub">
+                  <span class="material-icons">code</span> GitHub
+                </a>
+                <a href="https://linkedin.com/in/shankarkumar" target="_blank" rel="noopener" class="focus-outline inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-200 hover:shadow-sm" aria-label="LinkedIn">
+                  <span class="material-icons">linkedin</span> LinkedIn
+                </a>
+                <a href="mailto:shankar@gmail.com" class="focus-outline inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700" aria-label="Email">
+                  <span class="material-icons">email</span> Email
+                </a>
+              </div>
+
+              <!-- tags -->
+              <div class="mt-6">
+                <div class="text-xs text-gray-400 mb-2">Tags</div>
+                <div id="tagList" class="flex flex-wrap gap-2">
+                  <button class="tag-btn px-3 py-1 text-sm rounded-full border border-gray-200 bg-white text-gray-700" data-tag="uiux">#UI/UX</button>
+                  <button class="tag-btn px-3 py-1 text-sm rounded-full border border-gray-200 bg-white text-gray-700" data-tag="menswear">#Menswear</button>
+                  <button class="tag-btn px-3 py-1 text-sm rounded-full border border-gray-200 bg-white text-gray-700" data-tag="brelse">#BrelseLang</button>
+                  <button class="tag-btn px-3 py-1 text-sm rounded-full border border-gray-200 bg-white text-gray-700" data-tag="cyber">#Cybersecurity</button>
+                  <button class="tag-btn px-3 py-1 text-sm rounded-full border border-gray-200 bg-white text-gray-700" data-tag="research">#Research</button>
                 </div>
-                <div class="arrow-icon" aria-hidden="true"></div>
-                <div class="portfolio-text">
-                    <div class="portfolio-large">FOLIO</div>
-                </div>
-                <div class="portfolio-year">2025</div>
+              </div>
             </div>
 
-            <!-- Tags -->
-            <div class="tags-section" id="tags">
-                <div class="tags-grid" aria-hidden="false">
-                    <button class="tag">UI/UX Design</button>
-                    <button class="tag">Product Strategy</button>
-                    <button class="tag">Mobile Design</button>
-                    <button class="tag">Web Design</button>
-                    <button class="tag">Design Systems</button>
-                    <button class="tag">User Research</button>
-                    <button class="tag">Prototyping</button>
+            <!-- right portrait / project thumbnail -->
+            <div class="w-full md:w-52 flex-shrink-0">
+              <div class="rounded-xl overflow-hidden border border-gray-100 shadow-sm bg-gradient-to-tr from-indigo-600 to-indigo-400 text-white p-4 h-full flex flex-col justify-between">
+                <div class="text-sm opacity-90">Featured</div>
+                <div class="mt-4">
+                  <div class="font-semibold text-lg">BrelseAuth</div>
+                  <div class="text-xs mt-2 opacity-90">Tactile authentication using Braille+Morse</div>
                 </div>
-                <div class="see-more" id="seeMoreTags">See More ↓</div>
+                <div class="mt-4">
+                  <img src="https://via.placeholder.com/240x140.png?text=BrelseAuth" alt="BrelseAuth" class="w-full rounded-md border border-white/20">
+                </div>
+                <div class="mt-4 flex gap-2">
+                  <button id="openFeatured" class="flex-1 bg-white/20 hover:bg-white/30 rounded-md py-2 text-sm focus-outline">Preview</button>
+                  <a href="#" class="flex-1 bg-white text-indigo-700 rounded-md py-2 text-sm text-center">Case study</a>
+                </div>
+              </div>
             </div>
+          </div>
+        </section>
 
-            <!-- Navigation Tabs -->
-            <nav class="nav-tabs" role="navigation" aria-label="Main navigation">
-                <div class="nav-tab" data-target="about">About me</div>
-                <div class="nav-tab" data-target="resume">Resume</div>
-                <div class="nav-tab active" data-target="work">Work</div>
+        <!-- Right column: tabs + content (col-span 5) -->
+        <aside class="md:col-span-5 p-4 md:p-6">
+          <!-- Tabs -->
+          <div class="sticky top-6 z-20 bg-white px-1 -mx-1">
+            <nav id="mainTabs" class="flex gap-2 justify-between">
+              <button class="tab-btn flex-1 py-2 rounded-lg text-sm font-medium bg-indigo-50 text-indigo-700" data-target="about" aria-pressed="true">About</button>
+              <button class="tab-btn flex-1 py-2 rounded-lg text-sm font-medium bg-white text-gray-600" data-target="resume" aria-pressed="false">Resume</button>
+              <button class="tab-btn flex-1 py-2 rounded-lg text-sm font-medium bg-white text-gray-600" data-target="work" aria-pressed="false">Work</button>
             </nav>
+          </div>
 
-            <!-- About / Intro -->
-            <section id="about" aria-labelledby="about-heading">
-                <div class="intro-section">
-                    <div class="intro-image" aria-hidden="true"></div>
-                    <div class="intro-text">
-                        <div class="intro-card">
-                            <div style="position:absolute;top:12px;right:12px" aria-hidden="true">
-                                <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#ff6b6b,#feca57)"></div>
-                            </div>
-                            <h3 id="about-heading">A Product Designer based in Mumbai</h3>
-                            <p>With a background in Computer Science and 7+ years designing digital products, I craft human-centered interfaces and product strategies that scale. I focus on building design systems, conducting user research, and designing delightful mobile experiences.</p>
-                        </div>
+          <!-- Sections (stacked for responsive flow) -->
+          <div id="about" class="tab-panel mt-4">
+            <section class="rounded-xl border border-gray-100 bg-white p-4">
+              <h2 class="flex items-center gap-2 text-lg font-semibold" style="font-size:var(--h2)"><span class="material-icons text-indigo-600">person</span> Introduction</h2>
+              <p class="mt-3 text-gray-600" style="font-size:var(--p)">
+                I combine product design, menswear craft and deep tech research. I build meaningful products — from fashion systems to BrelseLang: a tactile code for secure authentication and accessibility.
+              </p>
+            </section>
+
+            <section class="rounded-xl border border-gray-100 bg-white p-4 mt-4">
+              <h3 class="flex items-center gap-2 text-sm font-semibold text-gray-700"><span class="material-icons text-gray-500">contact_mail</span> Get In Touch</h3>
+              <div class="mt-3 grid grid-cols-3 gap-3">
+                <a href="mailto:shankar@gmail.com" class="focus-outline rounded-lg border border-gray-100 p-3 text-center flex flex-col items-center gap-2">
+                  <span class="material-icons text-xl">email</span>
+                  <span class="text-xs text-gray-700">Email</span>
+                </a>
+                <a href="https://linkedin.com/in/shankarkumar" target="_blank" rel="noopener" class="focus-outline rounded-lg border border-gray-100 p-3 text-center flex flex-col items-center gap-2">
+                  <span class="material-icons text-xl">linkedin</span>
+                  <span class="text-xs text-gray-700">LinkedIn</span>
+                </a>
+                <a href="https://behance.net" target="_blank" rel="noopener" class="focus-outline rounded-lg border border-gray-100 p-3 text-center flex flex-col items-center gap-2">
+                  <span class="material-icons text-xl">palette</span>
+                  <span class="text-xs text-gray-700">Behance</span>
+                </a>
+              </div>
+            </section>
+          </div>
+
+          <div id="resume" class="tab-panel hidden mt-4">
+            <!-- Resume grid like screenshot: three column feel on wide screens -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Experience -->
+              <div class="rounded-xl border border-gray-100 bg-white p-4">
+                <div class="flex items-center justify-between">
+                  <h3 class="text-sm font-semibold flex items-center gap-2"><span class="material-icons text-indigo-500">work</span> Experience</h3>
+                  <button class="collapse-btn text-sm text-gray-500" aria-expanded="true">▾</button>
+                </div>
+                <div class="mt-3 space-y-3">
+                  <!-- cards -->
+                  <article class="p-3 rounded-lg border border-gray-100 hover:shadow-sm">
+                    <div class="flex items-start justify-between gap-3">
+                      <div>
+                        <h4 class="font-semibold text-sm">Founder — BrelseLang</h4>
+                        <div class="text-xs text-gray-500">2022 — Present</div>
+                      </div>
+                      <div class="text-xs text-gray-400">Auth & Research</div>
                     </div>
-                </div>
-            </section>
+                    <p class="text-xs text-gray-600 mt-2">Developing tactile authentication (Braille + Morse hybrid) for secure, accessible input methods.</p>
+                  </article>
 
-            <!-- Contact -->
-            <section id="contact" aria-labelledby="contact-heading">
-                <h2 id="contact-heading" class="section-title">Get In Touch</h2>
-                <div class="contact-grid">
-                    <a class="contact-card email" href="mailto:shankar@gmail.com" aria-label="Send email to Shankar">
-                        <span>Email</span>
-                    </a>
-                    <a class="contact-card linkedin" href="https://linkedin.com/in/shankarkumar" target="_blank" rel="noopener" aria-label="Open LinkedIn profile">
-                        <span>LinkedIn</span>
-                    </a>
-                    <a class="contact-card behance" href="https://behance.net/shankarkumar" target="_blank" rel="noopener" aria-label="Open Behance profile">
-                        <span>Behance</span>
-                    </a>
-                </div>
-            </section>
-
-            <!-- Work / Experience -->
-            <section id="work" aria-labelledby="work-heading">
-                <div style="display:flex;align-items:center;justify-content:space-between">
-                    <h2 id="work-heading" class="section-title">Experience</h2>
-                    <div class="dropdown-arrow" id="experience-toggle" title="Collapse/Expand"><span>▾</span></div>
-                </div>
-                <div class="section-content" id="experience-content">
-                    <div class="experience-grid" style="margin-top:10px">
-                        <div class="experience-card" data-role="exp" tabindex="0">
-                            <div class="experience-year">2023-Present</div>
-                            <h4>Senior Product Designer</h4>
-                            <div class="company">TechFlow Solutions</div>
-                            <p>Leading design initiatives for B2B SaaS products — design systems, UX improvements, and stakeholder-driven roadmaps.</p>
-                        </div>
-
-                        <div class="experience-card" data-role="exp" tabindex="0">
-                            <div class="experience-year">2021-2023</div>
-                            <h4>Product Designer</h4>
-                            <div class="company">StartupHub India</div>
-                            <p>Designed mobile and web apps for fintech startups, ran user research and shipped data-driven design experiments.</p>
-                        </div>
-
-                        <div class="experience-card" data-role="exp" tabindex="0">
-                            <div class="experience-year">2019-2021</div>
-                            <h4>UI/UX Designer</h4>
-                            <div class="company">Digital Craft Studio</div>
-                            <p>Built UI components for e-commerce platforms and collaborated tightly with engineering teams to ship features.</p>
-                        </div>
+                  <article class="p-3 rounded-lg border border-gray-100 hover:shadow-sm">
+                    <div class="flex items-start justify-between gap-3">
+                      <div>
+                        <h4 class="font-semibold text-sm">Product Designer — TechFlow</h4>
+                        <div class="text-xs text-gray-500">2023 — Present</div>
+                      </div>
+                      <div class="text-xs text-gray-400">B2B SaaS</div>
                     </div>
+                    <p class="text-xs text-gray-600 mt-2">Led design systems and UX for fintech & B2B products.</p>
+                  </article>
                 </div>
-            </section>
+              </div>
 
-            <!-- Expertise / Skills -->
-            <section id="resume" aria-labelledby="resume-heading">
-                <div style="display:flex;align-items:center;justify-content:space-between">
-                    <h2 id="resume-heading" class="section-title">Expertise</h2>
-                    <div class="dropdown-arrow" id="expertise-toggle" title="Collapse/Expand"><span>▾</span></div>
+              <!-- Expertise -->
+              <div class="rounded-xl border border-gray-100 bg-white p-4">
+                <div class="flex items-center justify-between">
+                  <h3 class="text-sm font-semibold flex items-center gap-2"><span class="material-icons text-indigo-500">emoji_objects</span> Expertise</h3>
+                  <button class="collapse-btn text-sm text-gray-500" aria-expanded="true">▾</button>
                 </div>
-                <div class="section-content" id="expertise-content">
-                    <div class="skills-content" style="margin-top:10px">
-                        <div class="skill-category">
-                            <strong>Design Tools:</strong> Figma, Adobe XD, Sketch, Principle, Framer, InVision
-                        </div>
-                        <div class="skill-category" style="margin-top:8px">
-                            <strong>Product Skills:</strong> User Research, Design Systems, Prototyping, A/B Testing, Analytics
-                        </div>
-                        <div class="skill-category" style="margin-top:8px">
-                            <strong>Soft Skills:</strong> Leadership, Communication, Problem Solving, Creativity, Team Collaboration
-                        </div>
+                <div class="mt-3 text-xs text-gray-600 space-y-2">
+                  <div>• Design Systems, UI/UX, Prototyping</div>
+                  <div>• Menswear & Product Design</div>
+                  <div>• Research: Authentication, Accessibility</div>
+                </div>
+              </div>
+
+              <!-- Hardskill -->
+              <div class="rounded-xl border border-gray-100 bg-white p-4">
+                <h3 class="text-sm font-semibold flex items-center gap-2"><span class="material-icons text-indigo-500">precision_manufacturing</span> Hardskill</h3>
+                <div class="mt-3 grid grid-cols-2 gap-2 text-xs text-gray-600">
+                  <div class="p-3 rounded-lg border border-gray-100">Figma</div>
+                  <div class="p-3 rounded-lg border border-gray-100">HTML & CSS</div>
+                  <div class="p-3 rounded-lg border border-gray-100">Prototyping</div>
+                  <div class="p-3 rounded-lg border border-gray-100">Design Systems</div>
+                </div>
+              </div>
+
+              <!-- Softskill -->
+              <div class="rounded-xl border border-gray-100 bg-white p-4">
+                <h3 class="text-sm font-semibold flex items-center gap-2"><span class="material-icons text-indigo-500">favorite</span> Softskill</h3>
+                <div class="mt-3 flex flex-wrap gap-2">
+                  <span class="text-xs px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full">Creativity</span>
+                  <span class="text-xs px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full">Communication</span>
+                  <span class="text-xs px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full">Leadership</span>
+                </div>
+              </div>
+
+              <!-- Education -->
+              <div class="rounded-xl border border-gray-100 bg-white p-4 md:col-span-2">
+                <h3 class="text-sm font-semibold flex items-center gap-2"><span class="material-icons text-indigo-500">school</span> Education</h3>
+                <div class="mt-3 grid gap-3">
+                  <div class="p-3 rounded-lg border border-gray-100">
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <div class="font-semibold text-sm">Google UX Design Certificate</div>
+                        <div class="text-xs text-gray-500">2022</div>
+                      </div>
                     </div>
-                </div>
-            </section>
+                    <p class="text-xs text-gray-600 mt-2">Bootcamp: research, prototyping & testing</p>
+                  </div>
 
-            <!-- Hardskill -->
-            <section id="hardskill" aria-labelledby="hardskill-heading">
-                <div style="display:flex;align-items:center;justify-content:space-between">
-                    <h2 id="hardskill-heading" class="section-title">Hardskill</h2>
-                    <div class="dropdown-arrow" id="hardskill-toggle" title="Collapse/Expand"><span>▾</span></div>
-                </div>
-                <div class="section-content" id="hardskill-content">
-                    <div class="skills-content" style="margin-top:10px">
-                        <div class="skills-list">
-                            Design software proficiency in Figma, Adobe Creative Suite, Sketch and prototyping tools. Strong foundation in HTML/CSS, JavaScript basics, and design system implementation.
-                        </div>
+                  <div class="p-3 rounded-lg border border-gray-100">
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <div class="font-semibold text-sm">Bachelor of Computer Science</div>
+                        <div class="text-xs text-gray-500">Mumbai University — 2017–2021</div>
+                      </div>
                     </div>
+                    <p class="text-xs text-gray-600 mt-2">Electives in HCI & software development</p>
+                  </div>
                 </div>
-            </section>
+              </div>
+            </div>
+          </div>
 
-            <!-- Education -->
-            <section id="education" aria-labelledby="education-heading">
-                <div style="display:flex;align-items:center;justify-content:space-between">
-                    <h2 id="education-heading" class="section-title">Education</h2>
-                    <div class="dropdown-arrow" id="education-toggle" title="Collapse/Expand"><span>▾</span></div>
+          <div id="work" class="tab-panel hidden mt-4">
+            <section class="rounded-xl border border-gray-100 bg-white p-4">
+              <div class="flex items-center justify-between">
+                <h3 class="text-sm font-semibold flex items-center gap-2"><span class="material-icons text-indigo-500">grid_view</span> Work</h3>
+                <div class="flex items-center gap-2 text-xs text-gray-500">
+                  <span>Filter:</span>
                 </div>
-                <div class="section-content" id="education-content">
-                    <div class="education-cards" style="margin-top:10px">
-                        <div class="education-card" tabindex="0">
-                            <div style="position:absolute;top:12px;right:12px;background:rgba(255,255,255,0.12);padding:4px 8px;border-radius:6px;font-size:12px">2022</div>
-                            <h4>Google UX Design Certificate</h4>
-                            <p>Completed comprehensive UX/UI design bootcamp covering user research, prototyping, and design thinking methodologies.</p>
-                        </div>
+              </div>
 
-                        <div class="education-card" tabindex="0">
-                            <div style="position:absolute;top:12px;right:12px;background:rgba(255,255,255,0.12);padding:4px 8px;border-radius:6px;font-size:12px">2017-2021</div>
-                            <h4>Bachelor of Computer Science</h4>
-                            <p>Mumbai University — Focus on software development with electives in human-computer interaction.</p>
-                        </div>
+              <!-- project filter chips -->
+              <div class="mt-3 flex flex-wrap gap-2" id="workTags">
+                <button class="work-tag px-3 py-1 rounded-full border text-xs text-gray-700" data-filter="all">All</button>
+                <button class="work-tag px-3 py-1 rounded-full border text-xs text-gray-700" data-filter="menswear">Menswear</button>
+                <button class="work-tag px-3 py-1 rounded-full border text-xs text-gray-700" data-filter="product">Product</button>
+                <button class="work-tag px-3 py-1 rounded-full border text-xs text-gray-700" data-filter="research">Research</button>
+              </div>
 
-                        <div class="education-card" tabindex="0">
-                            <div style="position:absolute;top:12px;right:12px;background:rgba(255,255,255,0.12);padding:4px 8px;border-radius:6px;font-size:12px">2015-2017</div>
-                            <h4>Higher Secondary Certificate</h4>
-                            <p>Science Stream with Mathematics — Mumbai Board.</p>
-                        </div>
+              <!-- projects grid -->
+              <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4" id="projectsGrid">
+                <!-- project card template -->
+                <article class="project-card rounded-lg border border-gray-100 overflow-hidden">
+                  <img src="https://via.placeholder.com/600x360.png?text=Project+1" alt="Project 1" class="w-full h-40 object-cover">
+                  <div class="p-3">
+                    <div class="flex items-start justify-between gap-3">
+                      <div>
+                        <h4 class="font-semibold text-sm">BrelseAuth — Tactile Auth</h4>
+                        <div class="text-xs text-gray-500">Research • 2024</div>
+                      </div>
+                      <div class="text-xs text-gray-400">Research</div>
                     </div>
-                </div>
-            </section>
+                    <p class="text-xs text-gray-600 mt-2">Prototype for secure tactile authentication using a hybrid Braille-Morse approach.</p>
+                    <div class="mt-3 flex gap-2">
+                      <button class="preview-btn flex-1 text-sm py-2 rounded-md border border-indigo-100" data-title="BrelseAuth" aria-label="Preview project">Preview</button>
+                      <a href="#" class="flex-1 text-sm py-2 rounded-md text-center bg-indigo-600 text-white hover:bg-indigo-700">Case Study</a>
+                    </div>
+                  </div>
+                </article>
 
-            <div class="spacer" style="height:86px"></div> <!-- Keep some space so bottom nav doesn't overlap last card on small screens -->
+                <article class="project-card rounded-lg border border-gray-100 overflow-hidden">
+                  <img src="https://via.placeholder.com/600x360.png?text=Project+2" alt="Project 2" class="w-full h-40 object-cover">
+                  <div class="p-3">
+                    <div class="flex items-start justify-between gap-3">
+                      <div>
+                        <h4 class="font-semibold text-sm">Menswear Capsule</h4>
+                        <div class="text-xs text-gray-500">Design • 2023</div>
+                      </div>
+                      <div class="text-xs text-gray-400">Menswear</div>
+                    </div>
+                    <p class="text-xs text-gray-600 mt-2">Seasonal capsule built for modern silhouettes and sustainable fabrics.</p>
+                    <div class="mt-3 flex gap-2">
+                      <button class="preview-btn flex-1 text-sm py-2 rounded-md border border-indigo-100" data-title="Menswear Capsule" aria-label="Preview project">Preview</button>
+                      <a href="#" class="flex-1 text-sm py-2 rounded-md text-center bg-indigo-600 text-white hover:bg-indigo-700">Case Study</a>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </section>
+          </div>
+        </aside>
+
+      </div>
+
+      <!-- bottom spacer -->
+      <div class="p-6 border-t border-gray-100 text-center bg-white">
+        <div class="max-w-3xl mx-auto">
+          <div class="text-xs text-gray-500">© 2025 Shankar Kumar — Product Designer & Founder of BrelseLang</div>
         </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Modal (project preview) -->
+  <div id="modal" class="fixed inset-0 hidden items-center justify-center modal-backdrop bg-black/50 p-4">
+    <div role="dialog" aria-modal="true" class="bg-white rounded-xl max-w-2xl w-full overflow-hidden shadow-2xl">
+      <div class="flex items-center justify-between p-4 border-b">
+        <div class="font-semibold" id="modalTitle">Preview</div>
+        <button id="closeModal" class="p-2 rounded-md focus-outline" aria-label="Close preview">✕</button>
+      </div>
+      <div class="p-4" id="modalBody">
+        <img src="https://via.placeholder.com/1200x630.png?text=Preview" alt="preview" class="w-full h-64 object-cover rounded-md">
+        <p class="mt-3 text-sm text-gray-600">Project details will be shown here. Replace with your case study snippets and images.</p>
+      </div>
     </div>
+  </div>
 
-    <!-- Bottom navigation (visible on small screens only) -->
-    <div class="bottom-nav" id="bottomNav" aria-hidden="false" role="navigation" aria-label="Bottom navigation">
-        <div class="nav-item" data-scroll-to="about" title="About">🏠</div>
-        <div class="nav-item home" data-scroll-to="work" title="Work">⭐</div>
-        <div class="nav-item" data-scroll-to="contact" title="Contact">✉️</div>
-    </div>
+  <!-- JS: interactions -->
+  <script>
+    // Basic tab switching
+    document.querySelectorAll('.tab-btn').forEach(btn=>{
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b=> {
+          b.classList.remove('bg-indigo-50','text-indigo-700');
+          b.classList.add('bg-white','text-gray-600');
+          b.setAttribute('aria-pressed','false');
+        });
+        btn.classList.add('bg-indigo-50','text-indigo-700');
+        btn.classList.remove('bg-white','text-gray-600');
+        btn.setAttribute('aria-pressed','true');
 
-    <!-- Simple modal placeholder (used if you want to display details) -->
-    <div class="modal" id="modal">
-        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-            <button id="closeModal" style="float:right;border:none;background:transparent;font-size:18px;cursor:pointer">✕</button>
-            <h3 id="modal-title">Details</h3>
-            <p id="modal-body">More details about the selected item will appear here.</p>
-        </div>
-    </div>
+        const target = btn.dataset.target;
+        document.querySelectorAll('.tab-panel').forEach(panel=>{
+          panel.classList.add('hidden');
+        });
+        const el = document.getElementById(target);
+        if (el) el.classList.remove('hidden');
+        // scroll to top of the panel area on small screens
+        el?.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
 
-    <script>
-        /* Tabs -> scroll behavior */
-        const tabs = document.querySelectorAll('.nav-tab');
-        const bottomItems = document.querySelectorAll('.bottom-nav .nav-item');
-        const sections = Array.from(document.querySelectorAll('section'));
-
-        function setActiveTabById(id) {
-            tabs.forEach(t => t.classList.toggle('active', t.dataset.target === id));
+    // Collapse buttons in resume
+    document.querySelectorAll('.collapse-btn').forEach(cb=>{
+      cb.addEventListener('click', () => {
+        const section = cb.closest('div');
+        // find next sibling content (for this layout we just toggle visibility on the group)
+        // For simplicity, toggle all .collapse content in parent
+        // Here we simply toggle the sibling list (the nextElementSibling)
+        // But to keep layout consistent, we'll toggle the parent's children except header
+        // Simpler implementation: shrink the parent by toggling opacity
+        if (cb.getAttribute('aria-expanded') === 'true') {
+          cb.setAttribute('aria-expanded','false');
+          cb.textContent = '▸';
+          // collapse: reduce height by hiding second child(s)
+          const parent = cb.closest('div').nextElementSibling;
+          if (parent) parent.classList.add('hidden');
+        } else {
+          cb.setAttribute('aria-expanded','true');
+          cb.textContent = '▾';
+          const parent = cb.closest('div').nextElementSibling;
+          if (parent) parent.classList.remove('hidden');
         }
+      });
+    });
 
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const id = tab.dataset.target;
-                const el = document.getElementById(id);
-                if (el) el.scrollIntoView({behavior:'smooth',block:'start'});
-                setActiveTabById(id);
-            });
+    // Preview modal open
+    document.querySelectorAll('.preview-btn, #openFeatured').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        const title = btn.dataset.title || 'Preview';
+        document.getElementById('modalTitle').innerText = title;
+        document.getElementById('modal').classList.remove('hidden');
+        // set focus for accessibility
+        document.getElementById('modal').querySelector('[role="dialog"]').focus();
+      });
+    });
+    document.getElementById('closeModal').addEventListener('click', ()=>{
+      document.getElementById('modal').classList.add('hidden');
+    });
+    // close modal on backdrop click
+    document.getElementById('modal').addEventListener('click', (e)=>{
+      if (e.target === e.currentTarget) document.getElementById('modal').classList.add('hidden');
+    });
+    // Escape to close
+    document.addEventListener('keydown', (e)=>{ if (e.key === 'Escape') document.getElementById('modal').classList.add('hidden'); });
+
+    // Work tag filtering (simple)
+    const workTags = document.querySelectorAll('.work-tag');
+    const projectCards = document.querySelectorAll('#projectsGrid .project-card');
+    workTags.forEach(t=>{
+      t.addEventListener('click', ()=>{
+        // toggle active visual
+        workTags.forEach(x=> x.classList.remove('bg-indigo-600','text-white'));
+        t.classList.add('bg-indigo-600','text-white');
+        const filter = t.dataset.filter;
+        // simple demo: filter by keyword in text (replace with data attribute in production)
+        projectCards.forEach(card=>{
+          const category = card.querySelector('div > div > div:last-child')?.innerText || '';
+          if (filter === 'all') card.style.display = '';
+          else if (category.toLowerCase().includes(filter)) card.style.display = '';
+          else card.style.display = 'none';
         });
+      });
+    });
 
-        bottomItems.forEach(b => {
-            b.addEventListener('click', () => {
-                const id = b.dataset.scrollTo;
-                const el = document.getElementById(id);
-                if (el) el.scrollIntoView({behavior:'smooth',block:'start'});
-            });
-        });
+    // Tag chips toggle (left hero)
+    document.querySelectorAll('.tag-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=> btn.classList.toggle('bg-indigo-50'));
+    });
 
-        // Highlight active tab while scrolling
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const id = entry.target.id;
-                    setActiveTabById(id === 'contact' ? 'work' : (id==='about'?'about': id)); // map work & resume as needed
-                }
-            });
-        }, {root:null,threshold:0.35});
+    // Theme toggle (very small demo)
+    const themeBtn = document.getElementById('themeToggle');
+    themeBtn?.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      if (document.documentElement.classList.contains('dark')) {
+        document.body.classList.add('bg-gray-900','text-gray-100');
+      } else {
+        document.body.classList.remove('bg-gray-900','text-gray-100');
+      }
+    });
 
-        sections.forEach(s => observer.observe(s));
+    // Ensure images don't cause overlap on small screens (simple protective measure)
+    window.addEventListener('load', () => {
+      document.querySelectorAll('img').forEach(img => {
+        img.addEventListener('error', ()=> img.src = 'data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="360"><rect width="100%" height="100%" fill="%23e5e7eb"/><text x="50%" y="50%" font-size="18" dominant-baseline="middle" text-anchor="middle" fill="%23999">no image</text></svg>');
+      });
+    });
 
-        /* Expand/collapse sections */
-        function attachToggle(toggleId, contentId) {
-            const toggle = document.getElementById(toggleId);
-            const content = document.getElementById(contentId);
-            if (!toggle || !content) return;
-            toggle.addEventListener('click', () => {
-                content.classList.toggle('collapsed');
-                toggle.querySelector('span').textContent = content.classList.contains('collapsed') ? '▸' : '▾';
-            });
+    // Active tab on scroll (basic)
+    const tabPanels = document.querySelectorAll('.tab-panel');
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const id = e.target.id;
+          tabButtons.forEach(b => {
+            b.classList.remove('bg-indigo-50','text-indigo-700');
+            b.classList.add('bg-white','text-gray-600');
+            if (b.dataset.target === id) {
+              b.classList.add('bg-indigo-50','text-indigo-700');
+            }
+          });
         }
-        attachToggle('experience-toggle','experience-content');
-        attachToggle('expertise-toggle','expertise-content');
-        attachToggle('hardskill-toggle','hardskill-content');
-        attachToggle('education-toggle','education-content');
-
-        /* Experience card click -> modal (light) */
-        document.querySelectorAll('.experience-card').forEach(card => {
-            card.addEventListener('click', () => {
-                const modal = document.getElementById('modal');
-                const body = document.getElementById('modal-body');
-                body.textContent = card.querySelector('h4').innerText + ' — ' + (card.querySelector('.company')?.innerText || '');
-                modal.classList.add('open');
-            });
-        });
-        document.getElementById('closeModal').addEventListener('click', () => {
-            document.getElementById('modal').classList.remove('open');
-        });
-
-        /* See more tags - simple toggle to show/hide extra tags (demo) */
-        document.getElementById('seeMoreTags').addEventListener('click', () => {
-            const tagsGrid = document.querySelector('.tags-grid');
-            if (!tagsGrid) return;
-            if (tagsGrid.dataset.expanded === 'true') {
-                // collapse
-                while (tagsGrid.children.length > 7) tagsGrid.removeChild(tagsGrid.lastElementChild);
-                tagsGrid.dataset.expanded = 'false';
-                document.getElementById('seeMoreTags').innerText = 'See More ↓';
-            } else {
-                // add demo extra tags
-                const extras = ['Design Ops','Service Design','Motion','Accessibility','Brand','Research Ops'];
-                extras.forEach(t => {
-                    const btn = document.createElement('button');
-                    btn.className = 'tag';
-                    btn.innerText = t;
-                    tagsGrid.appendChild(btn);
-                });
-                tagsGrid.dataset.expanded = 'true';
-                document.getElementById('seeMoreTags').innerText = 'Show Less ↑';
-            }
-        });
-
-        /* Hide bottom nav if page content shorter than viewport (prevents "bar on the last" overlay) */
-        const bottomNav = document.getElementById('bottomNav');
-        function updateBottomNavVisibility(){
-            const root = document.getElementById('pageRoot');
-            const pageRect = root.getBoundingClientRect();
-            // if content height <= viewport height - some buffer, hide bottom nav
-            if (document.documentElement.clientHeight - 140 > document.body.scrollHeight) {
-                bottomNav.style.display = 'none';
-            } else {
-                // only show on small screens; on large screens CSS hides it
-                if (window.matchMedia('(max-width:780px)').matches) bottomNav.style.display = 'flex';
-                else bottomNav.style.display = 'none';
-            }
-        }
-        window.addEventListener('load', updateBottomNavVisibility);
-        window.addEventListener('resize', updateBottomNavVisibility);
-        window.addEventListener('orientationchange', updateBottomNavVisibility);
-        window.addEventListener('scroll', () => {
-            // when scrolled to bottom, keep bottom nav visible; when reaching very bottom, ensure it doesn't overlap last element
-            updateBottomNavVisibility();
-        });
-
-        /* Remove bottomNav if user scrolls up and there's no more content below (little UX improvement) */
-        let lastScroll = window.scrollY;
-        window.addEventListener('scroll', () => {
-            const current = window.scrollY;
-            if (current < lastScroll && window.innerHeight + window.scrollY >= document.body.offsetHeight - 120) {
-                // scrolled up and near bottom: hide to reveal last content
-                bottomNav.style.opacity = '0';
-                bottomNav.style.pointerEvents = 'none';
-            } else {
-                bottomNav.style.opacity = '1';
-                bottomNav.style.pointerEvents = 'auto';
-            }
-            lastScroll = current;
-        });
-
-        /* Small accessibility nicety: keyboard focus outlines for cards */
-        document.addEventListener('keyup', (e) => {
-            if (e.key === 'Tab') document.body.classList.add('user-tabbed');
-        });
-    </script>
+      });
+    }, {threshold:0.4});
+    tabPanels.forEach(panel => observer.observe(panel));
+  </script>
 </body>
 </html>
