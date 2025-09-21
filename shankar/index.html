@@ -21,9 +21,6 @@
             'grid-move': 'gridMove 20s linear infinite',
             'pulse-slow': 'pulseSlow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
             'flow-bg': 'flowBg 30s linear infinite',
-            'float-1': 'floatUp 8s ease-in-out infinite alternate',
-            'float-2': 'floatDown 10s ease-in-out infinite alternate',
-            'float-3': 'floatUp 9s ease-in-out infinite alternate',
           }
         }
       }
@@ -63,18 +60,6 @@
       animation: flowBg 30s linear infinite;
     }
 
-    /* Neomorphic Bar Style */
-    .neomorphic-bar {
-      background: #0a0a0a; /* Slightly lighter than pure black for depth */
-      border-radius: 8px; /* Soft edges */
-      box-shadow: 
-        5px 5px 10px rgba(0, 0, 0, 0.3),   /* Darker shadow for depth */
-        -5px -5px 10px rgba(30, 30, 30, 0.1); /* Lighter shadow for highlight */
-      position: absolute;
-      z-index: 5; /* Ensure it's above the grid but below content */
-      opacity: 0.7;
-    }
-
     @keyframes flowBg {
       0% { transform: translate(0, 0); }
       100% { transform: translate(-33.3%, -33.3%); }
@@ -83,19 +68,6 @@
     @keyframes gridMove {
       0% { background-position: 0 0; }
       100% { background-position: 50px 50px; }
-    }
-
-    /* Floating animations for neomorphic bars */
-    @keyframes floatUp {
-      0% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-15px) rotate(2deg); }
-      100% { transform: translateY(0px) rotate(0deg); }
-    }
-
-    @keyframes floatDown {
-      0% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(15px) rotate(-2deg); }
-      100% { transform: translateY(0px) rotate(0deg); }
     }
 
     /* Vercel-style gradients */
@@ -249,13 +221,8 @@
   <section class="relative min-h-screen flex items-center justify-center overflow-hidden hero-bg-animated">
     <div class="absolute inset-0 grid-pattern opacity-50"></div>
     
-    <div class="neomorphic-bar w-24 h-6 top-1/4 left-1/4 animate-float-1"></div>
-    <div class="neomorphic-bar w-16 h-16 top-1/2 right-1/4 animate-float-2" style="animation-delay: 1.5s;"></div>
-    <div class="neomorphic-bar w-40 h-8 bottom-1/4 left-1/2 animate-float-3" style="animation-delay: 0.8s;"></div>
-    <div class="neomorphic-bar w-12 h-20 top-1/3 right-1/2 animate-float-1" style="animation-delay: 2.5s;"></div>
-    <div class="neomorphic-bar w-32 h-10 bottom-1/3 left-1/3 animate-float-2" style="animation-delay: 0.3s;"></div>
-
-
+    <canvas id="heroCanvas" class="absolute inset-0 z-5 pointer-events-auto cursor-pointer"></canvas>
+    
     <div class="relative z-10 text-center px-6 max-w-4xl mx-auto pt-16">
       <div class="animate-fade-in">
         <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-8">
@@ -263,10 +230,17 @@
           <span class="block text-gradient">& Founder</span>
         </h1>
         
-        <p class="text-lg md:text-xl text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed">
+        <p class="text-lg md:text-xl text-gray-400 mb-8 max-w-2xl mx-auto leading-relaxed">
           I design and build exceptional digital experiences. Currently building 
           <span class="text-white font-medium">BrelseLang</span>, a secure communication platform.
         </p>
+
+        <div class="mb-8 text-sm text-gray-500">
+          <span class="inline-flex items-center space-x-2">
+            <span class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
+            <span>Click and drag to create connections • Collect the glowing orbs</span>
+          </span>
+        </div>
 
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a href="#work" class="vercel-button-primary px-6 py-3 rounded-lg font-medium text-sm focus-ring">
@@ -503,10 +477,6 @@
               <div class="text-gray-400 font-medium">StartupXYZ</div>
             </div>
             <div class="text-sm text-gray-400 mt-2 md:mt-0">2017 - 2019</div>
-          </div>
-          <p class="text-gray-400 leading-relaxed">
-            Designed user experiences for fintech startup from seed to Series A. Helped grow user base 
-            from 1,000 to 50,000+ through strategic design decisions and user research.
           </p>
         </div>
       </div>
@@ -568,7 +538,7 @@
         </a>
         <a href="#" class="text-gray-400 hover:text-white transition-colors">
           <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 0C5.374 0 0 5.373 0 12 0 17.302 3.438 21.8 8.207 23.387c.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+            <path d="M12 0C5.374 0 0 5.373 0 12 0 17.302 3.438 21.8 8.207 23.387c.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
           </svg>
         </a>
         <a href="#" class="text-gray-400 hover:text-white transition-colors">
@@ -701,6 +671,199 @@
         heroTitle.style.transform = 'translateY(0)';
       }, 200);
     }
+  </script>
+
+  <script>
+    const canvas = document.getElementById('heroCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let orbs = [];
+    let mouse = { x: null, y: null, isPressed: false, radius: 150 };
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    class Particle {
+      constructor(x, y, color) {
+        this.x = x;
+        this.y = y;
+        this.size = Math.random() * 2 + 1;
+        this.baseX = this.x;
+        this.baseY = this.y;
+        this.density = (Math.random() * 30) + 1;
+        this.color = color;
+      }
+
+      draw() {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      update() {
+        let dx = mouse.x - this.x;
+        let dy = mouse.y - this.y;
+        let distance = Math.sqrt(dx * dx + dy * dy);
+        let forceDirectionX = dx / distance;
+        let forceDirectionY = dy / distance;
+        let maxDistance = mouse.radius;
+        let force = (maxDistance - distance) / maxDistance;
+        let directionX = forceDirectionX * force * this.density;
+        let directionY = forceDirectionY * force * this.density;
+
+        if (distance < mouse.radius) {
+          if (mouse.isPressed) {
+            this.x -= directionX;
+            this.y -= directionY;
+          } else {
+            // Repel effect when mouse is near but not clicked
+            this.x += directionX * 0.1;
+            this.y += directionY * 0.1;
+          }
+        } else {
+          // Return to original position
+          if (this.x !== this.baseX) {
+            let dx = this.x - this.baseX;
+            this.x -= dx / 10;
+          }
+          if (this.y !== this.baseY) {
+            let dy = this.y - this.baseY;
+            this.y -= dy / 10;
+          }
+        }
+
+        // Keep particles within bounds
+        if (this.x < 0) this.x = 0;
+        if (this.x > canvas.width) this.x = canvas.width;
+        if (this.y < 0) this.y = 0;
+        if (this.y > canvas.height) this.y = canvas.height;
+      }
+    }
+
+    class Orb {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 10 + 5;
+        this.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.closePath();
+        
+        ctx.fillStyle = this.color;
+        ctx.fill();
+
+        ctx.strokeStyle = `rgba(${parseInt(this.color.slice(4, -1))}, 0.2)`;
+        ctx.lineWidth = 2;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = this.color;
+        ctx.stroke();
+      }
+
+      checkCollection() {
+        let dx = mouse.x - this.x;
+        let dy = mouse.y - this.y;
+        let distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < mouse.radius * 0.5) {
+          return true;
+        }
+        return false;
+      }
+    }
+
+    function initParticles() {
+      particles = [];
+      const density = 0.001; // Particle density factor
+      const numberOfParticles = (canvas.width * canvas.height) * density;
+      for (let i = 0; i < numberOfParticles; i++) {
+        let x = Math.random() * canvas.width;
+        let y = Math.random() * canvas.height;
+        particles.push(new Particle(x, y, '#ffffff'));
+      }
+    }
+
+    function initOrbs() {
+      orbs = [];
+      for (let i = 0; i < 5; i++) {
+        orbs.push(new Orb());
+      }
+    }
+
+    function handleParticles() {
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+
+        for (let j = i; j < particles.length; j++) {
+          let dx = particles[i].x - particles[j].x;
+          let dy = particles[i].y - particles[j].y;
+          let distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < 80) { // Connect nearby particles
+            ctx.beginPath();
+            ctx.strokeStyle = 'rgba(255,255,255,' + (1 - distance / 80) + ')';
+            ctx.lineWidth = 1;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function handleOrbs() {
+      for (let i = 0; i < orbs.length; i++) {
+        orbs[i].draw();
+        if (orbs[i].checkCollection()) {
+          orbs.splice(i, 1);
+          i--;
+          orbs.push(new Orb()); // Spawn new orb
+        }
+      }
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      handleParticles();
+      handleOrbs();
+    }
+
+    // Event Listeners
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      initParticles();
+      initOrbs();
+    });
+
+    window.addEventListener('mousemove', (event) => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = event.clientX - rect.left;
+      mouse.y = event.clientY - rect.top;
+    });
+
+    window.addEventListener('mousedown', (event) => {
+      mouse.isPressed = true;
+    });
+
+    window.addEventListener('mouseup', (event) => {
+      mouse.isPressed = false;
+      mouse.x = undefined;
+      mouse.y = undefined;
+    });
+
+    // Initial setup
+    resizeCanvas();
+    initParticles();
+    initOrbs();
+    animate();
   </script>
 </body>
 </html>
