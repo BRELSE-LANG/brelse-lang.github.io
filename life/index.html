@@ -563,13 +563,6 @@
                 const birthYear = this.birthDate.getFullYear();
                 const currentAge = currentYear - birthYear;
                 
-                // Calculate various life statistics
-                const totalSeasons = this.lifeExpectancy * 4;
-                const seasonsLived = currentAge * 4 + Math.floor((new Date().getMonth() + 1) / 3);
-                const totalMondays = this.lifeExpectancy * 52;
-                const mondaysLived = currentWeek;
-                
-                // World population stats
                 const birthPopulation = this.getWorldPopulation(birthYear);
                 const currentPopulation = this.getWorldPopulation(currentYear);
                 const populationGrowth = ((currentPopulation - birthPopulation) / birthPopulation * 100).toFixed(1);
@@ -578,32 +571,22 @@
                     {
                         number: totalWeeks.toLocaleString(),
                         label: 'Total Weeks',
-                        detail: `${(totalWeeks/1000).toFixed(1)}K weeks to live`
+                        detail: `You have roughly ${(totalWeeks/52).toFixed(0)} years to live.`
                     },
                     {
                         number: currentWeek.toLocaleString(),
                         label: 'Weeks Lived',
-                        detail: `${percentLived}% of life completed`
+                        detail: `This represents ${percentLived}% of your life so far.`
                     },
                     {
                         number: remainingWeeks.toLocaleString(),
                         label: 'Weeks Remaining',
-                        detail: `${Math.round(remainingWeeks/52)} years left`
-                    },
-                    {
-                        number: totalSeasons,
-                        label: 'Total Seasons',
-                        detail: `${seasonsLived} seasons experienced`
-                    },
-                    {
-                        number: totalMondays,
-                        label: 'Total Mondays',
-                        detail: `${mondaysLived} Mondays so far`
+                        detail: `You have approximately ${Math.round(remainingWeeks/52)} years left.`
                     },
                     {
                         number: `${birthPopulation.toFixed(1)}B`,
-                        label: 'Birth Population',
-                        detail: `Now ${currentPopulation.toFixed(1)}B (+${populationGrowth}%)`
+                        label: 'World Population at Birth',
+                        detail: `The world population is now ${currentPopulation.toFixed(1)}B.`
                     }
                 ];
 
@@ -817,7 +800,7 @@
                         items: [
                             `Born when world population was ${this.getWorldPopulation(birthYear).toFixed(1)} billion`,
                             `Current world population: ${this.getWorldPopulation(currentYear).toFixed(1)} billion`,
-                            `Population has grown by ${((this.getWorldPopulation(currentYear) - this.getWorldPopulation(birthPopulation)) * 1000).toFixed(0)} million in your lifetime`,
+                            `Population has grown by ${((this.getWorldPopulation(currentYear) - this.getWorldPopulation(birthYear)) * 1000).toFixed(0)} million in your lifetime`,
                             `By age 80, world population may reach ${this.getWorldPopulation(birthYear + 80).toFixed(1)} billion`
                         ]
                     },
