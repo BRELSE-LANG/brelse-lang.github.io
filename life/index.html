@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Life in Weeks - Enhanced UI</title>
+    <title>Life in Weeks - Advanced</title>
     <style>
         :root {
             --background-color: #f7f9fc;
@@ -87,7 +87,7 @@
             min-width: 150px;
             color: var(--text-color);
             transition: all 0.2s ease;
-            appearance: none; /* For select */
+            appearance: none;
         }
 
         .input-group input:focus, .input-group select:focus {
@@ -257,6 +257,14 @@
             border-radius: 50%;
         }
 
+        .week.personal-milestone {
+            border: 2px solid #FFD700;
+            box-shadow: 0 0 5px #FFD700;
+            transform: scale(1.2);
+            position: relative;
+            z-index: 5;
+        }
+
         /* --- Legend --- */
         .legend {
             display: flex;
@@ -300,6 +308,7 @@
         .legend-color.autumn { background: #e76f51; }
         .legend-color.winter { background: #4a90e2; }
         .legend-color.milestone { background: #FFD700; border-radius: 50%; width: 12px; height: 12px; }
+        .legend-color.personal-milestone { background: #FFD700; border: 2px solid #FFD700; }
 
         /* --- Insights --- */
         .insights {
@@ -356,6 +365,110 @@
             color: #FFD700;
             display: block;
             margin-bottom: 0.25rem;
+        }
+
+        /* --- Modal for adding milestones --- */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.3s;
+        }
+
+        .modal.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: var(--surface-color);
+            padding: 2rem;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .modal-close {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            cursor: pointer;
+        }
+
+        .modal-body label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .modal-body input, .modal-body textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .modal-body textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+        }
+
+        .btn-secondary {
+            background-color: var(--border-color);
+            color: var(--text-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #d0d7e2;
         }
 
         /* --- Responsive Adjustments --- */
@@ -437,6 +550,25 @@
 
     <div class="tooltip" id="tooltip"></div>
 
+    <div id="milestoneModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Milestone</h3>
+                <span class="modal-close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <label for="milestoneTitle">Title</label>
+                <input type="text" id="milestoneTitle" placeholder="e.g., First Job, Bought a house">
+                <label for="milestoneNote">Notes</label>
+                <textarea id="milestoneNote" placeholder="A brief description of this milestone..."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelMilestone">Cancel</button>
+                <button class="btn btn-primary" id="saveMilestone">Save Milestone</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         class EnhancedLifeInWeeks {
             constructor() {
@@ -445,13 +577,15 @@
                 this.birthLocation = 'global';
                 this.today = new Date();
                 this.currentMode = 'basic';
+                this.personalMilestones = {};
+                this.selectedWeek = null;
                 
                 this.worldData = {
                     populationGrowth: {
                         1990: 5.3, 2000: 6.1, 2010: 6.9, 2020: 7.8, 2030: 8.5, 2040: 9.2, 2050: 9.7
                     },
                     climateData: {
-                        avgTempIncrease: 0.18, // per decade
+                        avgTempIncrease: 0.18,
                         co2Levels: { 1990: 354, 2020: 414, 2050: 480 }
                     },
                     techMilestones: {
@@ -473,22 +607,47 @@
                     }
                 };
                 
+                this.loadData();
                 this.initEventListeners();
                 this.updateVisualization();
             }
 
+            // --- Local Storage Management ---
+            saveData() {
+                localStorage.setItem('birthDate', this.birthDate.toISOString().split('T')[0]);
+                localStorage.setItem('lifeExpectancy', this.lifeExpectancy);
+                localStorage.setItem('personalMilestones', JSON.stringify(this.personalMilestones));
+            }
+
+            loadData() {
+                const storedBirthDate = localStorage.getItem('birthDate');
+                const storedLifeExpectancy = localStorage.getItem('lifeExpectancy');
+                const storedMilestones = localStorage.getItem('personalMilestones');
+                
+                if (storedBirthDate) this.birthDate = new Date(storedBirthDate);
+                if (storedLifeExpectancy) this.lifeExpectancy = parseInt(storedLifeExpectancy);
+                if (storedMilestones) this.personalMilestones = JSON.parse(storedMilestones);
+            }
+
+            // --- Event Listeners ---
             initEventListeners() {
                 const birthDateInput = document.getElementById('birthDate');
                 const lifeExpectancyInput = document.getElementById('lifeExpectancy');
                 const birthLocationInput = document.getElementById('birthLocation');
+                const milestoneModal = document.getElementById('milestoneModal');
+                
+                birthDateInput.value = this.birthDate.toISOString().split('T')[0];
+                lifeExpectancyInput.value = this.lifeExpectancy;
 
                 birthDateInput.addEventListener('change', (e) => {
                     this.birthDate = new Date(e.target.value);
+                    this.saveData();
                     this.updateVisualization();
                 });
 
                 lifeExpectancyInput.addEventListener('input', (e) => {
                     this.lifeExpectancy = parseInt(e.target.value);
+                    this.saveData();
                     this.updateVisualization();
                 });
 
@@ -506,8 +665,54 @@
                         this.updateVisualization();
                     });
                 });
+
+                document.querySelector('.modal-close').addEventListener('click', () => this.hideModal());
+                document.getElementById('cancelMilestone').addEventListener('click', () => this.hideModal());
+                document.getElementById('saveMilestone').addEventListener('click', () => this.saveMilestone());
             }
 
+            // --- Milestone Modal Functions ---
+            showModal(weekNumber) {
+                this.selectedWeek = weekNumber;
+                const modal = document.getElementById('milestoneModal');
+                const titleInput = document.getElementById('milestoneTitle');
+                const noteTextarea = document.getElementById('milestoneNote');
+
+                const existing = this.personalMilestones[weekNumber];
+                if (existing) {
+                    titleInput.value = existing.title;
+                    noteTextarea.value = existing.note;
+                } else {
+                    titleInput.value = '';
+                    noteTextarea.value = '';
+                }
+
+                modal.classList.add('show');
+            }
+
+            hideModal() {
+                const modal = document.getElementById('milestoneModal');
+                modal.classList.remove('show');
+                this.selectedWeek = null;
+            }
+
+            saveMilestone() {
+                const title = document.getElementById('milestoneTitle').value.trim();
+                const note = document.getElementById('milestoneNote').value.trim();
+
+                if (this.selectedWeek !== null) {
+                    if (title || note) {
+                        this.personalMilestones[this.selectedWeek] = { title, note };
+                    } else {
+                        delete this.personalMilestones[this.selectedWeek];
+                    }
+                    this.saveData();
+                    this.updateVisualization();
+                }
+                this.hideModal();
+            }
+
+            // --- Core Calculation and Rendering ---
             getWeeksDifference(date1, date2) {
                 const diffTime = Math.abs(date2 - date1);
                 return Math.floor(diffTime / (1000 * 60 * 60 * 24 * 7));
@@ -523,7 +728,6 @@
 
             getSeasonFromWeek(weekNumber, location) {
                 const weekInYear = weekNumber % 52;
-                
                 if (location === 'south') {
                     if (weekInYear >= 36 || weekInYear <= 11) return 'summer';
                     if (weekInYear >= 12 && weekInYear <= 23) return 'autumn';
@@ -540,10 +744,8 @@
             getWorldPopulation(year) {
                 const data = this.worldData.populationGrowth;
                 const years = Object.keys(data).map(Number).sort();
-                
                 if (year <= years[0]) return data[years[0]];
                 if (year >= years[years.length - 1]) return data[years[years.length - 1]];
-                
                 for (let i = 0; i < years.length - 1; i++) {
                     if (year >= years[i] && year < years[i + 1]) {
                         const ratio = (year - years[i]) / (years[i + 1] - years[i]);
@@ -558,20 +760,16 @@
                 const totalWeeks = this.getTotalWeeks();
                 const remainingWeeks = totalWeeks - currentWeek;
                 const percentLived = Math.round((currentWeek / totalWeeks) * 100);
-                
                 const currentYear = new Date().getFullYear();
                 const birthYear = this.birthDate.getFullYear();
-                const currentAge = currentYear - birthYear;
-                
-                const birthPopulation = this.getWorldPopulation(birthYear);
                 const currentPopulation = this.getWorldPopulation(currentYear);
-                const populationGrowth = ((currentPopulation - birthPopulation) / birthPopulation * 100).toFixed(1);
+                const birthPopulation = this.getWorldPopulation(birthYear);
 
                 const stats = [
                     {
                         number: totalWeeks.toLocaleString(),
                         label: 'Total Weeks',
-                        detail: `You have roughly ${(totalWeeks/52).toFixed(0)} years to live.`
+                        detail: `You have roughly ${(totalWeeks / 52).toFixed(0)} years to live.`
                     },
                     {
                         number: currentWeek.toLocaleString(),
@@ -581,7 +779,7 @@
                     {
                         number: remainingWeeks.toLocaleString(),
                         label: 'Weeks Remaining',
-                        detail: `You have approximately ${Math.round(remainingWeeks/52)} years left.`
+                        detail: `You have approximately ${Math.round(remainingWeeks / 52)} years left.`
                     },
                     {
                         number: `${birthPopulation.toFixed(1)}B`,
@@ -603,7 +801,6 @@
             createYearLabels() {
                 const yearLabels = document.getElementById('yearLabels');
                 yearLabels.innerHTML = '';
-                
                 const decades = Math.ceil(this.lifeExpectancy / 10);
                 for (let decade = 0; decade < decades; decade++) {
                     const label = document.createElement('div');
@@ -617,13 +814,11 @@
                 const grid = document.getElementById('grid');
                 const currentWeek = this.getCurrentWeek();
                 const birthYear = this.birthDate.getFullYear();
-                
                 grid.innerHTML = '';
 
                 for (let age = 0; age < this.lifeExpectancy; age++) {
                     const row = document.createElement('div');
                     row.className = 'grid-row';
-
                     const ageLabel = document.createElement('div');
                     ageLabel.className = 'age-label';
                     ageLabel.textContent = age;
@@ -638,7 +833,6 @@
                         weekEl.className = 'week';
                         const currentYear = birthYear + age;
 
-                        // Basic week state
                         if (weekNumber < currentWeek) {
                             weekEl.classList.add('lived');
                         } else if (weekNumber === currentWeek) {
@@ -647,7 +841,6 @@
                             weekEl.classList.add('future');
                         }
 
-                        // Add data overlays based on current mode
                         if (this.currentMode === 'seasons') {
                             const season = this.getSeasonFromWeek(weekNumber, this.birthLocation);
                             weekEl.classList.add(`season-${season}`);
@@ -656,6 +849,14 @@
                         if (this.currentMode === 'milestones' && this.worldData.lifeMilestones[age]) {
                             weekEl.classList.add('milestone');
                         }
+
+                        if (this.personalMilestones[weekNumber]) {
+                            weekEl.classList.add('personal-milestone');
+                        }
+
+                        weekEl.addEventListener('click', (e) => {
+                            this.showModal(weekNumber);
+                        });
 
                         weekEl.addEventListener('mouseenter', (e) => {
                             this.showTooltip(e, age, week, weekNumber, currentWeek, currentYear);
@@ -667,7 +868,6 @@
 
                         weeksRow.appendChild(weekEl);
                     }
-
                     row.appendChild(weeksRow);
                     grid.appendChild(row);
                 }
@@ -677,7 +877,6 @@
                 const tooltip = document.getElementById('tooltip');
                 const weekDate = new Date(this.birthDate);
                 weekDate.setDate(weekDate.getDate() + (weekNumber * 7));
-                
                 let status = weekNumber < currentWeek ? 'Lived' : 
                             weekNumber === currentWeek ? 'Current Week' : 'Future';
 
@@ -687,17 +886,19 @@
                     Status: ${status}
                 `;
 
-                // Add mode-specific data
+                if (this.personalMilestones[weekNumber]) {
+                    const milestone = this.personalMilestones[weekNumber];
+                    content += `<br><strong>Personal Milestone:</strong> ${milestone.title}<br><em>${milestone.note}</em>`;
+                }
+
                 if (this.currentMode === 'seasons') {
                     const season = this.getSeasonFromWeek(weekNumber, this.birthLocation);
                     content += `<br>Season: ${season.charAt(0).toUpperCase() + season.slice(1)}`;
                 }
-
                 if (this.currentMode === 'population') {
                     const population = this.getWorldPopulation(year);
                     content += `<br>World Population: ${population.toFixed(1)}B people`;
                 }
-
                 if (this.currentMode === 'milestones') {
                     if (this.worldData.lifeMilestones[age]) {
                         content += `<br><strong>Milestone:</strong> ${this.worldData.lifeMilestones[age]}`;
@@ -719,7 +920,6 @@
 
             updateLegend() {
                 const legend = document.getElementById('legend');
-                
                 const basicLegend = `
                     <div class="legend-section">
                         <div class="legend-title">Life Status</div>
@@ -735,47 +935,33 @@
                             <div class="legend-color future"></div>
                             <span>Future Weeks</span>
                         </div>
+                        <div class="legend-item">
+                            <div class="legend-color personal-milestone"></div>
+                            <span>Personal Milestone</span>
+                        </div>
                     </div>
                 `;
 
                 let modeSpecificLegend = '';
-                
                 if (this.currentMode === 'seasons') {
                     modeSpecificLegend = `
                         <div class="legend-section">
                             <div class="legend-title">Seasons</div>
-                            <div class="legend-item">
-                                <div class="legend-color spring"></div>
-                                <span>Spring</span>
-                            </div>
-                            <div class="legend-item">
-                                <div class="legend-color summer"></div>
-                                <span>Summer</span>
-                            </div>
-                            <div class="legend-item">
-                                <div class="legend-color autumn"></div>
-                                <span>Autumn</span>
-                            </div>
-                            <div class="legend-item">
-                                <div class="legend-color winter"></div>
-                                <span>Winter</span>
-                            </div>
+                            <div class="legend-item"><div class="legend-color spring"></div><span>Spring</span></div>
+                            <div class="legend-item"><div class="legend-color summer"></div><span>Summer</span></div>
+                            <div class="legend-item"><div class="legend-color autumn"></div><span>Autumn</span></div>
+                            <div class="legend-item"><div class="legend-color winter"></div><span>Winter</span></div>
                         </div>
                     `;
                 }
-
                 if (this.currentMode === 'milestones') {
                     modeSpecificLegend = `
                         <div class="legend-section">
                             <div class="legend-title">Milestones</div>
-                            <div class="legend-item">
-                                <div class="legend-color milestone"></div>
-                                <span>Life Milestone</span>
-                            </div>
+                            <div class="legend-item"><div class="legend-color milestone"></div><span>General Milestone</span></div>
                         </div>
                     `;
                 }
-
                 legend.innerHTML = basicLegend + modeSpecificLegend;
             }
 
