@@ -18,11 +18,8 @@
           animation: {
             'fade-in': 'fadeIn 0.5s ease-in-out',
             'slide-up': 'slideUp 0.5s ease-out',
-            'grid-move': 'gridMove 20s linear infinite',
             'pulse-slow': 'pulseSlow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-            'flow-bg': 'flowBg 30s linear infinite',
-            'subtle-pulse': 'subtlePulse 4s infinite ease-in-out', /* New pulse animation */
-          }
+          },
         }
       }
     }
@@ -30,54 +27,47 @@
 
   <style>
     * {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacMacFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
     }
 
-    /* Vercel-inspired grid background */
-    .grid-pattern {
-      background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), /* Increased visibility */
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px); /* Increased visibility */
-      background-size: 50px 50px;
-      animation: gridMove 30s linear infinite; /* Slower, more subtle movement */
-      opacity: 0.7; /* Make grid slightly more visible */
-    }
-
-    /* Motion graphics for hero section */
-    .hero-bg-animated {
-      background: #000;
-      overflow: hidden;
+    /* Hero section specific styles */
+    .hero-creative {
+      background-color: #000; /* Solid black background */
       position: relative;
+      overflow: hidden; /* Important to contain the gradient */
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
     }
 
-    .hero-bg-animated::before {
-      content: '';
+    .hero-gradient-orb {
       position: absolute;
-      top: -100%;
-      left: -100%;
-      width: 300%;
-      height: 300%;
-      /* Adjusted gradients for a "studio lighting" feel */
-      background: 
-        radial-gradient(circle at 20% 30%, rgba(0,112,243,0.15) 0%, rgba(0,0,0,0) 50%), /* Blue light */
-        radial-gradient(circle at 80% 70%, rgba(121,40,202,0.15) 0%, rgba(0,0,0,0) 50%), /* Purple light */
-        radial-gradient(circle at 50% 10%, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0) 50%); /* Subtle white top light */
-      animation: flowBg 40s linear infinite; /* Slower, more ambient flow */
-      opacity: 0.8; /* Make the gradients a bit more visible */
+      width: 150vw; /* Larger than viewport to ensure full coverage */
+      height: 150vw;
+      border-radius: 50%; /* Makes it a circle */
+      background: radial-gradient(circle at center, 
+                  #FF4500 0%, /* Orange-red center */
+                  #FF8C00 30%, /* Darker orange */
+                  #FFA500 60%, /* Lighter orange */
+                  rgba(0, 0, 0, 0) 100%); /* Fades to transparent */
+      top: -50%; /* Position it partially off-screen at the top */
+      left: 50%;
+      transform: translateX(-50%);
+      filter: blur(80px); /* Soft blur to mimic the effect in the image */
+      opacity: 0.8; /* Adjust as needed */
+      z-index: 1;
+      animation: orbMovement 20s infinite alternate ease-in-out; /* Subtle movement */
     }
 
-    @keyframes flowBg {
-      0% { transform: translate(0, 0); }
-      50% { transform: translate(-15%, -15%); } /* More subtle translation */
-      100% { transform: translate(0, 0); } /* Loop back smoothly */
+    @keyframes orbMovement {
+      0% { transform: translateX(-50%) translateY(0) scale(1); }
+      50% { transform: translateX(-55%) translateY(-5%) scale(1.02); }
+      100% { transform: translateX(-45%) translateY(0) scale(1); }
     }
 
-    @keyframes gridMove {
-      0% { background-position: 0 0; }
-      100% { background-position: 50px 50px; }
-    }
-
-    /* Vercel-style gradients */
+    /* Vercel-style gradients (kept for other sections if you use them) */
     .vercel-gradient {
       background: linear-gradient(to bottom right, #000000, #1a1a1a, #000000);
     }
@@ -155,12 +145,6 @@
       50% { opacity: 0.6; }
     }
 
-    /* New subtle pulse for lighting effect */
-    @keyframes subtlePulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.02); opacity: 0.95; }
-    }
-
     /* Vercel-style selection */
     ::selection {
       background: #0070f3;
@@ -231,8 +215,8 @@
     </div>
   </nav>
 
-  <section class="relative min-h-screen flex items-center justify-center overflow-hidden hero-bg-animated">
-    <div class="absolute inset-0 grid-pattern opacity-50 animate-subtle-pulse"></div>
+  <section class="hero-creative">
+    <div class="hero-gradient-orb"></div>
     
     <div class="relative z-10 text-center px-6 max-w-4xl mx-auto pt-16">
       <div class="animate-fade-in">
@@ -546,7 +530,7 @@
         </a>
         <a href="#" class="text-gray-400 hover:text-white transition-colors">
           <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 0C5.374 0 0 5.373 0 12 0 17.302 3.438 21.8 8.207 23.387c.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+            <path d="M12 0C5.374 0 0 5.373 0 12 0 17.302 3.438 21.8 8.207 23.387c.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
           </svg>
         </a>
         <a href="#" class="text-gray-400 hover:text-white transition-colors">
@@ -631,30 +615,6 @@
     document.querySelectorAll('section').forEach(section => {
       observer.observe(section);
     });
-
-    // Add subtle parallax effect to grid background
-    let ticking = false;
-    
-    function updateGridPosition() {
-      const scrolled = window.pageYOffset;
-      const rate = scrolled * -0.5;
-      
-      const gridElements = document.querySelectorAll('.grid-pattern');
-      gridElements.forEach(el => {
-        el.style.transform = `translate3d(0, ${rate}px, 0)`;
-      });
-      
-      ticking = false;
-    }
-    
-    function requestTick() {
-      if (!ticking) {
-        requestAnimationFrame(updateGridPosition);
-        ticking = true;
-      }
-    }
-    
-    window.addEventListener('scroll', requestTick);
 
     // Add hover effect to vercel cards
     document.querySelectorAll('.vercel-card').forEach(card => {
